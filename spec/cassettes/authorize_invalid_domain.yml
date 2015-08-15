@@ -1,0 +1,142 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: http://127.0.0.1:4000/acme/new-reg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Allow:
+      - POST
+      Content-Type:
+      - application/problem+json
+      Replay-Nonce:
+      - kMK_zvEqb2lXxsNsBUzgrgGXLbBJWIsWJzCRQvqoi7M
+      Date:
+      - Sat, 15 Aug 2015 01:58:30 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Sat, 15 Aug 2015 01:58:30 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:4000/acme/new-reg
+    body:
+      encoding: UTF-8
+      string: "{\"header\":{\"alg\":\"RS256\",\"jwk\":{\"kty\":\"RSA\",\"e\":\"AQAB\",\"n\":\"xM97cTkSSHBK_qwz8F_xd-KuSGqwnD--atl1HlNwX4z4MWNixwYJyACZD6qAzmHnaWgG7VJRHTydzw4SDw3B7Ue1h8PgHInRL6hxItYgjWFdGFPSFxtomhbVj5_oZz9daj8VCwSKu9ZIPvc9T-0GrH5mueSW-q57sMeYRCBN2KcbRhGBnyJ3RGEaP5jo-LAL2VUcTvPbxISG1XxdWs5Ed42GgNVNQ6iXtwZtSiibHNKrhMdX6Q4qRwIi7NTYsFgK3vEOr5I0nzFfHF7hBAXVDz9zJ9lwy07_it57KCw0lSvZvPLKibLAaR8VBLYsy97H050vIf7kAdRJE2uIJAHBcQ\"}},\"protected\":\"eyJub25jZSI6ImtNS196dkVxYjJsWHhzTnNCVXpncmdHWExiQkpXSXNXSnpDUlF2cW9pN00ifQ\",\"payload\":\"eyJyZXNvdXJjZSI6Im5ldy1yZWciLCJjb250YWN0IjpbIm1haWx0bzptYWlsQHRlc3QuY29tIl19\",\"signature\":\"g_59fhQnEXq4Hp_c-viQPAUAt8oOX-XOB4w-xLfed1A0MqinjZRQhaemWLHHJIr0qwru_JRa5Bhm4eCWxvpjJsSQ1-RQ4MPw_0yrYfQEMQhYLPOtGCtA9ZrYPBcj5nhRIwW-cFENw6VLzjXeBJp3uSvjKs3ADfY_k5UCeC2vFHkKMMkCEQ5kfsh6KvgwNxVx8gg8k40g1S8FC19yDXz1U5BLWp_TL0HWG48MT6pL76mR0kwdANgGFaZu6IVm9eAZkNRY8uUY1VMWd9ckwvZU9mA5rYYRvlnr9YFHE1F3P-KcPy67fiLDnQ3c5uWuLXg9WCAv78MrsoQhm1VkpGTGtQ\"}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Link:
+      - "<http://localhost:4000/acme/new-authz>;rel=\"next\""
+      - "<http://localhost:4000/terms/v1>;rel=\"terms-of-service\""
+      Location:
+      - http://localhost:4000/acme/reg/1049
+      Replay-Nonce:
+      - s3vg3gsjdMSEUflyutGWLVY0dLW9ge8OHLGrjkXQ9ZQ
+      Date:
+      - Sat, 15 Aug 2015 01:58:30 GMT
+      Content-Length:
+      - '426'
+    body:
+      encoding: UTF-8
+      string: "{\"id\":1049,\"key\":{\"kty\":\"RSA\",\"n\":\"xM97cTkSSHBK_qwz8F_xd-KuSGqwnD--atl1HlNwX4z4MWNixwYJyACZD6qAzmHnaWgG7VJRHTydzw4SDw3B7Ue1h8PgHInRL6hxItYgjWFdGFPSFxtomhbVj5_oZz9daj8VCwSKu9ZIPvc9T-0GrH5mueSW-q57sMeYRCBN2KcbRhGBnyJ3RGEaP5jo-LAL2VUcTvPbxISG1XxdWs5Ed42GgNVNQ6iXtwZtSiibHNKrhMdX6Q4qRwIi7NTYsFgK3vEOr5I0nzFfHF7hBAXVDz9zJ9lwy07_it57KCw0lSvZvPLKibLAaR8VBLYsy97H050vIf7kAdRJE2uIJAHBcQ\",\"e\":\"AQAB\"},\"contact\":[\"mailto:mail@test.com\"]}"
+    http_version: 
+  recorded_at: Sat, 15 Aug 2015 01:58:30 GMT
+- request:
+    method: post
+    uri: http://localhost:4000/acme/reg/1049
+    body:
+      encoding: UTF-8
+      string: "{\"header\":{\"alg\":\"RS256\",\"jwk\":{\"kty\":\"RSA\",\"e\":\"AQAB\",\"n\":\"xM97cTkSSHBK_qwz8F_xd-KuSGqwnD--atl1HlNwX4z4MWNixwYJyACZD6qAzmHnaWgG7VJRHTydzw4SDw3B7Ue1h8PgHInRL6hxItYgjWFdGFPSFxtomhbVj5_oZz9daj8VCwSKu9ZIPvc9T-0GrH5mueSW-q57sMeYRCBN2KcbRhGBnyJ3RGEaP5jo-LAL2VUcTvPbxISG1XxdWs5Ed42GgNVNQ6iXtwZtSiibHNKrhMdX6Q4qRwIi7NTYsFgK3vEOr5I0nzFfHF7hBAXVDz9zJ9lwy07_it57KCw0lSvZvPLKibLAaR8VBLYsy97H050vIf7kAdRJE2uIJAHBcQ\"}},\"protected\":\"eyJub25jZSI6InMzdmczZ3NqZE1TRVVmbHl1dEdXTFZZMGRMVzlnZThPSExHcmprWFE5WlEifQ\",\"payload\":\"eyJyZXNvdXJjZSI6InJlZyIsImFncmVlbWVudCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDAwMC90ZXJtcy92MSJ9\",\"signature\":\"wl6J0SLB1zTXviCxohyXWF9FV1pWhmBzQRtq02rCKnzkpEAxM-VLfU6Hs-SVpDYPwMoZxfTAeGKZ9JX4WvHUfsS5LkmxDccXypK0K7Hwpnl5_JFgGYjRLJ7ELQ8CoED1QHAvoLrzuvrLjs8m8mbEWg8WMz3DBHoG_deKf2BYNltaW-L7CDDKiwZnQLrX_98qj-Xl51906IWoUU_EBBq_CBz-IR4i5SVInvFSm65SukNvIlIAFzd7cihgspiHI6fB1DnRPfHGDBGIcFiqNaK1Hmr4WKDuM1Q-1G6h94IdsiN7ouJBiHOqWVVDDP2udWfqgPgdsu4qd3CI4CcN7aBYzA\"}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Link:
+      - "<http://localhost:4000/acme/new-authz>;rel=\"next\""
+      - "<http://localhost:4000/terms/v1>;rel=\"terms-of-service\""
+      Replay-Nonce:
+      - cjBUg7crayxYMOA5rh17lE9j-Fpur3t6j7MlcQ1XL2s
+      Date:
+      - Sat, 15 Aug 2015 01:58:30 GMT
+      Content-Length:
+      - '471'
+    body:
+      encoding: UTF-8
+      string: "{\"id\":1049,\"key\":{\"kty\":\"RSA\",\"n\":\"xM97cTkSSHBK_qwz8F_xd-KuSGqwnD--atl1HlNwX4z4MWNixwYJyACZD6qAzmHnaWgG7VJRHTydzw4SDw3B7Ue1h8PgHInRL6hxItYgjWFdGFPSFxtomhbVj5_oZz9daj8VCwSKu9ZIPvc9T-0GrH5mueSW-q57sMeYRCBN2KcbRhGBnyJ3RGEaP5jo-LAL2VUcTvPbxISG1XxdWs5Ed42GgNVNQ6iXtwZtSiibHNKrhMdX6Q4qRwIi7NTYsFgK3vEOr5I0nzFfHF7hBAXVDz9zJ9lwy07_it57KCw0lSvZvPLKibLAaR8VBLYsy97H050vIf7kAdRJE2uIJAHBcQ\",\"e\":\"AQAB\"},\"contact\":[\"mailto:mail@test.com\"],\"agreement\":\"http://localhost:4000/terms/v1\"}"
+    http_version: 
+  recorded_at: Sat, 15 Aug 2015 01:58:30 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:4000/acme/new-authz
+    body:
+      encoding: UTF-8
+      string: "{\"header\":{\"alg\":\"RS256\",\"jwk\":{\"kty\":\"RSA\",\"e\":\"AQAB\",\"n\":\"xM97cTkSSHBK_qwz8F_xd-KuSGqwnD--atl1HlNwX4z4MWNixwYJyACZD6qAzmHnaWgG7VJRHTydzw4SDw3B7Ue1h8PgHInRL6hxItYgjWFdGFPSFxtomhbVj5_oZz9daj8VCwSKu9ZIPvc9T-0GrH5mueSW-q57sMeYRCBN2KcbRhGBnyJ3RGEaP5jo-LAL2VUcTvPbxISG1XxdWs5Ed42GgNVNQ6iXtwZtSiibHNKrhMdX6Q4qRwIi7NTYsFgK3vEOr5I0nzFfHF7hBAXVDz9zJ9lwy07_it57KCw0lSvZvPLKibLAaR8VBLYsy97H050vIf7kAdRJE2uIJAHBcQ\"}},\"protected\":\"eyJub25jZSI6ImNqQlVnN2NyYXl4WU1PQTVyaDE3bEU5ai1GcHVyM3Q2ajdNbGNRMVhMMnMifQ\",\"payload\":\"eyJyZXNvdXJjZSI6Im5ldy1hdXRoeiIsImlkZW50aWZpZXIiOnsidHlwZSI6ImRucyIsInZhbHVlIjoibm90YWRvbWFpbiJ9fQ\",\"signature\":\"OCTbdvm2nR96BfuB2qC-I6fib8xYo4aVtUL3DNIYEdvPjmWDJEZHueYfhjfH8wV_0KDNT06Va91zwaoD-1aV_ClX1qTmsB_3bLvunBi6FBxN98p55OeaRH7Zxb0abGwXW0lq0hTrWSOZxXePDXEt5iscOvHcMoBh5fWk8ucye7c1NjzqsAZhVgMrf_rbi6qRR0UpGet4i4edCOO8d60g90XfHyr0Ey_O5SqLwMJzFKW-LiBzuoobAotYr8EVCRheOwe6rXTRPCnXupYZl9Li16SGvTGvDFXO1K7gQ-hasB8CFU0egmPuqFGYgHbL63gw1t0OaOGROQt73_kwxPLYQw\"}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/problem+json
+      Replay-Nonce:
+      - 8KCuWG_nkMl6ry8NeaugJwHa_GqiOBMJCQWBmNvziOs
+      Date:
+      - Sat, 15 Aug 2015 01:58:30 GMT
+      Content-Length:
+      - '90'
+    body:
+      encoding: UTF-8
+      string: "{\"type\":\"urn:acme:error:unauthorized\",\"detail\":\"Error creating
+        new authz :: Syntax error\"}"
+    http_version: 
+  recorded_at: Sat, 15 Aug 2015 01:58:30 GMT
+recorded_with: VCR 2.9.3

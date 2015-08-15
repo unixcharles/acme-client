@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: http://127.0.0.1:4000/acme/new-reg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Allow:
+      - POST
+      Content-Type:
+      - application/problem+json
+      Replay-Nonce:
+      - 4dMIJoDeHuEWhZeraol2f_f0QzF1Imd7FUhcOpfO0F8
+      Date:
+      - Sat, 15 Aug 2015 01:58:29 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Sat, 15 Aug 2015 01:58:29 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:4000/acme/new-reg
+    body:
+      encoding: UTF-8
+      string: "{\"header\":{\"alg\":\"RS256\",\"jwk\":{\"kty\":\"RSA\",\"e\":\"AQAB\",\"n\":\"rtF3XEIy43tN8gv46hkIMBPYEuPaWwDoek1r3OG_5ZK2uWzXDg8S4RIrlA6_Ce49TJG25TPbCXFGxorOrtowNcRyvyoBgbz92hYkUKXiSbzgVonzfdyGujvVyL3ctM6be8qT7-tDm5FbNS1M2HsRYPMtRlNvydZuUEFKJm6e44noqI0ZwyP5sBLvbIdKrhFOKsAPs9ndt3bVBCVnjLXdT0Ro0tvjD_epxWJDg2FWFx-gvG6EMycwPgRbYzmP-xvjCIcS7aRa4tmy_Lm3UJM8E7A0rCxKAiteaDGstEn8jLiIvTm5GVfAynldMX6B0rPhIviNxCHFlKkOmbbSX4zCtQ\"}},\"protected\":\"eyJub25jZSI6IjRkTUlKb0RlSHVFV2haZXJhb2wyZl9mMFF6RjFJbWQ3RlVoY09wZk8wRjgifQ\",\"payload\":\"eyJyZXNvdXJjZSI6Im5ldy1yZWciLCJjb250YWN0IjpbIm1haWx0bzpub3QtdmFsaWQiXX0\",\"signature\":\"WB8FqA3uVSRt82fVIUYoBnAh_OghXrvbyHkKRSG--u-D-rJxAG75XN6WQKsXGncLhroJjASo58PjJXqtqC8iejtz4HZW1Lk5EU1taZW4NZIRXrGZX1B1r03lAJKCM0GSrr3JWE7IgpbTww3b6tLEyOkXHgb7VBJaLl27lCoDdxsPWp6AI3f97vBUPFcNWC8HWAE56O9Fk-FEqIZoIwVn7AIGKfzgcmEmWa1OG5PeLZe_Nl4d7tjA4aCCQHJjjzA2c77rkllgmwKPT95DJnwQeube91lg_YnIGpS1e2IQZ3Usfr0QJbI5RoJlmdJUvJq41sHn0LGQnVgge2RI_dHd4g\"}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/problem+json
+      Replay-Nonce:
+      - glRVGbK3O65exQpkkPeF8y9nxEiNC8o1xL7I_BEeaW8
+      Date:
+      - Sat, 15 Aug 2015 01:58:30 GMT
+      Content-Length:
+      - '121'
+    body:
+      encoding: UTF-8
+      string: "{\"type\":\"urn:acme:error:malformed\",\"detail\":\"Error creating
+        new registration :: not-valid is not a valid e-mail address\"}"
+    http_version: 
+  recorded_at: Sat, 15 Aug 2015 01:58:30 GMT
+recorded_with: VCR 2.9.3
