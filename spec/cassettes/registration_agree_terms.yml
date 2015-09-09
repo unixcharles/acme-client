@@ -1,0 +1,108 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: http://127.0.0.1:4000/acme/new-reg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Allow:
+      - POST
+      Content-Type:
+      - application/problem+json
+      Replay-Nonce:
+      - hhSqbI3mJcvhZjmVp3kyvBT1pblAUfDJNMYyMjnsNPI
+      Date:
+      - Wed, 09 Sep 2015 14:35:55 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 09 Sep 2015 14:35:55 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:4000/acme/new-reg
+    body:
+      encoding: UTF-8
+      string: "{\"header\":{\"alg\":\"RS256\",\"jwk\":{\"kty\":\"RSA\",\"e\":\"AQAB\",\"n\":\"8-RUzySso6RoZ3AFtDGVAEQYf8fbt3OPp5nqCaipF1W7nsVX2uCy3ApiDl7v_cjTz4EkEQXDi-583hPhUN578UgNYAuVcG51zNsg0iJsOP7axHpuRIEfm_olWj84eOUBBlk94L0oLiP2M7n-h6Rk6pnbTzkndy4nc-1VFTbleFNFtcCtcxc_y2Y-UvU8Hhd0oLUuIgyTw9W_KVKCXfgO1boJOp0zFAShTf8ZEelYxyDuooyPksTwGX0IOX8LyARNm7W_D2NBMZ4MlE1QZ1INuQk_dr_sySGjGpzdN6Sv60gAOlfpIW10EYm_i0ksQZXLkvFby67mnwhiDEy79P5xQw\"}},\"protected\":\"eyJub25jZSI6ImhoU3FiSTNtSmN2aFpqbVZwM2t5dkJUMXBibEFVZkRKTk1ZeU1qbnNOUEkifQ\",\"payload\":\"eyJyZXNvdXJjZSI6Im5ldy1yZWciLCJjb250YWN0IjpbIm1haWx0bzppbmZvQHRlc3QuY29tIl19\",\"signature\":\"26gPO1krUgZ68okFuJXuww7AEMPPNeZVnfVncENGNmxe_dUIuLkSKkdP_avCNu6Nd0EtHuxBuI4LJDNwiLr528iJy1veL7DAa3n1hEjuJbWLMxOHkK9hsOktzByWbqFH-2tQwudNKoEGVxk0BB0lU80BJvxOd85bp6783Xoq2u_aS7qTa4ovDXI1JOHf-YxaCaoMk8ni9Y6dgJZQ1EsjOZcC_cbd57HlqECsC6dH7kv93CVloejfLPjOqz-aQ9HIR6P0h3jGPownqF-vKilUrPYcHppfbu-3KEgAU40ZuT88_5qTjy7cwtzI8crqLvqsjeTIajAKSmgtmduRNwyIjQ\"}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Link:
+      - "<http://localhost:4000/acme/new-authz>;rel=\"next\""
+      - "<http://localhost:4001/terms/v1>;rel=\"terms-of-service\""
+      Location:
+      - http://localhost:4000/acme/reg/1
+      Replay-Nonce:
+      - Xv6VqVvWUn6yyYgSYYK-21cORWAQZGNVazoRfaIpPaQ
+      Date:
+      - Wed, 09 Sep 2015 14:35:55 GMT
+      Content-Length:
+      - '423'
+    body:
+      encoding: UTF-8
+      string: "{\"id\":1,\"key\":{\"kty\":\"RSA\",\"n\":\"8-RUzySso6RoZ3AFtDGVAEQYf8fbt3OPp5nqCaipF1W7nsVX2uCy3ApiDl7v_cjTz4EkEQXDi-583hPhUN578UgNYAuVcG51zNsg0iJsOP7axHpuRIEfm_olWj84eOUBBlk94L0oLiP2M7n-h6Rk6pnbTzkndy4nc-1VFTbleFNFtcCtcxc_y2Y-UvU8Hhd0oLUuIgyTw9W_KVKCXfgO1boJOp0zFAShTf8ZEelYxyDuooyPksTwGX0IOX8LyARNm7W_D2NBMZ4MlE1QZ1INuQk_dr_sySGjGpzdN6Sv60gAOlfpIW10EYm_i0ksQZXLkvFby67mnwhiDEy79P5xQw\",\"e\":\"AQAB\"},\"contact\":[\"mailto:info@test.com\"]}"
+    http_version: 
+  recorded_at: Wed, 09 Sep 2015 14:35:55 GMT
+- request:
+    method: post
+    uri: http://localhost:4000/acme/reg/1
+    body:
+      encoding: UTF-8
+      string: "{\"header\":{\"alg\":\"RS256\",\"jwk\":{\"kty\":\"RSA\",\"e\":\"AQAB\",\"n\":\"8-RUzySso6RoZ3AFtDGVAEQYf8fbt3OPp5nqCaipF1W7nsVX2uCy3ApiDl7v_cjTz4EkEQXDi-583hPhUN578UgNYAuVcG51zNsg0iJsOP7axHpuRIEfm_olWj84eOUBBlk94L0oLiP2M7n-h6Rk6pnbTzkndy4nc-1VFTbleFNFtcCtcxc_y2Y-UvU8Hhd0oLUuIgyTw9W_KVKCXfgO1boJOp0zFAShTf8ZEelYxyDuooyPksTwGX0IOX8LyARNm7W_D2NBMZ4MlE1QZ1INuQk_dr_sySGjGpzdN6Sv60gAOlfpIW10EYm_i0ksQZXLkvFby67mnwhiDEy79P5xQw\"}},\"protected\":\"eyJub25jZSI6Ilh2NlZxVnZXVW42eXlZZ1NZWUstMjFjT1JXQVFaR05WYXpvUmZhSXBQYVEifQ\",\"payload\":\"eyJyZXNvdXJjZSI6InJlZyIsImFncmVlbWVudCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDAwMS90ZXJtcy92MSJ9\",\"signature\":\"5JSE4p0O4kmWxH4e4eTq1eY7oZI-5tVnyCrSp2FmywfXXEZ_Qfb3ij0IuiCWc3hdVTCSpzybXjXFUr0yyeicM7cq6qx_xbeKBlbHay8FzxAWWXiKrJhdrJsE45AyPrpJHSf8m2JRv2hos1dZNJIDI2CcANX0_V4ZyaweEy1PyKei3VZxQCD-Ro63nt74NTMVcTup5JSFr-kByOP_9or4T1TRrBpm-4f4_FUYp1ypWPZOnKexr7ong568DO-5GLis9zDcNPYvwWI_LmjcJrKddSUDrZ61lozghwV5VMeMYVFInt8yJJtItPTjMoUz9iGoIKpymSYH86CQT3KKKSVssw\"}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Link:
+      - "<http://localhost:4000/acme/new-authz>;rel=\"next\""
+      - "<http://localhost:4001/terms/v1>;rel=\"terms-of-service\""
+      Replay-Nonce:
+      - T5Nv69dXByiluiAUVhU7Sq9yq6H3-zUirifuGGkNjtM
+      Date:
+      - Wed, 09 Sep 2015 14:35:55 GMT
+      Content-Length:
+      - '468'
+    body:
+      encoding: UTF-8
+      string: "{\"id\":1,\"key\":{\"kty\":\"RSA\",\"n\":\"8-RUzySso6RoZ3AFtDGVAEQYf8fbt3OPp5nqCaipF1W7nsVX2uCy3ApiDl7v_cjTz4EkEQXDi-583hPhUN578UgNYAuVcG51zNsg0iJsOP7axHpuRIEfm_olWj84eOUBBlk94L0oLiP2M7n-h6Rk6pnbTzkndy4nc-1VFTbleFNFtcCtcxc_y2Y-UvU8Hhd0oLUuIgyTw9W_KVKCXfgO1boJOp0zFAShTf8ZEelYxyDuooyPksTwGX0IOX8LyARNm7W_D2NBMZ4MlE1QZ1INuQk_dr_sySGjGpzdN6Sv60gAOlfpIW10EYm_i0ksQZXLkvFby67mnwhiDEy79P5xQw\",\"e\":\"AQAB\"},\"contact\":[\"mailto:info@test.com\"],\"agreement\":\"http://localhost:4001/terms/v1\"}"
+    http_version: 
+  recorded_at: Wed, 09 Sep 2015 14:35:55 GMT
+recorded_with: VCR 2.9.3

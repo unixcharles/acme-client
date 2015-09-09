@@ -5,7 +5,7 @@ describe Acme::Resources::Registration do
   let(:registration) { client.register(contact: 'mailto:info@test.com') }
 
   context '#agree_terms' do
-    it 'send the agreement for the terms' do
+    it 'send the agreement for the terms', vcr: { cassette_name: 'registration_agree_terms' } do
       expect { registration.agree_terms }.to_not raise_error
     end
   end
