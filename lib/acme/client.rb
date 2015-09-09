@@ -1,5 +1,11 @@
 class Acme::Client
   DEFAULT_ENDPOINT = 'http://127.0.0.1:4000'
+  DIRECTORY_DEFAULT = {
+    'new-authz' => '/acme/new-authz',
+    'new-cert' => '/acme/new-cert',
+    'new-reg' => '/acme/new-reg',
+    'revoke-cert' => '/acme/revoke-cert'
+  }
 
   def initialize(endpoint: DEFAULT_ENDPOINT, directory_uri: nil, private_key:)
     @endpoint, @private_key, @directory_uri = endpoint, private_key, directory_uri
