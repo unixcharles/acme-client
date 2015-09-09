@@ -2,7 +2,7 @@
 
 `acme-client` is a client implementation of the [ACME](https://letsencrypt.github.io/acme-spec) protocol in Ruby.
 
-You can find the server reference implementation for ACME server [here](github.com/letsencrypt/boulder) and also the a reference [client](github.com/letsencrypt/letsencrypt) in python.
+You can find the server reference implementation for ACME server [here](https://github.com/letsencrypt/boulder) and also the a reference [client](https://github.com/letsencrypt/letsencrypt) in python.
 
 ACME is part of the [Letsencrypt](https://letsencrypt.org/) project, that are working hard at encrypting all the things.
 
