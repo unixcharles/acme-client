@@ -26,7 +26,7 @@ registration.agree_terms
 
 # Let's try to optain a certificate for yourdomain.com
 
-# We need to prove that we control the domain using one of the challanges method.
+# We need to prove that we control the domain using one of the challenges method.
 authorization = client.authorize(domain: 'yourdomain.com')
 
 # For now the only challenge method supprted by the client is simple_http.
