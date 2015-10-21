@@ -7,7 +7,7 @@ class Acme::Client
     'revoke-cert' => '/acme/revoke-cert'
   }
 
-  def initialize(endpoint: DEFAULT_ENDPOINT, directory_uri: nil, private_key:)
+  def initialize(private_key:, endpoint: DEFAULT_ENDPOINT, directory_uri: nil)
     @endpoint, @private_key, @directory_uri = endpoint, private_key, directory_uri
     @nonces ||= []
     load_directory!
