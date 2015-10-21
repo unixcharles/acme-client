@@ -26,9 +26,9 @@ class Acme::Client
 
   def authorize(domain:)
     payload = {
-      resource: "new-authz",
+      resource: 'new-authz',
       identifier: {
-        type: "dns",
+        type: 'dns',
         value: domain
       }
     }
