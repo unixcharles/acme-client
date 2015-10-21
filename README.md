@@ -13,10 +13,10 @@ ACME is part of the [Letsencrypt](https://letsencrypt.org/) project, that are wo
 private_key = OpenSSL::PKey::RSA.new(2048)
 
 # We need an ACME server to talk to, see github.com/letsencrypt/boulder
-endpoint = 'https://www.letsencrypt-demo.org/'
+endpoint = 'https://acme-staging.api.letsencrypt.org'
 
 # Initialize the client
-client = Acme::Client.new(private_key: private_key, endpoint: endpoint, directory: '/directory')
+client = Acme::Client.new(private_key: private_key, endpoint: endpoint)
 
 # If the private key is not known to the server, we need to register it for the first time.
 registration = client.register(contact: 'mailto:unixcharles@gmail.com')
