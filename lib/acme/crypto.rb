@@ -42,6 +42,6 @@ class Acme::Crypto
   end
 
   def encode64(input)
-    UrlSafeBase64.encode64(input)
+    Base64.urlsafe_encode64(input)
   end
 end
