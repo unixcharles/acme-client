@@ -1,4 +1,5 @@
 # Acme::Client
+![ci-status](https://travis-ci.org/unixcharles/acme-client.svg)
 
 `acme-client` is a client implementation of the [ACME](https://letsencrypt.github.io/acme-spec) protocol in Ruby.
 
