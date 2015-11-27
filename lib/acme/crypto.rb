@@ -30,7 +30,11 @@ class Acme::Crypto
   end
 
   def jwk
-    JSON::JWK.new(public_key).to_hash
+    JSON::JWK.new(public_key)
+  end
+
+  def thumbprint
+    jwk.thumbprint
   end
 
   def public_key
