@@ -27,7 +27,7 @@ describe Acme::Client do
     it 'fail to register with an invalid contact', vcr: { cassette_name: 'register_invalid_contact' } do
       expect {
         unregistered_client.register(contact: %w(mailto:not-valid))
-      }.to raise_error(Acme::Error, /not-valid is not a valid e-mail address/)
+      }.to raise_error(Acme::Error, /not a valid e-mail address/)
     end
 
     it 'fail to register a key that is already registered', vcr: { cassette_name: 'register_duplicate_failure' } do
@@ -68,13 +68,12 @@ describe Acme::Client do
       registration = client.register(contact: 'mailto:info@test.com')
       registration.agree_terms
       authorization = client.authorize(domain: domain)
-      simple_http = authorization.simple_http
-      simple_http.tls = false
-      
-      serve_once(simple_http.file_content) do
-        simple_http.request_verification
-        retry_until(condition: lambda { simple_http.status != 'pending' }) do
-          simple_http.verify_status
+      http01 = authorization.http01
+
+      serve_once(http01.file_content) do
+        http01.request_verification
+        retry_until(condition: lambda { http01.status != 'pending' }) do
+          http01.verify_status
         end
       end
     end

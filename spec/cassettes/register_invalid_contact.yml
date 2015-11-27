@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.1
+      - Faraday v0.9.2
       Accept:
       - "*/*"
   response:
@@ -16,30 +16,28 @@ http_interactions:
       code: 405
       message: Method Not Allowed
     headers:
-      Access-Control-Allow-Origin:
-      - "*"
       Allow:
       - POST
       Content-Type:
       - application/problem+json
       Replay-Nonce:
-      - 4dMIJoDeHuEWhZeraol2f_f0QzF1Imd7FUhcOpfO0F8
+      - prIML-68tRSYENeNzy0WwDVitcAlSmFl3TRaDP1HmPU
       Date:
-      - Sat, 15 Aug 2015 01:58:29 GMT
+      - Fri, 27 Nov 2015 21:16:15 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Sat, 15 Aug 2015 01:58:29 GMT
+  recorded_at: Fri, 27 Nov 2015 21:16:15 GMT
 - request:
     method: post
     uri: http://127.0.0.1:4000/acme/new-reg
     body:
       encoding: UTF-8
-      string: "{\"header\":{\"alg\":\"RS256\",\"jwk\":{\"kty\":\"RSA\",\"e\":\"AQAB\",\"n\":\"rtF3XEIy43tN8gv46hkIMBPYEuPaWwDoek1r3OG_5ZK2uWzXDg8S4RIrlA6_Ce49TJG25TPbCXFGxorOrtowNcRyvyoBgbz92hYkUKXiSbzgVonzfdyGujvVyL3ctM6be8qT7-tDm5FbNS1M2HsRYPMtRlNvydZuUEFKJm6e44noqI0ZwyP5sBLvbIdKrhFOKsAPs9ndt3bVBCVnjLXdT0Ro0tvjD_epxWJDg2FWFx-gvG6EMycwPgRbYzmP-xvjCIcS7aRa4tmy_Lm3UJM8E7A0rCxKAiteaDGstEn8jLiIvTm5GVfAynldMX6B0rPhIviNxCHFlKkOmbbSX4zCtQ\"}},\"protected\":\"eyJub25jZSI6IjRkTUlKb0RlSHVFV2haZXJhb2wyZl9mMFF6RjFJbWQ3RlVoY09wZk8wRjgifQ\",\"payload\":\"eyJyZXNvdXJjZSI6Im5ldy1yZWciLCJjb250YWN0IjpbIm1haWx0bzpub3QtdmFsaWQiXX0\",\"signature\":\"WB8FqA3uVSRt82fVIUYoBnAh_OghXrvbyHkKRSG--u-D-rJxAG75XN6WQKsXGncLhroJjASo58PjJXqtqC8iejtz4HZW1Lk5EU1taZW4NZIRXrGZX1B1r03lAJKCM0GSrr3JWE7IgpbTww3b6tLEyOkXHgb7VBJaLl27lCoDdxsPWp6AI3f97vBUPFcNWC8HWAE56O9Fk-FEqIZoIwVn7AIGKfzgcmEmWa1OG5PeLZe_Nl4d7tjA4aCCQHJjjzA2c77rkllgmwKPT95DJnwQeube91lg_YnIGpS1e2IQZ3Usfr0QJbI5RoJlmdJUvJq41sHn0LGQnVgge2RI_dHd4g\"}"
+      string: '{"header":{"alg":"RS256","jwk":{"kty":"RSA","e":"AQAB","n":"pCTLHh8z3WMkrBxEBUdUM1btTNk1i01fV_pmRcGJ5Br_nikAEVCkBiu0WLI69c2ezb1dldBXIKYEPsOUTqZ2kfeQTGAQs-EQQzzXVqd4cR8Ihf4n5VBa2PTlIfa3BsPk82ptrUa6OIxqV2c4YFPJOLC64LLFe0LjgTrve9vnmK-6fD2B18qaifV0ub_9wgoYbXBrW8P-06U0MlQXSRJqMjb_0v4Tn4Yv4B1kvmKS0oGIUEq2mtu_uvhlZdcaDePc-3v2zuOMQOjHI0dBoVehVB-unJLWallPD51JKqbZrDphvV0n1B3LrYxDKv1uVFp2kE9hjcfbq_tchGELsNjQzw"}},"protected":"eyJub25jZSI6InBySU1MLTY4dFJTWUVOZU56eTBXd0RWaXRjQWxTbUZsM1RSYURQMUhtUFUifQ","payload":"eyJyZXNvdXJjZSI6Im5ldy1yZWciLCJjb250YWN0IjpbIm1haWx0bzpub3QtdmFsaWQiXX0","signature":"LdIa_GYsXT7Q4BR5tlH_Nm85JRug2-w4svf1MATi711f-h2Tv8Cgn1SU6yPbDDlAEA8wSHiqU2Faj3hlT_K9EahmLagmyAyFX_bU4T_JybnDEqYfF45pmIhLq9RpTnnNUiYbbTux7YxgYPKgJoCgSGjcUH5TSLI79_tscETkclQOPEbVWdh37cCCMeQj_II2aoQMfobj_Uo3YwrRalIafea-5HoUC5sh_zOEBFnFDZ7vBLOWO7BYnjmcw28JaLeBX6Z7F51Z_UNibLaFDw5cxgguUEc5jjEbHAoe7Z1dExr58is5LvL_CjQbPrVL1QIvFPWklYCGoc0vbCdnBbbQ9Q"}'
     headers:
       User-Agent:
-      - Faraday v0.9.1
+      - Faraday v0.9.2
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -49,20 +47,18 @@ http_interactions:
       code: 400
       message: Bad Request
     headers:
-      Access-Control-Allow-Origin:
-      - "*"
       Content-Type:
       - application/problem+json
       Replay-Nonce:
-      - glRVGbK3O65exQpkkPeF8y9nxEiNC8o1xL7I_BEeaW8
+      - CTlSpGnrx14Z_f4oQGfewSY2l5tXs8lqwO2Pnj2_JX4
       Date:
-      - Sat, 15 Aug 2015 01:58:30 GMT
+      - Fri, 27 Nov 2015 21:16:15 GMT
       Content-Length:
-      - '121'
+      - '155'
     body:
       encoding: UTF-8
-      string: "{\"type\":\"urn:acme:error:malformed\",\"detail\":\"Error creating
-        new registration :: not-valid is not a valid e-mail address\"}"
+      string: '{"type":"urn:acme:error:malformed","detail":"Error creating new registration
+        :: Validation of contact mailto:not-valid failed: not a valid e-mail address"}'
     http_version: 
-  recorded_at: Sat, 15 Aug 2015 01:58:30 GMT
+  recorded_at: Fri, 27 Nov 2015 21:16:15 GMT
 recorded_with: VCR 2.9.3
