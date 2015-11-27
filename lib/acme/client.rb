@@ -17,7 +17,7 @@ class Acme::Client
 
   def register(contact:)
     payload = {
-      resource: 'new-reg', contact: [contact]
+      resource: 'new-reg', contact: Array(contact)
     }
 
     response = connection.post(@operation_endpoints.fetch('new-reg'), payload)
