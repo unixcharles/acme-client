@@ -10,9 +10,9 @@ describe Acme::Resources::Authorization do
 
   let(:authorization) { client.authorize(domain: 'domain.com')}
 
-  context '#simple_http' do
-    it 'returns a SimpleHttp object', vcr: { cassette_name: 'authorization_simple_http' }  do
-      expect(authorization.simple_http).to be_a(Acme::Resources::Challenges::SimpleHttp)
+  context '#http01' do
+    it 'returns a HTTP01 object', vcr: { cassette_name: 'authorization_http_01' }  do
+      expect(authorization.http01).to be_a(Acme::Resources::Challenges::HTTP01)
     end
   end
 end
