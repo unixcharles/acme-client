@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'acme_client'
+require 'acme-client'
 
 require 'rspec'
 require 'vcr'
@@ -8,6 +8,9 @@ require 'webrick'
 
 module TestHelper
   def generate_private_key
+    OpenSSL::PKey::RSA.new(2048)
+  rescue OpenSSL::PKey::RSAError # Try again
+    sleep(0.05)
     OpenSSL::PKey::RSA.new(2048)
   end
 
@@ -33,7 +36,7 @@ module TestHelper
 
   def serve_once(body)
     dev_null = Logger.new(StringIO.new)
-    server = WEBrick::HTTPServer.new(:Port => 5001, :Logger => dev_null, :AccessLog => dev_null)
+    server = WEBrick::HTTPServer.new(:Port => 5002, :Logger => dev_null, :AccessLog => dev_null)
 
     thread = Thread.new do
       server.mount_proc('/') do |_, response|
