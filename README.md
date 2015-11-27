@@ -10,12 +10,14 @@ ACME is part of the [Letsencrypt](https://letsencrypt.org/) project, that are wo
 
 ```ruby
 # We're going to need a private key.
+require 'openssl'
 private_key = OpenSSL::PKey::RSA.new(2048)
 
 # We need an ACME server to talk to, see github.com/letsencrypt/boulder
 endpoint = 'https://acme-staging.api.letsencrypt.org'
 
 # Initialize the client
+require 'acme-client'
 client = Acme::Client.new(private_key: private_key, endpoint: endpoint)
 
 # If the private key is not known to the server, we need to register it for the first time.
@@ -29,28 +31,28 @@ registration.agree_terms
 # We need to prove that we control the domain using one of the challenges method.
 authorization = client.authorize(domain: 'yourdomain.com')
 
-# For now the only challenge method supprted by the client is simple_http.
-simple_http = authorization.simple_http
+# For now the only challenge method supprted by the client is http-01.
+challenge = authorization.http01
 
-# The SimpleHTTP method will require you to response to an HTTP request.
+# The http-01 method will require you to response to an HTTP request.
 
 # You can retrieve the expected path for the file.
-simple_http.filename # => ".well-known/acme-challenge/:some_token"
+http.filename # => ".well-known/acme-challenge/:some_token"
 
 # You can generate the body of the expected response.
-simple_http.file_content # => 'string of JWS signed json' 
+http.file_content # => 'string token and JWK thumbprint' 
 
-# You can send no Content-Type at all but if you send one it has to be 'application/jose+json'.
-simple_http.content_type
+# You can send no Content-Type at all but if you send one it has to be 'text/plain'.
+http.content_type
 
 # Once you are ready to serve the confirmation request you can proceed.
-simple_http.request_verification # => true
-simple_http.verify_status # => 'pending'
+http.request_verification # => true
+http.verify_status # => 'pending'
 
 # Wait a bit for the server to make the request, or really just blink, it should be fast.
 sleep(1)
 
-simple_http.verify_status # => 'valid'
+http.verify_status # => 'valid'
 
 # We're going to need a CSR, lets do this real quick with Ruby+OpenSSL.
 csr = OpenSSL::X509::Request.new
@@ -73,7 +75,7 @@ client.new_certificate(csr) # => #<OpenSSL::X509::Certificate ....>
 # Not implemented
 
 - Recovery methods are not implemented.
-- SimpleHTTP is the only challenge method implemented
+- http-01 is the only challenge method implemented
 
 ## Development
 
