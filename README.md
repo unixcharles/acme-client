@@ -38,22 +38,22 @@ challenge = authorization.http01
 # The http-01 method will require you to response to an HTTP request.
 
 # You can retrieve the expected path for the file.
-http.filename # => ".well-known/acme-challenge/:some_token"
+challenge.filename # => ".well-known/acme-challenge/:some_token"
 
 # You can generate the body of the expected response.
-http.file_content # => 'string token and JWK thumbprint' 
+challenge.file_content # => 'string token and JWK thumbprint' 
 
 # You can send no Content-Type at all but if you send one it has to be 'text/plain'.
-http.content_type
+challenge.content_type
 
 # Once you are ready to serve the confirmation request you can proceed.
-http.request_verification # => true
-http.verify_status # => 'pending'
+challenge.request_verification # => true
+challenge.verify_status # => 'pending'
 
 # Wait a bit for the server to make the request, or really just blink, it should be fast.
 sleep(1)
 
-http.verify_status # => 'valid'
+challenge.verify_status # => 'valid'
 
 # We're going to need a CSR, lets do this real quick with Ruby+OpenSSL.
 csr = OpenSSL::X509::Request.new
