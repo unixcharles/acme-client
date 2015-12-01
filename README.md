@@ -45,6 +45,16 @@ challenge.file_content # => 'string token and JWK thumbprint'
 
 # You can send no Content-Type at all but if you send one it has to be 'text/plain'.
 challenge.content_type
+  
+# Save the file. We'll create a public directory to serve it from, and we'll creating the challenge directory.
+FileUtils.mkdir_p( File.join( 'public', File.dirname( challenge.filename ) ) )
+
+# Then writing the file
+File.open( File.join( 'public', challenge.filename), 'w') {|f| f << challenge.file_content }
+
+# The challenge file can be server with a Ruby webserver such as run a webserver in another console. You may need to forward ports on your router
+#ruby -run -e httpd public -p 8080 --bind-address 0.0.0.0
+
 
 # Once you are ready to serve the confirmation request you can proceed.
 challenge.request_verification # => true
@@ -63,14 +73,26 @@ certificate_private_key = OpenSSL::PKey::RSA.new(2048)
 
 # We just going to add the domain but normally you might want to provide more information.
 csr.subject = OpenSSL::X509::Name.new([
-  ['CN', common_name, OpenSSL::ASN1::UTF8STRING]
+  ['CN', 'yourdomain.com', OpenSSL::ASN1::UTF8STRING]
 ])
 
 csr.public_key = certificate_private_key.public_key
 csr.sign(certificate_private_key, OpenSSL::Digest::SHA256.new)
 
 # We can now request a certificate
-client.new_certificate(csr) # => #<OpenSSL::X509::Certificate ....>
+https_cert = client.new_certificate(csr) # => #<OpenSSL::X509::Certificate ....>
+
+# Save the certificate and key
+File.open("server.crt", 'w') {|f| f << https_cert }
+File.open("server.key", 'w') {|f| f << certificate_private_key }
+
+# Start a webserver, using your shiny new certificate
+# ruby -r openssl -r webrick -r 'webrick/https' -e "s = WEBrick::HTTPServer.new(
+#   :Port => 8443,
+#   :DocumentRoot => Dir.pwd,
+#   :SSLEnable => true,
+#   :SSLPrivateKey => OpenSSL::PKey::RSA.new( File.open('server.key').read),
+#   :SSLCertificate => OpenSSL::X509::Certificate.new( File.open('server.crt').read)); trap('INT') { s.shutdown }; s.start"
 ```
 
 # Not implemented
