@@ -8,6 +8,7 @@ require 'digest'
 require 'forwardable'
 
 require 'acme/certificate'
+require 'acme/certificate_request'
 require 'acme/crypto'
 require 'acme/client'
 require 'acme/resources'
