@@ -15,7 +15,7 @@ require 'openssl'
 private_key = OpenSSL::PKey::RSA.new(2048)
 
 # We need an ACME server to talk to, see github.com/letsencrypt/boulder
-endpoint = ''https://acme-v01.api.letsencrypt.org/'
+endpoint = 'https://acme-v01.api.letsencrypt.org/'
 
 # Initialize the client
 require 'acme-client'
