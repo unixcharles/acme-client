@@ -62,7 +62,7 @@ http_interactions:
       - '497'
     body:
       encoding: UTF-8
-      string: '{"id":7,"key":{"kty":"RSA","n":"tRV-Cklf3t1270t-DiOd2C3U0qZdGwWna4guV_3abMHUSS3WPf0_mvvt4lHuUrStPbip_uwetL_YMEXNGEFWRseKLRy17usaUwBN1c4R2uw50qb5coEeSoNQTS_v_qcHBD8ko8t63TTaVNjytLk3ql-xIgFuJCdedGWDtLEAdr73tWbp9n5Akm7LhsrzlWjFu5NsbnJzYtkL2ZY3ETc5gSdRLdA7oRcqpwcTXajy5GTsmwQO2U8bQIjzdzGLRGrC2_XxY_Co8r2CBnZopfFlUG3hC4rtubxM4tQvp5topb1swrSCGT7vYZ_vWUBgi0Td7X6xcw4mjSDLmH23yyXYgQ","e":"AQAB"},"contact":["mailto:info@test.com"],"initialIp":"127.0.0.1","createdAt":"2015-11-27T16:16:16.554354663-05:00"}'
+      string: '{"id":7,"key":{"kty":"RSA","n":"tRV-Cklf3t1270t-DiOd2C3U0qZdGwWna4guV_3abMHUSS3WPf0_mvvt4lHuUrStPbip_uwetL_YMEXNGEFWRseKLRy17usaUwBN1c4R2uw50qb5coEeSoNQTS_v_qcHBD8ko8t63TTaVNjytLk3ql-xIgFuJCdedGWDtLEAdr73tWbp9n5Akm7LhsrzlWjFu5NsbnJzYtkL2ZY3ETc5gSdRLdA7oRcqpwcTXajy5GTsmwQO2U8bQIjzdzGLRGrC2_XxY_Co8r2CBnZopfFlUG3hC4rtubxM4tQvp5topb1swrSCGT7vYZ_vWUBgi0Td7X6xcw4mjSDLmH23yyXYgQ","e":"AQAB"},"contact":["mailto:info@example.com"],"initialIp":"127.0.0.1","createdAt":"2015-11-27T16:16:16.554354663-05:00"}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:16 GMT
 - request:
@@ -96,7 +96,7 @@ http_interactions:
       - '527'
     body:
       encoding: UTF-8
-      string: '{"id":7,"key":{"kty":"RSA","n":"tRV-Cklf3t1270t-DiOd2C3U0qZdGwWna4guV_3abMHUSS3WPf0_mvvt4lHuUrStPbip_uwetL_YMEXNGEFWRseKLRy17usaUwBN1c4R2uw50qb5coEeSoNQTS_v_qcHBD8ko8t63TTaVNjytLk3ql-xIgFuJCdedGWDtLEAdr73tWbp9n5Akm7LhsrzlWjFu5NsbnJzYtkL2ZY3ETc5gSdRLdA7oRcqpwcTXajy5GTsmwQO2U8bQIjzdzGLRGrC2_XxY_Co8r2CBnZopfFlUG3hC4rtubxM4tQvp5topb1swrSCGT7vYZ_vWUBgi0Td7X6xcw4mjSDLmH23yyXYgQ","e":"AQAB"},"contact":["mailto:info@test.com"],"agreement":"http://127.0.0.1:4001/terms/v1","initialIp":"127.0.0.1","createdAt":"2015-11-27T21:16:16Z"}'
+      string: '{"id":7,"key":{"kty":"RSA","n":"tRV-Cklf3t1270t-DiOd2C3U0qZdGwWna4guV_3abMHUSS3WPf0_mvvt4lHuUrStPbip_uwetL_YMEXNGEFWRseKLRy17usaUwBN1c4R2uw50qb5coEeSoNQTS_v_qcHBD8ko8t63TTaVNjytLk3ql-xIgFuJCdedGWDtLEAdr73tWbp9n5Akm7LhsrzlWjFu5NsbnJzYtkL2ZY3ETc5gSdRLdA7oRcqpwcTXajy5GTsmwQO2U8bQIjzdzGLRGrC2_XxY_Co8r2CBnZopfFlUG3hC4rtubxM4tQvp5topb1swrSCGT7vYZ_vWUBgi0Td7X6xcw4mjSDLmH23yyXYgQ","e":"AQAB"},"contact":["mailto:info@example.com"],"agreement":"http://127.0.0.1:4001/terms/v1","initialIp":"127.0.0.1","createdAt":"2015-11-27T21:16:16Z"}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:16 GMT
 - request:
@@ -131,7 +131,7 @@ http_interactions:
       - '1114'
     body:
       encoding: UTF-8
-      string: '{"identifier":{"type":"dns","value":"test90.testdomain.com"},"status":"pending","expires":"2015-12-04T16:16:16.579245251-05:00","challenges":[{"type":"tls-sni-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/11","token":"oAJXJBcULZyZWhBzDW2q7NUqSgbHFMhsWFlbjwy6m18"},{"type":"dns-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/12","token":"lbfOSLoH3aKTE8pe7XG2TPBaicGZXMMP-b9MELAhW5Y"},{"type":"simpleHttp","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/13","token":"RuVBG636zeIYIbw8-_x5E5u35IFfNkfJyAz7aArFPI8","tls":true},{"type":"http-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/14","token":"eMHlDSEcX3AU4m_mlaJrYPUVcvi4MdVCf5QSOoEm8zo"},{"type":"dvsni","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/15","token":"lUng3tG8ZGndiOpPXaADDLMmQrNSY2zxroxhTgzN_U8"}],"combinations":[[3],[0],[4],[1],[2]]}'
+      string: '{"identifier":{"type":"dns","value":"test90.testexample.org"},"status":"pending","expires":"2015-12-04T16:16:16.579245251-05:00","challenges":[{"type":"tls-sni-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/11","token":"oAJXJBcULZyZWhBzDW2q7NUqSgbHFMhsWFlbjwy6m18"},{"type":"dns-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/12","token":"lbfOSLoH3aKTE8pe7XG2TPBaicGZXMMP-b9MELAhW5Y"},{"type":"simpleHttp","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/13","token":"RuVBG636zeIYIbw8-_x5E5u35IFfNkfJyAz7aArFPI8","tls":true},{"type":"http-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/14","token":"eMHlDSEcX3AU4m_mlaJrYPUVcvi4MdVCf5QSOoEm8zo"},{"type":"dvsni","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/15","token":"lUng3tG8ZGndiOpPXaADDLMmQrNSY2zxroxhTgzN_U8"}],"combinations":[[3],[0],[4],[1],[2]]}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:16 GMT
 - request:
@@ -236,7 +236,7 @@ http_interactions:
       - '535'
     body:
       encoding: UTF-8
-      string: '{"type":"http-01","status":"valid","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/14","token":"eMHlDSEcX3AU4m_mlaJrYPUVcvi4MdVCf5QSOoEm8zo","keyAuthorization":"eMHlDSEcX3AU4m_mlaJrYPUVcvi4MdVCf5QSOoEm8zo.l5-DPsKXUMNnZkGGx-dhhGvybszKiyb7uGJZCkRjTvI","validationRecord":[{"url":"http://test90.testdomain.com:5002/.well-known/acme-challenge/eMHlDSEcX3AU4m_mlaJrYPUVcvi4MdVCf5QSOoEm8zo","hostname":"test90.testdomain.com","port":"5002","addressesResolved":["127.0.0.1"],"addressUsed":"127.0.0.1"}]}'
+      string: '{"type":"http-01","status":"valid","uri":"http://127.0.0.1:4000/acme/challenge/PGeNnfRnY0zfzDDghQS4GmDIs20je9FIcHQUn7yqkp8/14","token":"eMHlDSEcX3AU4m_mlaJrYPUVcvi4MdVCf5QSOoEm8zo","keyAuthorization":"eMHlDSEcX3AU4m_mlaJrYPUVcvi4MdVCf5QSOoEm8zo.l5-DPsKXUMNnZkGGx-dhhGvybszKiyb7uGJZCkRjTvI","validationRecord":[{"url":"http://test90.testexample.org:5002/.well-known/acme-challenge/eMHlDSEcX3AU4m_mlaJrYPUVcvi4MdVCf5QSOoEm8zo","hostname":"test90.testexample.org","port":"5002","addressesResolved":["127.0.0.1"],"addressUsed":"127.0.0.1"}]}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:16 GMT
 - request:

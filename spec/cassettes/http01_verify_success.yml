@@ -62,7 +62,7 @@ http_interactions:
       - '497'
     body:
       encoding: UTF-8
-      string: '{"id":8,"key":{"kty":"RSA","n":"l_eSb_069_gfY3mzfj1pYavs-KwYY_y2MclHA4lazl3SEQeD5HO2sWhmpeQrCbcyYSshNBJLa6Euwyj7fquW2Vy65c3tHf8DyxfcF_ha4JNHObXx0UREZjhBUWO3vUg6PJ9bHjfDB8uoCrFwXU8ksUMwZuF4neVtnZPqBCXEXXhMxZueF7jHXi7M3thUe09kOyKxkUYjeDo2ssXWZcNgn5BmlZP_I9J_NVwdYLmfSlz1StlEEG4iwsqnxQ5wATMdBFCrH8Yme6juYvB7CSEqKg32SpF51tV9_4UG1_W7C3XQfdWgzjbSRud8RiaElQiky7q5YIgJ3ru_T-5kqNpjWQ","e":"AQAB"},"contact":["mailto:info@test.com"],"initialIp":"127.0.0.1","createdAt":"2015-11-27T16:16:16.875256047-05:00"}'
+      string: '{"id":8,"key":{"kty":"RSA","n":"l_eSb_069_gfY3mzfj1pYavs-KwYY_y2MclHA4lazl3SEQeD5HO2sWhmpeQrCbcyYSshNBJLa6Euwyj7fquW2Vy65c3tHf8DyxfcF_ha4JNHObXx0UREZjhBUWO3vUg6PJ9bHjfDB8uoCrFwXU8ksUMwZuF4neVtnZPqBCXEXXhMxZueF7jHXi7M3thUe09kOyKxkUYjeDo2ssXWZcNgn5BmlZP_I9J_NVwdYLmfSlz1StlEEG4iwsqnxQ5wATMdBFCrH8Yme6juYvB7CSEqKg32SpF51tV9_4UG1_W7C3XQfdWgzjbSRud8RiaElQiky7q5YIgJ3ru_T-5kqNpjWQ","e":"AQAB"},"contact":["mailto:info@example.com"],"initialIp":"127.0.0.1","createdAt":"2015-11-27T16:16:16.875256047-05:00"}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:16 GMT
 - request:
@@ -96,7 +96,7 @@ http_interactions:
       - '527'
     body:
       encoding: UTF-8
-      string: '{"id":8,"key":{"kty":"RSA","n":"l_eSb_069_gfY3mzfj1pYavs-KwYY_y2MclHA4lazl3SEQeD5HO2sWhmpeQrCbcyYSshNBJLa6Euwyj7fquW2Vy65c3tHf8DyxfcF_ha4JNHObXx0UREZjhBUWO3vUg6PJ9bHjfDB8uoCrFwXU8ksUMwZuF4neVtnZPqBCXEXXhMxZueF7jHXi7M3thUe09kOyKxkUYjeDo2ssXWZcNgn5BmlZP_I9J_NVwdYLmfSlz1StlEEG4iwsqnxQ5wATMdBFCrH8Yme6juYvB7CSEqKg32SpF51tV9_4UG1_W7C3XQfdWgzjbSRud8RiaElQiky7q5YIgJ3ru_T-5kqNpjWQ","e":"AQAB"},"contact":["mailto:info@test.com"],"agreement":"http://127.0.0.1:4001/terms/v1","initialIp":"127.0.0.1","createdAt":"2015-11-27T21:16:16Z"}'
+      string: '{"id":8,"key":{"kty":"RSA","n":"l_eSb_069_gfY3mzfj1pYavs-KwYY_y2MclHA4lazl3SEQeD5HO2sWhmpeQrCbcyYSshNBJLa6Euwyj7fquW2Vy65c3tHf8DyxfcF_ha4JNHObXx0UREZjhBUWO3vUg6PJ9bHjfDB8uoCrFwXU8ksUMwZuF4neVtnZPqBCXEXXhMxZueF7jHXi7M3thUe09kOyKxkUYjeDo2ssXWZcNgn5BmlZP_I9J_NVwdYLmfSlz1StlEEG4iwsqnxQ5wATMdBFCrH8Yme6juYvB7CSEqKg32SpF51tV9_4UG1_W7C3XQfdWgzjbSRud8RiaElQiky7q5YIgJ3ru_T-5kqNpjWQ","e":"AQAB"},"contact":["mailto:info@example.com"],"agreement":"http://127.0.0.1:4001/terms/v1","initialIp":"127.0.0.1","createdAt":"2015-11-27T21:16:16Z"}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:16 GMT
 - request:
@@ -131,7 +131,7 @@ http_interactions:
       - '1113'
     body:
       encoding: UTF-8
-      string: '{"identifier":{"type":"dns","value":"test4.testdomain.com"},"status":"pending","expires":"2015-12-04T16:16:16.898852524-05:00","challenges":[{"type":"http-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/16","token":"DRp3SSd-RG5eVXiCAMgb2s1mPU5pHDiGOTh3ue42KLg"},{"type":"tls-sni-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/17","token":"l4WGDGy7nQ_9SNybllPDQ1hApe0IexTEoGhSZz8Rvb0"},{"type":"dvsni","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/18","token":"dpLEvsR1LqnLJdgsCB0cN5O1Ji8M_P2bPOVa5ghDZZY"},{"type":"simpleHttp","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/19","token":"2YAzVpBflOrK2D0lV5SEH5FC8fhr7PH1IV1ylbpehjE","tls":true},{"type":"dns-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/20","token":"f3YGZ4xxs_WWpUkLK_EUu77p2vDsI_RixHXeIXCXGoI"}],"combinations":[[1],[2],[0],[4],[3]]}'
+      string: '{"identifier":{"type":"dns","value":"test4.testexample.org"},"status":"pending","expires":"2015-12-04T16:16:16.898852524-05:00","challenges":[{"type":"http-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/16","token":"DRp3SSd-RG5eVXiCAMgb2s1mPU5pHDiGOTh3ue42KLg"},{"type":"tls-sni-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/17","token":"l4WGDGy7nQ_9SNybllPDQ1hApe0IexTEoGhSZz8Rvb0"},{"type":"dvsni","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/18","token":"dpLEvsR1LqnLJdgsCB0cN5O1Ji8M_P2bPOVa5ghDZZY"},{"type":"simpleHttp","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/19","token":"2YAzVpBflOrK2D0lV5SEH5FC8fhr7PH1IV1ylbpehjE","tls":true},{"type":"dns-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/20","token":"f3YGZ4xxs_WWpUkLK_EUu77p2vDsI_RixHXeIXCXGoI"}],"combinations":[[1],[2],[0],[4],[3]]}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:16 GMT
 - request:
@@ -236,7 +236,7 @@ http_interactions:
       - '533'
     body:
       encoding: UTF-8
-      string: '{"type":"http-01","status":"valid","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/16","token":"DRp3SSd-RG5eVXiCAMgb2s1mPU5pHDiGOTh3ue42KLg","keyAuthorization":"DRp3SSd-RG5eVXiCAMgb2s1mPU5pHDiGOTh3ue42KLg.8NcnpZqegT0CCBAn97dMkciN0gIR4DH2i-F6daqgM_E","validationRecord":[{"url":"http://test4.testdomain.com:5002/.well-known/acme-challenge/DRp3SSd-RG5eVXiCAMgb2s1mPU5pHDiGOTh3ue42KLg","hostname":"test4.testdomain.com","port":"5002","addressesResolved":["127.0.0.1"],"addressUsed":"127.0.0.1"}]}'
+      string: '{"type":"http-01","status":"valid","uri":"http://127.0.0.1:4000/acme/challenge/eCnXJAw2QMmQw60dnsiLhbVNqciAbBq5qDg89l-xhuA/16","token":"DRp3SSd-RG5eVXiCAMgb2s1mPU5pHDiGOTh3ue42KLg","keyAuthorization":"DRp3SSd-RG5eVXiCAMgb2s1mPU5pHDiGOTh3ue42KLg.8NcnpZqegT0CCBAn97dMkciN0gIR4DH2i-F6daqgM_E","validationRecord":[{"url":"http://test4.testexample.org:5002/.well-known/acme-challenge/DRp3SSd-RG5eVXiCAMgb2s1mPU5pHDiGOTh3ue42KLg","hostname":"test4.testexample.org","port":"5002","addressesResolved":["127.0.0.1"],"addressUsed":"127.0.0.1"}]}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:16 GMT
 recorded_with: VCR 2.9.3

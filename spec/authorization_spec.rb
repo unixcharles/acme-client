@@ -3,12 +3,12 @@ require 'spec_helper'
 describe Acme::Resources::Authorization do
   let(:client) do
     client = Acme::Client.new(private_key: generate_private_key)
-    registration = client.register(contact: 'mailto:info@test.com')
+    registration = client.register(contact: 'mailto:info@example.com')
     registration.agree_terms
     client
   end
 
-  let(:authorization) { client.authorize(domain: 'domain.com')}
+  let(:authorization) { client.authorize(domain: 'example.org')}
 
   context '#http01' do
     it 'returns a HTTP01 object', vcr: { cassette_name: 'authorization_http_01' }  do

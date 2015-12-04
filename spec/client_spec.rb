@@ -5,13 +5,13 @@ describe Acme::Client do
 
   let(:registered_client) do
     client = Acme::Client.new(private_key: generate_private_key)
-    client.register(contact: 'mailto:mail@test.com')
+    client.register(contact: 'mailto:mail@example.com')
     client
   end
 
   let(:active_client) do
     client = Acme::Client.new(private_key: generate_private_key)
-    registration = client.register(contact: 'mailto:mail@test.com')
+    registration = client.register(contact: 'mailto:mail@example.com')
     registration.agree_terms
     client
   end
@@ -40,32 +40,32 @@ describe Acme::Client do
   context '#authorize' do
     it 'succeed', vcr: { cassette_name: 'authorize_success' } do
       expect {
-        registration = active_client.authorize(domain: 'domain.com')
+        registration = active_client.authorize(domain: 'example.org')
         expect(registration).to be_a(Acme::Resources::Authorization)
       }.to_not raise_error
     end
 
     it 'fail when the client has not yet agree to the tos', vcr: { cassette_name: 'authorize_fail_tos' } do
       expect {
-        registered_client.authorize(domain: 'domain.com')
+        registered_client.authorize(domain: 'example.org')
       }.to raise_error(Acme::Error, /Must agree to subscriber agreement before any further actions/)
     end
 
     it 'fail when the domain is not valid', vcr: { cassette_name: 'authorize_invalid_domain' } do
       expect {
-        active_client.authorize(domain: 'notadomain')
+        active_client.authorize(domain: 'notadomain.invalid')
       }.to raise_error(Acme::Error, /Error creating new authz/)
     end
   end
 
   context '#new_certificate' do
-    let(:domain) { "test#{rand(10*10)}.testdomain.com" }
+    let(:domain) { "test#{rand(10*10)}.example.net" }
     let(:private_key) { generate_private_key }
     let(:client) { Acme::Client.new(private_key: private_key) }
     let(:csr) { generate_csr(domain, generate_private_key) }
 
     before(:each) do
-      registration = client.register(contact: 'mailto:info@test.com')
+      registration = client.register(contact: 'mailto:info@example.com')
       registration.agree_terms
       authorization = client.authorize(domain: domain)
       http01 = authorization.http01
