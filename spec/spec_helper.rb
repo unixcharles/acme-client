@@ -48,6 +48,7 @@ module TestHelper
     yield
   ensure
     server.shutdown
+    thread.join(5)
     thread.exit
   end
 end
