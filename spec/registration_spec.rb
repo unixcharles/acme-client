@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Acme::Resources::Registration do
   let(:client) { Acme::Client.new(private_key: generate_private_key) }
-  let(:registration) { client.register(contact: 'mailto:info@test.com') }
+  let(:registration) { client.register(contact: 'mailto:info@example.com') }
 
   context '#agree_terms' do
     it 'send the agreement for the terms', vcr: { cassette_name: 'registration_agree_terms' } do

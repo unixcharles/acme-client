@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Acme::Resources::Challenges::HTTP01 do
   let(:http01) do
     client = Acme::Client.new(private_key: generate_private_key)
-    registration = client.register(contact: 'mailto:info@test.com')
+    registration = client.register(contact: 'mailto:info@example.com')
     registration.agree_terms
-    authorization = client.authorize(domain: "test#{rand(10*10)}.testdomain.com")
+    authorization = client.authorize(domain: "test#{rand(10*10)}.example.org")
     http01 = authorization.http01
     http01
   end

@@ -62,7 +62,7 @@ http_interactions:
       - '497'
     body:
       encoding: UTF-8
-      string: '{"id":9,"key":{"kty":"RSA","n":"121qBENAyK3w8Or33QsXKIrb0th0uZViaemLYYNt3-pAsILsUPPmgDTW9FHyugnnMk7f5PwzNsTmx322SFYqjyzYgWfDG6kEeJFcY4Yzg7as-Wipda1P3xHy020EQ-6QhU8UO0OO21aBalEoapYPBKQmQCnKcHFsyRHrTjQ0yWzVP2Ime_NZej1jzg8kK0HuRcPs4c1K56LPLVUtXCJ4IR1r_WkWPzue1XjD6aC9MWY5_doYJ3zcdzkFrRzxrK0y6f78P0PdmCY2jdFwNUkw0468WIGq1kdTFS-dX4oGvnILYV2UlMCvVA8WjRqUYNNTkLB3Et0J0ayH5E0zDxGz1Q","e":"AQAB"},"contact":["mailto:info@test.com"],"initialIp":"127.0.0.1","createdAt":"2015-11-27T16:16:17.016243364-05:00"}'
+      string: '{"id":9,"key":{"kty":"RSA","n":"121qBENAyK3w8Or33QsXKIrb0th0uZViaemLYYNt3-pAsILsUPPmgDTW9FHyugnnMk7f5PwzNsTmx322SFYqjyzYgWfDG6kEeJFcY4Yzg7as-Wipda1P3xHy020EQ-6QhU8UO0OO21aBalEoapYPBKQmQCnKcHFsyRHrTjQ0yWzVP2Ime_NZej1jzg8kK0HuRcPs4c1K56LPLVUtXCJ4IR1r_WkWPzue1XjD6aC9MWY5_doYJ3zcdzkFrRzxrK0y6f78P0PdmCY2jdFwNUkw0468WIGq1kdTFS-dX4oGvnILYV2UlMCvVA8WjRqUYNNTkLB3Et0J0ayH5E0zDxGz1Q","e":"AQAB"},"contact":["mailto:info@example.com"],"initialIp":"127.0.0.1","createdAt":"2015-11-27T16:16:17.016243364-05:00"}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:17 GMT
 - request:
@@ -96,7 +96,7 @@ http_interactions:
       - '527'
     body:
       encoding: UTF-8
-      string: '{"id":9,"key":{"kty":"RSA","n":"121qBENAyK3w8Or33QsXKIrb0th0uZViaemLYYNt3-pAsILsUPPmgDTW9FHyugnnMk7f5PwzNsTmx322SFYqjyzYgWfDG6kEeJFcY4Yzg7as-Wipda1P3xHy020EQ-6QhU8UO0OO21aBalEoapYPBKQmQCnKcHFsyRHrTjQ0yWzVP2Ime_NZej1jzg8kK0HuRcPs4c1K56LPLVUtXCJ4IR1r_WkWPzue1XjD6aC9MWY5_doYJ3zcdzkFrRzxrK0y6f78P0PdmCY2jdFwNUkw0468WIGq1kdTFS-dX4oGvnILYV2UlMCvVA8WjRqUYNNTkLB3Et0J0ayH5E0zDxGz1Q","e":"AQAB"},"contact":["mailto:info@test.com"],"agreement":"http://127.0.0.1:4001/terms/v1","initialIp":"127.0.0.1","createdAt":"2015-11-27T21:16:17Z"}'
+      string: '{"id":9,"key":{"kty":"RSA","n":"121qBENAyK3w8Or33QsXKIrb0th0uZViaemLYYNt3-pAsILsUPPmgDTW9FHyugnnMk7f5PwzNsTmx322SFYqjyzYgWfDG6kEeJFcY4Yzg7as-Wipda1P3xHy020EQ-6QhU8UO0OO21aBalEoapYPBKQmQCnKcHFsyRHrTjQ0yWzVP2Ime_NZej1jzg8kK0HuRcPs4c1K56LPLVUtXCJ4IR1r_WkWPzue1XjD6aC9MWY5_doYJ3zcdzkFrRzxrK0y6f78P0PdmCY2jdFwNUkw0468WIGq1kdTFS-dX4oGvnILYV2UlMCvVA8WjRqUYNNTkLB3Et0J0ayH5E0zDxGz1Q","e":"AQAB"},"contact":["mailto:info@example.com"],"agreement":"http://127.0.0.1:4001/terms/v1","initialIp":"127.0.0.1","createdAt":"2015-11-27T21:16:17Z"}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:17 GMT
 - request:
@@ -131,7 +131,7 @@ http_interactions:
       - '1114'
     body:
       encoding: UTF-8
-      string: '{"identifier":{"type":"dns","value":"test97.testdomain.com"},"status":"pending","expires":"2015-12-04T16:16:17.040239285-05:00","challenges":[{"type":"tls-sni-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/21","token":"KQsRsIphuJrwLPJS5daIhg-ZaZoyXn_7cnBizUNu6kM"},{"type":"dvsni","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/22","token":"2Qqd7Z4sKVdDv62QE846gVRJNvMDRcpCEkAe-dOuAFI"},{"type":"dns-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/23","token":"ZrDI6hUGKKch5D8lQVxS_npFgV5RUuwjfz3pYVINFC0"},{"type":"http-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/24","token":"JzO8iiYXAtAGYoCzQg6UujScHrj43CkP5Kms9pB67Fc"},{"type":"simpleHttp","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/25","token":"ZljXMuA9jm9d-eFZ7uGfwD1LAuehQnoGwFtmQ41HAMM","tls":true}],"combinations":[[0],[2],[4],[1],[3]]}'
+      string: '{"identifier":{"type":"dns","value":"test97.testexample.org"},"status":"pending","expires":"2015-12-04T16:16:17.040239285-05:00","challenges":[{"type":"tls-sni-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/21","token":"KQsRsIphuJrwLPJS5daIhg-ZaZoyXn_7cnBizUNu6kM"},{"type":"dvsni","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/22","token":"2Qqd7Z4sKVdDv62QE846gVRJNvMDRcpCEkAe-dOuAFI"},{"type":"dns-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/23","token":"ZrDI6hUGKKch5D8lQVxS_npFgV5RUuwjfz3pYVINFC0"},{"type":"http-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/24","token":"JzO8iiYXAtAGYoCzQg6UujScHrj43CkP5Kms9pB67Fc"},{"type":"simpleHttp","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/25","token":"ZljXMuA9jm9d-eFZ7uGfwD1LAuehQnoGwFtmQ41HAMM","tls":true}],"combinations":[[0],[2],[4],[1],[3]]}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:17 GMT
 - request:
@@ -237,7 +237,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"type":"http-01","status":"invalid","error":{"type":"urn:acme:error:unauthorized","detail":"Error
-        parsing key authorization file: Invalid key authorization: malformed key thumbprint"},"uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/24","token":"JzO8iiYXAtAGYoCzQg6UujScHrj43CkP5Kms9pB67Fc","keyAuthorization":"JzO8iiYXAtAGYoCzQg6UujScHrj43CkP5Kms9pB67Fc.-LRTkkT36kdRvT4ykIkNHFClr7NbETJHbqOyFo02_1o","validationRecord":[{"url":"http://test97.testdomain.com:5002/.well-known/acme-challenge/JzO8iiYXAtAGYoCzQg6UujScHrj43CkP5Kms9pB67Fc","hostname":"test97.testdomain.com","port":"5002","addressesResolved":["127.0.0.1"],"addressUsed":"127.0.0.1"}]}'
+        parsing key authorization file: Invalid key authorization: malformed key thumbprint"},"uri":"http://127.0.0.1:4000/acme/challenge/tMk_DFPF_wzjwkm7FK3fccoiJqWkt686RecKIaTrrt8/24","token":"JzO8iiYXAtAGYoCzQg6UujScHrj43CkP5Kms9pB67Fc","keyAuthorization":"JzO8iiYXAtAGYoCzQg6UujScHrj43CkP5Kms9pB67Fc.-LRTkkT36kdRvT4ykIkNHFClr7NbETJHbqOyFo02_1o","validationRecord":[{"url":"http://test97.testexample.org:5002/.well-known/acme-challenge/JzO8iiYXAtAGYoCzQg6UujScHrj43CkP5Kms9pB67Fc","hostname":"test97.testexample.org","port":"5002","addressesResolved":["127.0.0.1"],"addressUsed":"127.0.0.1"}]}'
     http_version: 
   recorded_at: Fri, 27 Nov 2015 21:16:17 GMT
 recorded_with: VCR 2.9.3
