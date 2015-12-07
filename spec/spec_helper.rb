@@ -9,6 +9,7 @@ require 'vcr'
 require 'http_helper'
 require 'retry_helper'
 require 'ssl_helper'
+require 'profile_helper' if ENV['RUBY_PROF']
 
 RSpec.configure do |c|
   c.include HttpHelper
