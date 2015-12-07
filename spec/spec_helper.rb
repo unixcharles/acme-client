@@ -66,6 +66,5 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.ignore_localhost = false
   c.default_cassette_options = {record: :new_episodes}
-
-  c.allow_http_connections_when_no_cassette = true
+  c.allow_http_connections_when_no_cassette = false
 end
