@@ -22,15 +22,15 @@ require 'acme-client'
 client = Acme::Client.new(private_key: private_key, endpoint: endpoint)
 
 # If the private key is not known to the server, we need to register it for the first time.
-registration = client.register(contact: 'mailto:unixcharles@gmail.com')
+registration = client.register(contact: 'mailto:contact@example.com')
 
 # You'll may need to agree to the term (that's up the to the server to require it or not but boulder does by default)
 registration.agree_terms
 
-# Let's try to optain a certificate for yourdomain.com
+# Let's try to optain a certificate for example.org
 
 # We need to prove that we control the domain using one of the challenges method.
-authorization = client.authorize(domain: 'yourdomain.com')
+authorization = client.authorize(domain: 'example.org')
 
 # For now the only challenge method supprted by the client is http-01.
 challenge = authorization.http01
@@ -65,26 +65,18 @@ sleep(1)
 
 challenge.verify_status # => 'valid'
 
-# We're going to need a CSR, lets do this real quick with Ruby+OpenSSL.
-csr = OpenSSL::X509::Request.new
+# We're going to need a certificate signing request. If not explicitly
+# specified, the first name listed becomes the common name.
+csr = Acme::CertificateRequest.new(names: %w[example.org www.example.org])
 
-# We need a private key for the certificate, not the same as the account key.
-certificate_private_key = OpenSSL::PKey::RSA.new(2048)
-
-# We just going to add the domain but normally you might want to provide more information.
-csr.subject = OpenSSL::X509::Name.new([
-  ['CN', 'yourdomain.com', OpenSSL::ASN1::UTF8STRING]
-])
-
-csr.public_key = certificate_private_key.public_key
-csr.sign(certificate_private_key, OpenSSL::Digest::SHA256.new)
-
-# We can now request a certificate
+# We can now request a certificate, you can pass anything that returns
+# a valid DER encoded CSR when calling to_der on it, for example a
+# OpenSSL::X509::Request too.
 certificate = client.new_certificate(csr) # => #<Acme::Certificate ....>
 
 # Save the certificate and key
+File.write("privkey.pem", certificate.request.private_key.to_pem)
 File.write("cert.pem", certificate.to_pem)
-File.write("key.pem", certificate_private_key.to_pem)
 File.write("chain.pem", certificate.chain_to_pem)
 File.write("fullchain.pem", certificate.fullchain_to_pem)
 
@@ -100,7 +92,7 @@ File.write("fullchain.pem", certificate.fullchain_to_pem)
 # Not implemented
 
 - Recovery methods are not implemented.
-- http-01 is the only challenge method implemented
+- tls-sni-01 and proofOfPossession-01 are not implemented.
 
 ## Development
 
