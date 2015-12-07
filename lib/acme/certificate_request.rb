@@ -21,7 +21,7 @@ class Acme::CertificateRequest
     "L"  => OpenSSL::ASN1::UTF8STRING
   }.freeze
 
-  attr_reader :csr, :private_key, :common_name, :names, :subject
+  attr_reader :private_key, :common_name, :names, :subject
 
   def_delegators :csr, :to_pem, :to_der
 
@@ -43,8 +43,10 @@ class Acme::CertificateRequest
 
     @subject[SUBJECT_KEYS[:common_name]] ||= @common_name
     validate_subject
+  end
 
-    @csr = generate
+  def csr
+    @csr ||= generate
   end
 
   private
