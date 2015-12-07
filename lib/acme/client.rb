@@ -44,7 +44,7 @@ class Acme::Client
     }
 
     response = connection.post(@operation_endpoints.fetch('new-cert'), payload)
-    ::Acme::Certificate.new(OpenSSL::X509::Certificate.new(response.body), fetch_chain(response).reverse)
+    ::Acme::Certificate.new(OpenSSL::X509::Certificate.new(response.body), fetch_chain(response))
   end
 
   def fetch_chain(response, limit=10)
