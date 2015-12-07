@@ -40,7 +40,7 @@ class Acme::Client
   def new_certificate(csr)
     payload = {
       resource: 'new-cert',
-      csr: UrlSafeBase64.encode64(csr.to_der)
+      csr: Base64.urlsafe_encode64(csr.to_der)
     }
 
     response = connection.post(@operation_endpoints.fetch('new-cert'), payload)
