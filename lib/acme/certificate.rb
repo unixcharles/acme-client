@@ -14,7 +14,11 @@ class Acme::Certificate
     x509_chain.map(&:to_pem).join
   end
 
+  def x509_fullchain
+    [x509, *x509_chain]
+  end
+
   def fullchain_to_pem
-    [*x509_chain, x509].map(&:to_pem).join
+    x509_fullchain.map(&:to_pem).join
   end
 end

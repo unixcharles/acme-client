@@ -89,6 +89,7 @@ describe Acme::Client do
       expect(certificate.x509).to be_a(OpenSSL::X509::Certificate)
       expect(certificate.x509_chain).not_to be_empty
       expect(certificate.x509_chain).to contain_exactly(a_kind_of(OpenSSL::X509::Certificate), a_kind_of(OpenSSL::X509::Certificate))
+      expect(certificate.x509_fullchain.first).to be(certificate.x509)
     end
   end
 end
