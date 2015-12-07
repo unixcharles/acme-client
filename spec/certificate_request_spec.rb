@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Acme::CertificateRequest do
-  def test_key
-    @test_key ||= generate_private_key
+  attr_reader :test_key
+
+  before(:all) do
+    @test_key = generate_private_key
   end
 
   it "checks for a valid digest" do
