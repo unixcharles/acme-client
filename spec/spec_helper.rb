@@ -1,5 +1,5 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-$LOAD_PATH.unshift File.expand_path('../support', __FILE__)
+$LOAD_PATH.unshift File.join(__dir__, '../lib')
+$LOAD_PATH.unshift File.join(__dir__, 'support')
 
 require 'acme-client'
 
