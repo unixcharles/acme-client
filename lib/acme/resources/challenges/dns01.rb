@@ -1,6 +1,6 @@
 class Acme::Resources::Challenges::DNS01 < Acme::Resources::Challenges::Base
-  RECORD_NAME = '_acme-challenge'
-  RECORD_TYPE = 'TXT'
+  RECORD_NAME = '_acme-challenge'.freeze
+  RECORD_TYPE = 'TXT'.freeze
 
   def record_name
     RECORD_NAME
