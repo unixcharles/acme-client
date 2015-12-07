@@ -35,20 +35,24 @@ module TestHelper
   end
 
   def serve_once(body)
-    dev_null = Logger.new(StringIO.new)
-    server = WEBrick::HTTPServer.new(:Port => 5002, :Logger => dev_null, :AccessLog => dev_null)
+    if VCR.real_http_connections_allowed?
+      dev_null = Logger.new(StringIO.new)
+      server = WEBrick::HTTPServer.new(:Port => 5002, :Logger => dev_null, :AccessLog => dev_null)
 
-    thread = Thread.new do
-      server.mount_proc('/') do |_, response|
-        response.body = body
+      thread = Thread.new do
+        server.mount_proc('/') do |_, response|
+          response.body = body
+        end
+        server.start
       end
-      server.start
     end
 
     yield
   ensure
-    server.shutdown
-    thread.join(5)
+    if VCR.real_http_connections_allowed?
+      server.shutdown
+      thread.join(5)
+    end
   end
 end
 
