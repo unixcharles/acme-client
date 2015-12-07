@@ -59,7 +59,7 @@ describe Acme::Client do
   end
 
   context '#new_certificate' do
-    let(:domain) { "test#{rand(10*10)}.example.org" }
+    let(:domain) { "test.example.org" }
     let(:private_key) { generate_private_key }
     let(:client) { Acme::Client.new(private_key: private_key) }
     let(:csr) { generate_csr(domain, generate_private_key) }
@@ -87,7 +87,7 @@ describe Acme::Client do
       }.to_not raise_error
 
       expect(certificate).to be_a(Acme::Certificate)
-      expect(certificate.common_name).to eq("test23.example.org")
+      expect(certificate.common_name).to eq(domain)
       expect(certificate.x509).to be_a(OpenSSL::X509::Certificate)
       expect(certificate.x509_chain).not_to be_empty
       expect(certificate.x509_chain).to contain_exactly(a_kind_of(OpenSSL::X509::Certificate), a_kind_of(OpenSSL::X509::Certificate))
@@ -101,7 +101,7 @@ describe Acme::Client do
       }.to_not raise_error
 
       expect(certificate).to be_a(Acme::Certificate)
-      expect(certificate.common_name).to eq("test23.example.org")
+      expect(certificate.common_name).to eq(domain)
       expect(certificate.x509).to be_a(OpenSSL::X509::Certificate)
       expect(certificate.x509_chain).not_to be_empty
       expect(certificate.x509_chain).to contain_exactly(a_kind_of(OpenSSL::X509::Certificate), a_kind_of(OpenSSL::X509::Certificate))
