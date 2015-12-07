@@ -59,7 +59,7 @@ describe Acme::Client do
   end
 
   context '#new_certificate' do
-    let(:domain) { "test#{rand(10*10)}.example.net" }
+    let(:domain) { "test#{rand(10*10)}.example.org" }
     let(:private_key) { generate_private_key }
     let(:client) { Acme::Client.new(private_key: private_key) }
     let(:csr) { generate_csr(domain, generate_private_key) }

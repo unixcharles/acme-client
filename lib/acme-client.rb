@@ -1,6 +1,5 @@
 module Acme; end
 
-require 'url_safe_base64'
 require 'faraday'
 require 'json'
 require 'json/jwt'

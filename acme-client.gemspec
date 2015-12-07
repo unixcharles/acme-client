@@ -22,6 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock', '~> 1.21', '>= 1.21.0'
 
   spec.add_runtime_dependency 'faraday', '~> 0.9', '>= 0.9.1'
-  spec.add_runtime_dependency 'url_safe_base64', '~> 0.2', '>= 0.2.2'
   spec.add_runtime_dependency 'json-jwt', '~> 1.2', '>= 1.2.3'
 end
