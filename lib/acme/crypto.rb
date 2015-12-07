@@ -17,6 +17,10 @@ class Acme::Crypto
     jwk.thumbprint
   end
 
+  def digest
+    OpenSSL::Digest::SHA256.new
+  end
+
   private
 
   def jwk
@@ -25,9 +29,5 @@ class Acme::Crypto
 
   def public_key
     @public_key ||= private_key.public_key
-  end
-
-  def digest
-    OpenSSL::Digest::SHA256.new
   end
 end
