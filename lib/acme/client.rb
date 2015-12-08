@@ -47,19 +47,21 @@ class Acme::Client
     ::Acme::Certificate.new(OpenSSL::X509::Certificate.new(response.body), fetch_chain(response), csr)
   end
 
+  def connection
+    @connection ||= Faraday.new(@endpoint) do |configuration|
+      configuration.use Acme::FaradayMiddleware, client: self
+      configuration.adapter Faraday.default_adapter
+    end
+  end
+
+  private
+
   def fetch_chain(response, limit=10)
     if limit == 0 || response.headers["link"].nil? || response.headers["link"]["up"].nil?
       []
     else
       issuer = connection.get(response.headers["link"]["up"])
       [OpenSSL::X509::Certificate.new(issuer.body), *fetch_chain(issuer, limit-1)]
-    end
-  end
-
-  def connection
-    @connection ||= Faraday.new(@endpoint) do |configuration|
-      configuration.use Acme::FaradayMiddleware, client: self
-      configuration.adapter Faraday.default_adapter
     end
   end
 

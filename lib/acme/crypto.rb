@@ -13,19 +13,21 @@ class Acme::Crypto
     jwt.to_json(syntax: :flattened)
   end
 
-  def jwk
-    @jwk ||= JSON::JWK.new(public_key)
-  end
-
   def thumbprint
     jwk.thumbprint
   end
 
-  def public_key
-    @public_key ||= private_key.public_key
-  end
-
   def digest
     OpenSSL::Digest::SHA256.new
+  end
+
+  private
+
+  def jwk
+    @jwk ||= JSON::JWK.new(public_key)
+  end
+
+  def public_key
+    @public_key ||= private_key.public_key
   end
 end

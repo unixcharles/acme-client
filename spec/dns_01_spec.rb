@@ -6,8 +6,13 @@ describe Acme::Resources::Challenges::DNS01 do
     registration = client.register(contact: 'mailto:info@example.com')
     registration.agree_terms
     authorization = client.authorize(domain: "test.example.com")
-    dns01 = authorization.dns01
-    dns01
+    authorization.dns01
+  end
+
+  it 'returns the correct record metadata', vcr: { cassette_name: 'dns01_metadata' } do
+    expect(dns01.record_name).to eq "_acme-challenge"
+    expect(dns01.record_type).to eq "TXT"
+    expect(dns01.record_content).to be_a(String)
   end
 
   it 'successfully verify the challenge', vcr: { cassette_name: 'dns01_verify_success' } do

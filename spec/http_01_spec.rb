@@ -6,8 +6,12 @@ describe Acme::Resources::Challenges::HTTP01 do
     registration = client.register(contact: 'mailto:info@example.com')
     registration.agree_terms
     authorization = client.authorize(domain: "test#{rand(10*10)}.example.org")
-    http01 = authorization.http01
-    http01
+    authorization.http01
+  end
+
+  it 'returns the correct metadata', vcr: { cassette_name: 'http01_metadata' } do
+    expect(http01.filename).to start_with(".well-known/acme-challenge")
+    expect(http01.file_content).to be_a(String)
   end
 
   context '#verify' do
