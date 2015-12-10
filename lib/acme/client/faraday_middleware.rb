@@ -50,8 +50,8 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def error_class
-    if error_name.present? && Acme::Client::Error.const_defined?(error_name)
-      "Acme::Client::Error::#{error_name}".constantize
+    if error_name && !error_name.empty? && Acme::Client::Error.const_defined?(error_name)
+      Object.const_get("Acme::Client::Error::#{error_name}")
     else
       Acme::Client::Error
     end
@@ -62,7 +62,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
       return unless env.body.is_a?(Hash)
       return unless env.body.key?('type')
 
-      env.body['type'].gsub('urn:acme:error:', '').classify
+      env.body['type'].gsub('urn:acme:error:', '').split(/[_-]/).map(&:capitalize).join
     end
   end
 
