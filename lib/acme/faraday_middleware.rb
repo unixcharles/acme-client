@@ -43,13 +43,13 @@ class Acme::FaradayMiddleware < Faraday::Middleware
       Acme::Error
     end
 
-    if env.body.is_a? Hash
+    message = if env.body.is_a? Hash
       env.body['detail']
     else
       "Error message: #{env.body}"
     end
 
-    raise error_class, env.body['detail']
+    raise error_class, message
   end
 
   private
