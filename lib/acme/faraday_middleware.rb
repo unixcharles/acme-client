@@ -27,7 +27,7 @@ class Acme::FaradayMiddleware < Faraday::Middleware
       link_header = env.response_headers['Link']
       links = link_header.split(', ').map do |entry|
         link = entry.match(/<(.*?)>;/).captures.first
-        name = entry.match(/rel="([\w_-]+)"/).captures.first
+        name = entry.match(/rel="([\w-]+)"/).captures.first
         [name, link]
       end
 
@@ -43,7 +43,7 @@ class Acme::FaradayMiddleware < Faraday::Middleware
       Acme::Error
     end
 
-    message = if env.body.is_a? Hash
+    if env.body.is_a? Hash
       env.body['detail']
     else
       "Error message: #{env.body}"
