@@ -13,7 +13,7 @@ class Acme::Client
     load_directory!
   end
 
-  attr_reader :private_key, :nonces, :operation_endpoints
+  attr_reader :private_key, :nonces, :operation_endpoints, :domain
 
   def register(contact:)
     payload = {
@@ -33,6 +33,8 @@ class Acme::Client
       }
     }
 
+    @domain = domain
+
     response = connection.post(@operation_endpoints.fetch('new-authz'), payload)
     ::Acme::Resources::Authorization.new(self, response)
   end
@@ -45,6 +47,12 @@ class Acme::Client
 
     response = connection.post(@operation_endpoints.fetch('new-cert'), payload)
     ::Acme::Certificate.new(OpenSSL::X509::Certificate.new(response.body), fetch_chain(response), csr)
+  end
+
+  def new_self_signed_certificate domain
+    cert = ::Acme::Certificate.new(nil, nil, nil)
+    cert.create_self_signed_cert([domain])
+    cert
   end
 
   def connection

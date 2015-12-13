@@ -1,8 +1,20 @@
 class Acme::Resources::Challenges::TLSSNI01 < Acme::Resources::Challenges::Base
 
-  def sni_name
+  def hostname
     hd = crypto.digest.hexdigest(authorization_key)
     "#{hd[0..31]}.#{hd[32..64]}.acme.invalid"
+  end
+
+  def temporary_cert
+    @temporary_cert ||= client.new_self_signed_certificate self.hostname 
+  end
+
+  def self_signed_certificate
+    self.temporary_cert.to_pem
+  end
+
+  def self_signed_certificate_key
+    self.temporary_cert.private_key.to_pem
   end
 
   def request_verification
