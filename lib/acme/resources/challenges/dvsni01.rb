@@ -1,7 +1,8 @@
 class Acme::Resources::Challenges::DVSNI01 < Acme::Resources::Challenges::Base
 
   def sni_name
-    crypto.thumbprint + ".acme.invalid"
+    hd = crypto.digest.hexdigest(authorization_key)
+    "#{hd[0..31]}.#{hd[32..64]}.acme.invalid"
   end
 
   def request_verification
