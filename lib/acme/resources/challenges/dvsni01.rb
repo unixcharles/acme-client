@@ -6,7 +6,7 @@ class Acme::Resources::Challenges::DVSNI01 < Acme::Resources::Challenges::Base
   end
 
   def request_verification
-    response = client.connection.post(@uri, { resource: 'challenge', type: 'dvsni-01', keyAuthorization: authorization_key })
+    response = client.connection.post(@uri, { resource: 'challenge', type: 'tls-dvsni-01', keyAuthorization: authorization_key })
     response.success?
   end
 end
