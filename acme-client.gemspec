@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Charles Barbier']
   spec.email         = ['unixcharles@gmail.com']
   spec.summary       = 'Client for the ACME protocol.'
-  spec.homepage      = 'http://github.com/unixcharles/acme-client'
+  spec.homepage      = 'http://github.com/saltsa/acme-client'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
