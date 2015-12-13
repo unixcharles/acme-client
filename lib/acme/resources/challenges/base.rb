@@ -1,6 +1,6 @@
 class Acme::Resources::Challenges::Base
 
-  attr_reader :client, :status, :uri, :token, :error
+  attr_reader :client, :status, :uri, :token, :error, :iterations
 
   def initialize(client, attributes)
     @client = client
