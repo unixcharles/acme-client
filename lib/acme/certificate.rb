@@ -24,12 +24,6 @@ class Acme::Certificate
     cert.version = 2 # X509v3
     cert.serial = 0x0
 
-    key_usage = []
-    ext_key_usage = []
-    basic_constraint = "CA:FALSE"
-    key_usage << "nonRepudiation" << "digitalSignature" << "keyEncipherment"
-    key_usage << "dataEncipherment"
-    ext_key_usage << "serverAuth"
     ext = []
 
     ef = OpenSSL::X509::ExtensionFactory.new
@@ -45,10 +39,9 @@ class Acme::Certificate
     cert.add_extension ef.create_extension("subjectAltName", subjectAltDomains.map { |d| "DNS: #{d}" }.join(','))
 
     cert.sign(keypair, OpenSSL::Digest::SHA256.new)
-    ## [keypair.to_pem, cert.to_pem]
     @private_key = keypair
     @x509 = cert
-    self
+    true
   end
 
   def chain_to_pem
