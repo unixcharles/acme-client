@@ -1,4 +1,4 @@
-class Acme::Resources::Challenges::TLSNI01 < Acme::Resources::Challenges::Base
+class Acme::Resources::Challenges::TLSSNI01 < Acme::Resources::Challenges::Base
 
   def sni_name
     hd = crypto.digest.hexdigest(authorization_key)
