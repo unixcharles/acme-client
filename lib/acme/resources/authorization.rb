@@ -1,8 +1,9 @@
 class Acme::Resources::Authorization
   HTTP01 = Acme::Resources::Challenges::HTTP01
   DNS01 = Acme::Resources::Challenges::DNS01
+  TLSSNI01 = Acme::Resources::Challenges::TLSSNI01
 
-  attr_reader :domain, :status, :http01, :dns01
+  attr_reader :domain, :status, :http01, :dns01, :tls_sni01
 
   def initialize(client, response)
     @client = client
@@ -17,6 +18,7 @@ class Acme::Resources::Authorization
       case attributes.fetch('type')
       when 'http-01' then @http01 = HTTP01.new(@client, attributes)
       when 'dns-01' then @dns01 = DNS01.new(@client, attributes)
+      when 'tls-sni-01' then @tls_sni01 = TLSSNI01.new(@client, attributes)
       else
         # no supported
       end
