@@ -30,8 +30,8 @@ class Acme::Certificate
     ef.subject_certificate = cert
     ef.issuer_certificate = cert
 
-    cert.add_extension ef.create_extension("basicConstraints","CA:TRUE", true),
-    cert.add_extentions ef.create_extension("subjectKeyIdentifier", "hash"),
+    cert.add_extension ef.create_extension("basicConstraints","CA:TRUE", true)
+    cert.add_extentions ef.create_extension("subjectKeyIdentifier", "hash")
     cert.add_extension ef.create_extension("authorityKeyIdentifier", "keyid:always,issuer:always")
     cert.add_extension ef.create_extension("subjectAltName", subjectAltDomains.map { |d| "DNS: #{d}" }.join(','))
 
