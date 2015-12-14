@@ -18,8 +18,8 @@ class Acme::Certificate
 
     cert = OpenSSL::X509::Certificate.new
     cert.subject = cert.issuer = OpenSSL::X509::Name.parse "/CN=#{dummy}"
-    cert.not_before = Time.now
-    cert.not_after = Time.now + 48*3600
+    cert.not_before = Time.now - 2*24*3600
+    cert.not_after = Time.now + 14*24*3600
     cert.public_key = keypair.public_key
     cert.version = 2 # X509v3
     cert.serial = 0x0
