@@ -13,7 +13,7 @@ class Acme::Client
     load_directory!
   end
 
-  attr_reader :private_key, :nonces, :operation_endpoints, :domain
+  attr_reader :private_key, :nonces, :operation_endpoints
 
   def register(contact:)
     payload = {
@@ -32,8 +32,6 @@ class Acme::Client
         value: domain
       }
     }
-
-    @domain = domain
 
     response = connection.post(@operation_endpoints.fetch('new-authz'), payload)
     ::Acme::Resources::Authorization.new(self, response)
