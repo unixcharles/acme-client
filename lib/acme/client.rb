@@ -47,12 +47,6 @@ class Acme::Client
     ::Acme::Certificate.new(OpenSSL::X509::Certificate.new(response.body), fetch_chain(response), csr)
   end
 
-  def new_self_signed_certificate domain
-    cert = ::Acme::Certificate.new(nil, nil, nil)
-    cert.create_self_signed_cert([domain])
-    cert
-  end
-
   def connection
     @connection ||= Faraday.new(@endpoint) do |configuration|
       configuration.use Acme::FaradayMiddleware, client: self

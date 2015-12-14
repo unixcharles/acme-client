@@ -6,7 +6,7 @@ class Acme::Resources::Challenges::TLSSNI01 < Acme::Resources::Challenges::Base
   end
 
   def temporary_cert
-    @temporary_cert ||= client.new_self_signed_certificate self.hostname 
+    @temporary_cert ||= ::Acme::Certificate.new(nil, nil, nil).create_self_signed_cert([domain])
   end
 
   def self_signed_certificate
