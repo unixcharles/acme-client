@@ -17,7 +17,7 @@ class Acme::Certificate
     keypair = OpenSSL::PKey::RSA.new(2048) 
 
     cert = OpenSSL::X509::Certificate.new
-    cert.subject = cert.issuer = OpenSSL::X509::Name.parse "/CN=#{subjectAltDomains.first}"
+    cert.subject = cert.issuer = OpenSSL::X509::Name.parse "/CN=#{dummy}"
     cert.not_before = Time.now
     cert.not_after = Time.now + 48*3600
     cert.public_key = keypair.public_key
@@ -30,11 +30,8 @@ class Acme::Certificate
     ef.subject_certificate = cert
     ef.issuer_certificate = cert
 
-    cert.extensions = [
-        ef.create_extension("basicConstraints","CA:TRUE", true),
-        ef.create_extension("subjectKeyIdentifier", "hash"),
-    ]
-
+    cert.add_extension ef.create_extension("basicConstraints","CA:TRUE", true),
+    cert.add_extentions ef.create_extension("subjectKeyIdentifier", "hash"),
     cert.add_extension ef.create_extension("authorityKeyIdentifier", "keyid:always,issuer:always")
     cert.add_extension ef.create_extension("subjectAltName", subjectAltDomains.map { |d| "DNS: #{d}" }.join(','))
 
