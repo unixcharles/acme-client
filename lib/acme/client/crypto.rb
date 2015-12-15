@@ -1,4 +1,4 @@
-class Acme::Crypto
+class Acme::Client::Crypto
   attr_reader :private_key
 
   def initialize(private_key)

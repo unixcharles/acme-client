@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Acme::Resources::Challenges::DNS01 do
+describe Acme::Client::Resources::Challenges::DNS01 do
   let(:dns01) do
     client = Acme::Client.new(private_key: generate_private_key)
     registration = client.register(contact: 'mailto:info@example.com')

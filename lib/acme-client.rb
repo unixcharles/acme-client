@@ -1,4 +1,4 @@
-module Acme; end
+module Acme; class Client; end; end
 
 require 'faraday'
 require 'json'
@@ -7,10 +7,10 @@ require 'openssl'
 require 'digest'
 require 'forwardable'
 
-require 'acme/certificate'
-require 'acme/certificate_request'
-require 'acme/crypto'
+require 'acme/client/certificate'
+require 'acme/client/certificate_request'
+require 'acme/client/crypto'
 require 'acme/client'
-require 'acme/resources'
-require 'acme/faraday_middleware'
-require 'acme/error'
+require 'acme/client/resources'
+require 'acme/client/faraday_middleware'
+require 'acme/client/error'

@@ -1,3 +1,5 @@
+require "acme-client"
+
 class Acme::Client
   DEFAULT_ENDPOINT = 'http://127.0.0.1:4000'
   DIRECTORY_DEFAULT = {
@@ -21,7 +23,7 @@ class Acme::Client
     }
 
     response = connection.post(@operation_endpoints.fetch('new-reg'), payload)
-    ::Acme::Resources::Registration.new(self, response)
+    ::Acme::Client::Resources::Registration.new(self, response)
   end
 
   def authorize(domain:)
@@ -34,7 +36,7 @@ class Acme::Client
     }
 
     response = connection.post(@operation_endpoints.fetch('new-authz'), payload)
-    ::Acme::Resources::Authorization.new(self, response)
+    ::Acme::Client::Resources::Authorization.new(self, response)
   end
 
   def new_certificate(csr)
@@ -44,12 +46,12 @@ class Acme::Client
     }
 
     response = connection.post(@operation_endpoints.fetch('new-cert'), payload)
-    ::Acme::Certificate.new(OpenSSL::X509::Certificate.new(response.body), fetch_chain(response), csr)
+    ::Acme::Client::Certificate.new(OpenSSL::X509::Certificate.new(response.body), fetch_chain(response), csr)
   end
 
   def connection
     @connection ||= Faraday.new(@endpoint) do |configuration|
-      configuration.use Acme::FaradayMiddleware, client: self
+      configuration.use Acme::Client::FaradayMiddleware, client: self
       configuration.adapter Faraday.default_adapter
     end
   end

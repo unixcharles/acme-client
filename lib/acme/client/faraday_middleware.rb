@@ -1,4 +1,4 @@
-class Acme::FaradayMiddleware < Faraday::Middleware
+class Acme::Client::FaradayMiddleware < Faraday::Middleware
   attr_reader :env, :response, :client
 
   def initialize(app, client:)
@@ -13,7 +13,7 @@ class Acme::FaradayMiddleware < Faraday::Middleware
   end
 
   def on_complete(env)
-    raise Acme::Error::NotFound, env.url.to_s if env.status == 404
+    raise Acme::Client::Error::NotFound, env.url.to_s if env.status == 404
 
     nonces << env.response_headers['replay-nonce']
 
@@ -37,10 +37,10 @@ class Acme::FaradayMiddleware < Faraday::Middleware
     return if env.success?
 
     error_name = env.body['type'].gsub('urn:acme:error:', '').classify
-    error_class = if Acme::Error.qualified_const_defined?(error_name)
-      "Acme::Error::#{error_name}".constantize
+    error_class = if Acme::Client::Error.qualified_const_defined?(error_name)
+      "Acme::Client::Error::#{error_name}".constantize
     else
-      Acme::Error
+      Acme::Client::Error
     end
 
     message = if env.body.is_a? Hash
@@ -76,6 +76,6 @@ class Acme::FaradayMiddleware < Faraday::Middleware
   end
 
   def crypto
-    @crypto ||= Acme::Crypto.new(private_key)
+    @crypto ||= Acme::Client::Crypto.new(private_key)
   end
 end

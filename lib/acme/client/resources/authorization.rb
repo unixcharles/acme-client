@@ -1,6 +1,6 @@
-class Acme::Resources::Authorization
-  HTTP01 = Acme::Resources::Challenges::HTTP01
-  DNS01 = Acme::Resources::Challenges::DNS01
+class Acme::Client::Resources::Authorization
+  HTTP01 = Acme::Client::Resources::Challenges::HTTP01
+  DNS01 = Acme::Client::Resources::Challenges::DNS01
 
   attr_reader :domain, :status, :http01, :dns01
 

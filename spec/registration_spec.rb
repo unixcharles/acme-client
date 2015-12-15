@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Acme::Resources::Registration do
+describe Acme::Client::Resources::Registration do
   let(:client) { Acme::Client.new(private_key: generate_private_key) }
   let(:registration) { client.register(contact: 'mailto:info@example.com') }
 
@@ -12,7 +12,7 @@ describe Acme::Resources::Registration do
 
   context '#get_terms' do
     xit 'returns the TOS term', vcr: { cassette_name: 'registration_get_terms_success' } do
-      registration = Acme::Resources::Registration.new(client, response)
+      registration = Acme::Client::Resources::Registration.new(client, response)
     end
   end
 end

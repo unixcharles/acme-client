@@ -20,20 +20,20 @@ describe Acme::Client do
     it 'register successfully', vcr: { cassette_name: 'register_success' } do
       expect {
         registration = unregistered_client.register(contact: %w(mailto:cert-admin@example.com tel:+15145552222))
-        expect(registration).to be_a(Acme::Resources::Registration)
+        expect(registration).to be_a(Acme::Client::Resources::Registration)
       }.to_not raise_error
     end
 
     it 'fail to register with an invalid contact', vcr: { cassette_name: 'register_invalid_contact' } do
       expect {
         unregistered_client.register(contact: %w(mailto:not-valid))
-      }.to raise_error(Acme::Error, /not a valid e-mail address/)
+      }.to raise_error(Acme::Client::Error, /not a valid e-mail address/)
     end
 
     it 'fail to register a key that is already registered', vcr: { cassette_name: 'register_duplicate_failure' } do
       expect {
         registered_client.register(contact: %w(mailto:cert-admin@example.com tel:+15145552222))
-      }.to raise_error(Acme::Error, /Registration key is already in use/)
+      }.to raise_error(Acme::Client::Error, /Registration key is already in use/)
     end
   end
 
@@ -41,20 +41,20 @@ describe Acme::Client do
     it 'succeed', vcr: { cassette_name: 'authorize_success' } do
       expect {
         registration = active_client.authorize(domain: 'example.org')
-        expect(registration).to be_a(Acme::Resources::Authorization)
+        expect(registration).to be_a(Acme::Client::Resources::Authorization)
       }.to_not raise_error
     end
 
     it 'fail when the client has not yet agree to the tos', vcr: { cassette_name: 'authorize_fail_tos' } do
       expect {
         registered_client.authorize(domain: 'example.org')
-      }.to raise_error(Acme::Error, /Must agree to subscriber agreement before any further actions/)
+      }.to raise_error(Acme::Client::Error, /Must agree to subscriber agreement before any further actions/)
     end
 
     it 'fail when the domain is not valid', vcr: { cassette_name: 'authorize_invalid_domain' } do
       expect {
         active_client.authorize(domain: 'notadomain.invalid')
-      }.to raise_error(Acme::Error, /Error creating new authz/)
+      }.to raise_error(Acme::Client::Error, /Error creating new authz/)
     end
   end
 
@@ -63,7 +63,7 @@ describe Acme::Client do
     let(:private_key) { generate_private_key }
     let(:client) { Acme::Client.new(private_key: private_key) }
     let(:csr) { generate_csr(domain, generate_private_key) }
-    let(:request) { Acme::CertificateRequest.new(common_name: domain, private_key: generate_private_key) }
+    let(:request) { Acme::Client::CertificateRequest.new(common_name: domain, private_key: generate_private_key) }
 
     before(:each) do
       registration = client.register(contact: 'mailto:info@example.com')
@@ -86,21 +86,21 @@ describe Acme::Client do
         certificate = client.new_certificate(csr)
       }.to_not raise_error
 
-      expect(certificate).to be_a(Acme::Certificate)
+      expect(certificate).to be_a(Acme::Client::Certificate)
       expect(certificate.common_name).to eq(domain)
       expect(certificate.x509).to be_a(OpenSSL::X509::Certificate)
       expect(certificate.x509_chain).not_to be_empty
       expect(certificate.x509_chain).to contain_exactly(a_kind_of(OpenSSL::X509::Certificate), a_kind_of(OpenSSL::X509::Certificate))
     end
 
-    it 'retrieve a new certificate successfully using a Acme::CertificateRequest', vcr: { cassette_name: 'new_certificate_success' } do
+    it 'retrieve a new certificate successfully using a Acme::Client::CertificateRequest', vcr: { cassette_name: 'new_certificate_success' } do
       certificate = nil
 
       expect {
         certificate = client.new_certificate(request)
       }.to_not raise_error
 
-      expect(certificate).to be_a(Acme::Certificate)
+      expect(certificate).to be_a(Acme::Client::Certificate)
       expect(certificate.common_name).to eq(domain)
       expect(certificate.x509).to be_a(OpenSSL::X509::Certificate)
       expect(certificate.x509_chain).not_to be_empty

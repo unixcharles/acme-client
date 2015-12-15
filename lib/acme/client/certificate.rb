@@ -1,4 +1,4 @@
-class Acme::Certificate
+class Acme::Client::Certificate
   extend Forwardable
 
   attr_reader :x509, :x509_chain, :request
