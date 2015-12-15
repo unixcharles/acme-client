@@ -18,7 +18,7 @@ private_key = OpenSSL::PKey::RSA.new(2048)
 endpoint = 'https://acme-v01.api.letsencrypt.org/'
 
 # Initialize the client
-require 'acme-client'
+require 'acme/client'
 client = Acme::Client.new(private_key: private_key, endpoint: endpoint)
 
 # If the private key is not known to the server, we need to register it for the first time.
@@ -67,12 +67,12 @@ challenge.verify_status # => 'valid'
 
 # We're going to need a certificate signing request. If not explicitly
 # specified, the first name listed becomes the common name.
-csr = Acme::CertificateRequest.new(names: %w[example.org www.example.org])
+csr = Acme::Client::CertificateRequest.new(names: %w[example.org www.example.org])
 
 # We can now request a certificate, you can pass anything that returns
 # a valid DER encoded CSR when calling to_der on it, for example a
 # OpenSSL::X509::Request too.
-certificate = client.new_certificate(csr) # => #<Acme::Certificate ....>
+certificate = client.new_certificate(csr) # => #<Acme::Client::Certificate ....>
 
 # Save the certificate and key
 File.write("privkey.pem", certificate.request.private_key.to_pem)

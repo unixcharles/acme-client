@@ -1,4 +1,4 @@
-class Acme::Resources::Challenges::DNS01 < Acme::Resources::Challenges::Base
+class Acme::Client::Resources::Challenges::DNS01 < Acme::Client::Resources::Challenges::Base
   RECORD_NAME = '_acme-challenge'.freeze
   RECORD_TYPE = 'TXT'.freeze
 

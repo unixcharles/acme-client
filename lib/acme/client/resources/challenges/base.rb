@@ -1,4 +1,4 @@
-class Acme::Resources::Challenges::Base
+class Acme::Client::Resources::Challenges::Base
 
   attr_reader :client, :status, :uri, :token, :error
 
@@ -28,6 +28,6 @@ class Acme::Resources::Challenges::Base
   end
 
   def crypto
-    @crypto ||= Acme::Crypto.new(@client.private_key)
+    @crypto ||= Acme::Client::Crypto.new(@client.private_key)
   end
 end

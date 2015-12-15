@@ -1,4 +1,4 @@
-class Acme::Resources::Challenges::HTTP01 < Acme::Resources::Challenges::Base
+class Acme::Client::Resources::Challenges::HTTP01 < Acme::Client::Resources::Challenges::Base
   CONTENT_TYPE = 'text/plain'.freeze
 
   def content_type
