@@ -108,4 +108,42 @@ describe Acme::Client do
       expect(certificate.x509_fullchain.first).to be(certificate.x509)
     end
   end
+
+  context '#revoke_certificate' do
+    let(:domain) { 'test.example.org' }
+    let(:account_private_key) { generate_private_key }
+    let(:certificate_private_key) { generate_private_key }
+
+    let(:client) { Acme::Client.new(private_key: account_private_key) }
+    let(:request) { Acme::Client::CertificateRequest.new(common_name: domain, private_key: certificate_private_key) }
+    let(:certificate) { client.new_certificate(request) }
+
+    let(:bad_client) { Acme::Client.new(private_key: generate_private_key) }
+
+    before(:each) do
+      registration = client.register(contact: 'mailto:info@example.com')
+      registration.agree_terms
+      authorization = client.authorize(domain: domain)
+      http01 = authorization.http01
+
+      serve_once(http01.file_content) do
+        http01.request_verification
+        retry_until(condition: lambda { http01.status != 'pending' }) do
+          http01.verify_status
+        end
+      end
+    end
+
+    it 'revoke a certificate successfully with the account key', vcr: { cassette_name: 'revoke_certificate_success_account_key' } do
+      expect { client.revoke_certificate(certificate) }.to_not raise_error
+    end
+
+    it 'revoke a certificate successfully with the certificate key', vcr: { cassette_name: 'revoke_certificate_success_certificate_key' } do
+      expect { Acme::Client.revoke_certificate(certificate, private_key: certificate_private_key) }.to_not raise_error
+    end
+
+    it 'revoke a certificate fail when using an unknown key', vcr: { cassette_name: 'revoke_certificate_bad_key' } do
+      expect { bad_client.revoke_certificate(certificate) }.to raise_error(Acme::Client::Error::Unauthorized)
+    end
+  end
 end
