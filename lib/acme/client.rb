@@ -49,14 +49,20 @@ class Acme::Client
     ::Acme::Client::Certificate.new(OpenSSL::X509::Certificate.new(response.body), fetch_chain(response), csr)
   end
 
-  def revoke_certificate(certificate)
+  def revoke_certificate(certificate, revocation_key: @private_key)
     payload = {
       resource: 'revoke-cert',
       certificate: Base64.urlsafe_encode64(certificate.to_der)
     }
 
-    response = connection.post(@operation_endpoints.fetch('revoke-cert'), payload)
-    response.status
+    if @private_key.respond_to?(:to_der) && revocation_key.to_der == @private_key.to_der
+      response = connection.post(@operation_endpoints.fetch('revoke-cert'), payload)
+    else
+      tmp_client = ::Acme::Client.new(private_key: revocation_key, endpoint: @endpoint, directory_uri: @directory_uri)
+      response = tmp_client.connection.post(@operation_endpoints.fetch('revoke-cert'), payload)
+    end
+
+    nil
   end
 
   def connection
