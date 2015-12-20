@@ -49,6 +49,16 @@ class Acme::Client
     ::Acme::Client::Certificate.new(OpenSSL::X509::Certificate.new(response.body), fetch_chain(response), csr)
   end
 
+  def revoke_certificate(certificate)
+    payload = {
+      resource: 'revoke-cert',
+      certificate: Base64.urlsafe_encode64(certificate.to_der)
+    }
+
+    response = connection.post(@operation_endpoints.fetch('revoke-cert'), payload)
+    response.status
+  end
+
   def connection
     @connection ||= Faraday.new(@endpoint) do |configuration|
       configuration.use Acme::Client::FaradayMiddleware, client: self
