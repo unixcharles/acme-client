@@ -56,6 +56,9 @@ class Acme::Client
     response.success?
   end
 
+  def self.revoke_certificate(certificate, *arguments)
+    client = new(*arguments)
+    client.revoke_certificate(certificate)
   end
 
   def connection
