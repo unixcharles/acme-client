@@ -11,8 +11,8 @@ describe Acme::Client::Resources::Registration do
   end
 
   context '#get_terms' do
-    xit 'returns the TOS term', vcr: { cassette_name: 'registration_get_terms_success' } do
-      registration = Acme::Client::Resources::Registration.new(client, response)
+    it 'returns the TOS term', vcr: { cassette_name: 'registration_get_terms_success' } do
+      expect(registration.get_terms).to be_a(String)
     end
   end
 end
