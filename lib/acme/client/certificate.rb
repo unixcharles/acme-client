@@ -24,6 +24,6 @@ class Acme::Client::Certificate
   end
 
   def common_name
-    x509.subject.to_a.find {|name, _, _| name == "CN" }[1]
+    x509.subject.to_a.find { |name, _, _| name == 'CN' }[1]
   end
 end

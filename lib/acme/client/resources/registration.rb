@@ -9,22 +9,16 @@ class Acme::Client::Resources::Registration
   end
 
   def get_terms
-    if @term_of_service_uri
-      @client.connection.get(@term_of_service_uri).body
-    end
+    return unless @term_of_service_uri
+
+    @client.connection.get(@term_of_service_uri).body
   end
 
   def agree_terms
-    if @term_of_service_uri
-      payload = {
-        resource: "reg",
-        agreement: @term_of_service_uri
-      }
-      response = @client.connection.post(@uri, { resource: 'reg', agreement: @term_of_service_uri })
-      response.success?
-    else
-      true
-    end
+    return true unless @term_of_service_uri
+
+    response = @client.connection.post(@uri, resource: 'reg', agreement: @term_of_service_uri)
+    response.success?
   end
 
   private

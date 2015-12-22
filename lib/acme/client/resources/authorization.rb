@@ -19,8 +19,7 @@ class Acme::Client::Resources::Authorization
       when 'http-01' then @http01 = HTTP01.new(@client, attributes)
       when 'dns-01' then @dns01 = DNS01.new(@client, attributes)
       when 'tls-sni-01' then @tls_sni01 = TLSSNI01.new(@client, attributes)
-      else
-        # no supported
+        # else no-op
       end
     end
   end

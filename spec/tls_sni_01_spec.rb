@@ -5,7 +5,7 @@ describe Acme::Client::Resources::Challenges::TLSSNI01 do
     client = Acme::Client.new(private_key: generate_private_key)
     registration = client.register(contact: 'mailto:info@example.com')
     registration.agree_terms
-    authorization = client.authorize(domain: "test#{rand(10*10)}.example.org")
+    authorization = client.authorize(domain: "test#{rand(10 * 10)}.example.org")
     authorization.tls_sni01
   end
 

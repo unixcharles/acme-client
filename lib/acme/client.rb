@@ -1,4 +1,4 @@
-require "acme-client"
+require 'acme-client'
 
 class Acme::Client
   DEFAULT_ENDPOINT = 'http://127.0.0.1:4000'
@@ -70,12 +70,13 @@ class Acme::Client
 
   private
 
-  def fetch_chain(response, limit=10)
-    if limit == 0 || response.headers["link"].nil? || response.headers["link"]["up"].nil?
+  def fetch_chain(response, limit = 10)
+    links = response.headers['link']
+    if limit.zero? || links.nil? || links['up'].nil?
       []
     else
-      issuer = connection.get(response.headers["link"]["up"])
-      [OpenSSL::X509::Certificate.new(issuer.body), *fetch_chain(issuer, limit-1)]
+      issuer = connection.get(links['up'])
+      [OpenSSL::X509::Certificate.new(issuer.body), *fetch_chain(issuer, limit - 1)]
     end
   end
 

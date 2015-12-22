@@ -1,5 +1,4 @@
 class Acme::Client::Resources::Challenges::Base
-
   attr_reader :client, :status, :uri, :token, :error
 
   def initialize(client, attributes)
@@ -16,7 +15,7 @@ class Acme::Client::Resources::Challenges::Base
   end
 
   def request_verification
-    response = @client.connection.post(@uri, { resource: 'challenge', type: challenge_type, keyAuthorization: authorization_key })
+    response = @client.connection.post(@uri, resource: 'challenge', type: challenge_type, keyAuthorization: authorization_key)
     response.success?
   end
 

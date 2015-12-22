@@ -9,50 +9,76 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   def call(env)
     @env = env
     @env.body = crypto.generate_signed_jws(header: { nonce: pop_nonce }, payload: env.body)
-    @app.call(env).on_complete {|env| on_complete(env) }
+    @app.call(env).on_complete { |response_env| on_complete(response_env) }
   end
 
   def on_complete(env)
-    raise Acme::Client::Error::NotFound, env.url.to_s if env.status == 404
+    @env = env
 
-    nonces << env.response_headers['replay-nonce']
-
-    content_type = env.response_headers['Content-Type']
-
-    if content_type == 'application/json' || content_type == 'application/problem+json'
-      env.body = JSON.load(env.body)
-    end
-
-    if env.response_headers.key?('Link')
-      link_header = env.response_headers['Link']
-      links = link_header.split(', ').map do |entry|
-        link = entry.match(/<(.*?)>;/).captures.first
-        name = entry.match(/rel="([\w-]+)"/).captures.first
-        [name, link]
-      end
-
-      env.response_headers['Link'] = Hash[*links.flatten]
-    end
+    raise_on_not_found!
+    store_nonce
+    env.body = decode_body
+    env.response_headers['Link'] = decode_link_headers
 
     return if env.success?
 
-    error_name = env.body['type'].gsub('urn:acme:error:', '').classify
-    error_class = if Acme::Client::Error.qualified_const_defined?(error_name)
-      "Acme::Client::Error::#{error_name}".constantize
-    else
-      Acme::Client::Error
-    end
+    raise_on_error!
+  end
 
-    message = if env.body.is_a? Hash
+  private
+
+  def raise_on_not_found!
+    raise Acme::Client::Error::NotFound, env.url.to_s if env.status == 404
+  end
+
+  def raise_on_error!
+    raise error_class, error_message
+  end
+
+  def error_message
+    if env.body.is_a? Hash
       env.body['detail']
     else
       "Error message: #{env.body}"
     end
-
-    raise error_class, message
   end
 
-  private
+  def error_class
+    error_name = env.body['type'].gsub('urn:acme:error:', '').classify
+    if Acme::Client::Error.qualified_const_defined?(error_name)
+      "Acme::Client::Error::#{error_name}".constantize
+    else
+      Acme::Client::Error
+    end
+  end
+
+  def decode_body
+    content_type = env.response_headers['Content-Type']
+
+    if content_type == 'application/json' || content_type == 'application/problem+json'
+      JSON.load(env.body)
+    else
+      env.body
+    end
+  end
+
+  LINK_MATCH = /<(.*?)>;rel="([\w-]+)"/
+
+  def decode_link_headers
+    return unless env.response_headers.key?('Link')
+    link_header = env.response_headers['Link']
+
+    links = link_header.split(', ').map { |entry|
+      _, link, name = *entry.match(LINK_MATCH)
+      [name, link]
+    }
+
+    Hash[*links.flatten]
+  end
+
+  def store_nonce
+    nonces << env.response_headers['replay-nonce']
+  end
 
   def pop_nonce
     if nonces.empty?
