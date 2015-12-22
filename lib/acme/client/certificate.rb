@@ -1,7 +1,7 @@
 class Acme::Client::Certificate
   extend Forwardable
 
-  attr_reader :x509, :x509_chain, :request
+  attr_reader :x509, :x509_chain, :request, :private_key
 
   def_delegators :x509, :to_pem, :to_der
 
