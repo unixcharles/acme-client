@@ -1,4 +1,5 @@
 class Acme::Client::Resources::Challenges::HTTP01 < Acme::Client::Resources::Challenges::Base
+  CHALLENGE_TYPE = 'http-01'.freeze
   CONTENT_TYPE = 'text/plain'.freeze
 
   def content_type
@@ -11,10 +12,5 @@ class Acme::Client::Resources::Challenges::HTTP01 < Acme::Client::Resources::Cha
 
   def filename
     ".well-known/acme-challenge/#{token}"
-  end
-
-  def request_verification
-    response = client.connection.post(@uri, { resource: 'challenge', type: 'http-01', keyAuthorization: authorization_key })
-    response.success?
   end
 end

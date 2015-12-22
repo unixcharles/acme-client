@@ -15,7 +15,16 @@ class Acme::Client::Resources::Challenges::Base
     status
   end
 
+  def request_verification
+    response = @client.connection.post(@uri, { resource: 'challenge', type: challenge_type, keyAuthorization: authorization_key })
+    response.success?
+  end
+
   private
+
+  def challenge_type
+    self.class::CHALLENGE_TYPE
+  end
 
   def authorization_key
     "#{token}.#{crypto.thumbprint}"
