@@ -92,7 +92,7 @@ File.write("fullchain.pem", certificate.fullchain_to_pem)
 # Not implemented
 
 - Recovery methods are not implemented.
-- tls-sni-01 and proofOfPossession-01 are not implemented.
+- proofOfPossession-01 is not implemented.
 
 ## Development
 
