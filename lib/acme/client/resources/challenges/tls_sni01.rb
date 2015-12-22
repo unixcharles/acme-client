@@ -1,4 +1,6 @@
 class Acme::Client::Resources::Challenges::TLSSNI01 < Acme::Client::Resources::Challenges::Base
+  CHALLENGE_TYPE = 'tls-sni-01'.freeze
+
   def hostname
     digest = crypto.digest.hexdigest(authorization_key)
     "#{digest[0..31]}.#{digest[32..64]}.acme.invalid"
@@ -10,11 +12,6 @@ class Acme::Client::Resources::Challenges::TLSSNI01 < Acme::Client::Resources::C
 
   def private_key
     self_sign_certificate.private_key
-  end
-
-  def request_verification
-    response = client.connection.post(@uri, { resource: 'challenge', type: 'tls-sni-01', keyAuthorization: authorization_key })
-    response.success?
   end
 
   private
