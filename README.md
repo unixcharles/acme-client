@@ -94,6 +94,10 @@ File.write("fullchain.pem", certificate.fullchain_to_pem)
 - Recovery methods are not implemented.
 - proofOfPossession-01 is not implemented.
 
+# Requirements
+
+Ruby >= 2.1
+
 ## Development
 
 All the tests use VCR to mock the interaction with the server but if you
