@@ -37,7 +37,7 @@ class Acme::Client::SelfSignCertificate
   end
 
   def default_not_before
-    Time.now + 3600
+    Time.now - 3600
   end
 
   def default_not_after
