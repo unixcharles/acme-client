@@ -59,7 +59,7 @@ describe Acme::Client do
   end
 
   context '#new_certificate' do
-    let(:domain) { "test.example.org" }
+    let(:domain) { 'test.example.org' }
     let(:private_key) { generate_private_key }
     let(:client) { Acme::Client.new(private_key: private_key) }
     let(:csr) { generate_csr(domain, generate_private_key) }
@@ -93,7 +93,7 @@ describe Acme::Client do
       expect(certificate.x509_chain).to contain_exactly(a_kind_of(OpenSSL::X509::Certificate), a_kind_of(OpenSSL::X509::Certificate))
     end
 
-    it 'retrieve a new certificate successfully using a Acme::Client::CertificateRequest', vcr: { cassette_name: 'new_certificate_success' } do
+    it 'retrieve a new certificate successfully using a CertificateRequest', vcr: { cassette_name: 'new_certificate_success' } do
       certificate = nil
 
       expect {

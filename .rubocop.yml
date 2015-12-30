@@ -1,0 +1,79 @@
+AllCops:
+  RunRailsCops: false
+  Exclude:
+    - 'bin/*'
+    - 'vendor/**/*'
+
+Style/FileName:
+  Exclude:
+    - 'lib/acme-client.rb'
+
+Lint/AssignmentInCondition:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/MultilineOperationIndentation:
+  Enabled: false
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Style/FirstParameterIndentation:
+  EnforcedStyle: consistent
+
+Style/TrailingComma:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: single_quotes
+
+Metrics/LineLength:
+  Max: 140
+
+Metrics/ParameterLists:
+  Max: 5
+  CountKeywordArgs: false
+
+Lint/EndAlignment:
+  AlignWith: variable
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/TrivialAccessors:
+  AllowPredicates: true
+
+Lint/UnusedMethodArgument:
+  AllowUnusedKeywordArguments: true
+
+Metrics/MethodLength:
+  Max: 15
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/BlockDelimiters:
+  EnforcedStyle: semantic
+
+Style/Lambda:
+  Enabled: false
+
+Style/AccessorMethodName:
+  Enabled: false

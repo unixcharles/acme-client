@@ -3,8 +3,8 @@ module RetryHelper
     count = 0
     until condition.call
       yield
-      count =+ 1
       raise 'timed out' if count > retry_count
+      count = + 1
     end
   end
 end

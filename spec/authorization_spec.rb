@@ -8,16 +8,16 @@ describe Acme::Client::Resources::Authorization do
     client
   end
 
-  let(:authorization) { client.authorize(domain: 'example.org')}
+  let(:authorization) { client.authorize(domain: 'example.org') }
 
   context '#http01' do
-    it 'returns a HTTP01 object', vcr: { cassette_name: 'authorization' }  do
+    it 'returns a HTTP01 object', vcr: { cassette_name: 'authorization' } do
       expect(authorization.http01).to be_a(Acme::Client::Resources::Challenges::HTTP01)
     end
   end
 
   context '#dns01' do
-    it 'returns a DNS01 object', vcr: { cassette_name: 'authorization' }  do
+    it 'returns a DNS01 object', vcr: { cassette_name: 'authorization' } do
       expect(authorization.dns01).to be_a(Acme::Client::Resources::Challenges::DNS01)
     end
   end

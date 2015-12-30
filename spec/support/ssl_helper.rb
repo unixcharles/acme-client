@@ -1,4 +1,4 @@
-require "yaml"
+require 'yaml'
 
 module SSLHelper
   class KeyStash
@@ -21,7 +21,7 @@ module SSLHelper
 
     def load
       if File.exist?(KEYSTASH_PATH)
-        YAML.load_file(KEYSTASH_PATH).map {|key| OpenSSL::PKey::RSA.new(key) }
+        YAML.load_file(KEYSTASH_PATH).map { |key| OpenSSL::PKey::RSA.new(key) }
       else
         []
       end

@@ -13,15 +13,9 @@ class Acme::Client::SelfSignCertificate
 
   def certificate
     @certificate ||= begin
-      certificate = OpenSSL::X509::Certificate.new
-      certificate.not_before = not_before
-      certificate.not_after = not_after
-      certificate.public_key = private_key.public_key
+      certificate = generate_certificate
 
-      extension_factory = OpenSSL::X509::ExtensionFactory.new
-      extension_factory.subject_certificate = certificate
-      extension_factory.issuer_certificate = certificate
-
+      extension_factory = generate_extension_factory(certificate)
       subject_alt_name_entry = subject_alt_names.map { |d| "DNS: #{d}" }.join(',')
       subject_alt_name_extension = extension_factory.create_extension('subjectAltName', subject_alt_name_entry)
       certificate.add_extension(subject_alt_name_extension)
@@ -46,5 +40,20 @@ class Acme::Client::SelfSignCertificate
 
   def digest
     OpenSSL::Digest::SHA256.new
+  end
+
+  def generate_certificate
+    certificate = OpenSSL::X509::Certificate.new
+    certificate.not_before = not_before
+    certificate.not_after = not_after
+    certificate.public_key = private_key.public_key
+    certificate
+  end
+
+  def generate_extension_factory(certificate)
+    extension_factory = OpenSSL::X509::ExtensionFactory.new
+    extension_factory.subject_certificate = certificate
+    extension_factory.issuer_certificate = certificate
+    extension_factory
   end
 end
