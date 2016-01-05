@@ -12,6 +12,6 @@ class Acme::Client::Resources::Challenges::DNS01 < Acme::Client::Resources::Chal
   end
 
   def record_content
-    crypto.digest.hexdigest(authorization_key)
+    Base64.urlsafe_encode64(crypto.digest.digest(authorization_key)).sub(/[\s=]*\z/, '')
   end
 end
