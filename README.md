@@ -85,7 +85,7 @@ File.write("fullchain.pem", certificate.fullchain_to_pem)
 #   :Port => 8443,
 #   :DocumentRoot => Dir.pwd,
 #   :SSLEnable => true,
-#   :SSLPrivateKey => OpenSSL::PKey::RSA.new( File.read('key.pem') ),
+#   :SSLPrivateKey => OpenSSL::PKey::RSA.new( File.read('privkey.pem') ),
 #   :SSLCertificate => OpenSSL::X509::Certificate.new( File.read('cert.pem') )); trap('INT') { s.shutdown }; s.start"
 ```
 
