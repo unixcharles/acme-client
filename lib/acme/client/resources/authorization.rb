@@ -3,7 +3,7 @@ class Acme::Client::Resources::Authorization
   DNS01 = Acme::Client::Resources::Challenges::DNS01
   TLSSNI01 = Acme::Client::Resources::Challenges::TLSSNI01
 
-  attr_reader :domain, :status, :http01, :dns01, :tls_sni01
+  attr_reader :domain, :status, :expires, :http01, :dns01, :tls_sni01
 
   def initialize(client, response)
     @client = client
@@ -25,6 +25,7 @@ class Acme::Client::Resources::Authorization
   end
 
   def assign_attributes(body)
+    @expires = Time.parse(body['expires']) if body.has_key? 'expires'
     @domain = body['identifier']['value']
     @status = body['status']
   end
