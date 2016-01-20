@@ -25,7 +25,7 @@ class Acme::Client::Resources::Authorization
   end
 
   def assign_attributes(body)
-    @expires = Time.parse(body['expires']) if body.has_key? 'expires'
+    @expires = Time.iso8601(body['expires']) if body.has_key? 'expires'
     @domain = body['identifier']['value']
     @status = body['status']
   end
