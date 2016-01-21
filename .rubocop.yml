@@ -1,8 +1,11 @@
 AllCops:
-  RunRailsCops: false
+  TargetRubyVersion: 2.2
   Exclude:
     - 'bin/*'
     - 'vendor/**/*'
+
+Rails:
+  Enabled: false
 
 Style/FileName:
   Exclude:
@@ -29,7 +32,10 @@ Style/AlignParameters:
 Style/FirstParameterIndentation:
   EnforcedStyle: consistent
 
-Style/TrailingComma:
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+Style/TrailingCommaInLiteral:
   Enabled: false
 
 Style/StringLiterals:

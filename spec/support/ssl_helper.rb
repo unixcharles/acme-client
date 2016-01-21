@@ -40,9 +40,14 @@ module SSLHelper
 
   def generate_csr(common_name, private_key)
     request = OpenSSL::X509::Request.new
-    request.subject = OpenSSL::X509::Name.new([
-      ['CN', common_name, OpenSSL::ASN1::UTF8STRING]
-    ])
+    request.subject = OpenSSL::X509::Name.new(
+      [
+        [
+          'CN',
+          common_name,
+          OpenSSL::ASN1::UTF8STRING
+        ]
+      ])
 
     request.public_key = private_key.public_key
     request.sign(private_key, OpenSSL::Digest::SHA256.new)
