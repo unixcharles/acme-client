@@ -55,9 +55,8 @@ class Acme::Client::CertificateRequest
   def normalize_names
     if @common_name
       @names.unshift(@common_name) unless @names.include?(@common_name)
-    elsif @names.empty?
-      raise ArgumentError, 'No common name and no list of names given'
     else
+      raise ArgumentError, 'No common name and no list of names given' if @names.empty?
       @common_name = @names.first
     end
   end

@@ -1,13 +1,13 @@
 require 'acme-client'
 
 class Acme::Client
-  DEFAULT_ENDPOINT = 'http://127.0.0.1:4000'
+  DEFAULT_ENDPOINT = 'http://127.0.0.1:4000'.freeze
   DIRECTORY_DEFAULT = {
     'new-authz' => '/acme/new-authz',
     'new-cert' => '/acme/new-cert',
     'new-reg' => '/acme/new-reg',
     'revoke-cert' => '/acme/revoke-cert'
-  }
+  }.freeze
 
   def initialize(private_key:, endpoint: DEFAULT_ENDPOINT, directory_uri: nil)
     @endpoint, @private_key, @directory_uri = endpoint, private_key, directory_uri
