@@ -13,6 +13,9 @@ describe Acme::Client::Resources::Challenges::DNS01 do
     expect(dns01.record_name).to eq '_acme-challenge'
     expect(dns01.record_type).to eq 'TXT'
     expect(dns01.record_content).to be_a(String)
+    expect(dns01.to_h['token']).to eq(dns01.token)
+    expect(dns01.to_h['uri']).to eq(dns01.uri)
+    expect(dns01.to_h['type']).to eq(dns01.class::CHALLENGE_TYPE)
   end
 
   it 'successfully verify the challenge', vcr: { cassette_name: 'dns01_verify_success' } do

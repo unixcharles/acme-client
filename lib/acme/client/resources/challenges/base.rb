@@ -19,6 +19,10 @@ class Acme::Client::Resources::Challenges::Base
     response.success?
   end
 
+  def to_h
+    { 'token' => token, 'uri' => uri, 'type' => challenge_type }
+  end
+
   private
 
   def challenge_type
