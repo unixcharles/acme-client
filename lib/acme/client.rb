@@ -68,6 +68,17 @@ class Acme::Client
     end
   end
 
+  def challenge_from_hash(attributes)
+    case attributes.fetch('type')
+    when 'http-01'
+      Acme::Client::Resources::Challenges::HTTP01.new(self, attributes)
+    when 'dns-01'
+      Acme::Client::Resources::Challenges::DNS01.new(self, attributes)
+    when 'tls-sni-01'
+      Acme::Client::Resources::Challenges::TLSSNI01.new(self, attributes)
+    end
+  end
+
   private
 
   def fetch_chain(response, limit = 10)

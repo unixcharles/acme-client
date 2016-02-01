@@ -52,9 +52,14 @@ FileUtils.mkdir_p( File.join( 'public', File.dirname( challenge.filename ) ) )
 # Then writing the file
 File.write( File.join( 'public', challenge.filename), challenge.file_content )
 
+# Optionally save the challenge for use at another time (eg: by a background job processor)
+File.write('challenge', challenge.to_h.to_json)
+
 # The challenge file can be server with a Ruby webserver such as run a webserver in another console. You may need to forward ports on your router
 #ruby -run -e httpd public -p 8080 --bind-address 0.0.0.0
 
+# Load a saved challenge. This is only required if you need to reuse a saved challenge as outlined above.
+challenge = client.challenge_from_hash(JSON.parse(File.read('challenge')))
 
 # Once you are ready to serve the confirmation request you can proceed.
 challenge.request_verification # => true

@@ -146,4 +146,45 @@ describe Acme::Client do
       expect { bad_client.revoke_certificate(certificate) }.to raise_error(Acme::Client::Error::Unauthorized)
     end
   end
+
+  context '#challenge_from_hash' do
+    let(:challenge_hash) do
+      { 'token' => 'some-token', 'uri' => '/some-uri' }
+    end
+
+    let(:client) { Acme::Client.new(private_key: 'fake-key') }
+    let(:http01) { Acme::Client::Resources::Challenges::HTTP01 }
+    let(:dns01) { Acme::Client::Resources::Challenges::DNS01 }
+    let(:tls_sni01) { Acme::Client::Resources::Challenges::TLSSNI01 }
+
+    it 'returns an HTTP01 challenge object with the specified parameters' do
+      challenge = client.challenge_from_hash(challenge_hash.merge('type' => http01::CHALLENGE_TYPE))
+
+      expect(challenge).to be_a(http01)
+      expect(challenge.uri).to eq challenge_hash['uri']
+      expect(challenge.token).to eq challenge_hash['token']
+    end
+
+    it 'returns a DNS01 challenge object with the specified parameters' do
+      challenge = client.challenge_from_hash(challenge_hash.merge('type' => dns01::CHALLENGE_TYPE))
+
+      expect(challenge).to be_a(dns01)
+      expect(challenge.uri).to eq challenge_hash['uri']
+      expect(challenge.token).to eq challenge_hash['token']
+    end
+
+    it 'returns an TLSSNI01 challenge object with the specified parameters' do
+      challenge = client.challenge_from_hash(challenge_hash.merge('type' => tls_sni01::CHALLENGE_TYPE))
+
+      expect(challenge).to be_a(tls_sni01)
+      expect(challenge.uri).to eq challenge_hash['uri']
+      expect(challenge.token).to eq challenge_hash['token']
+    end
+
+    it 'returns nil if an unsupported challenge type is provided' do
+      challenge = client.challenge_from_hash(challenge_hash.merge('type' => 'nope'))
+
+      expect(challenge).to be_nil
+    end
+  end
 end
