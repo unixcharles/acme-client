@@ -8,7 +8,10 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
 
   def call(env)
     @env = env
-    @env.body = crypto.generate_signed_jws(header: { nonce: pop_nonce }, payload: env.body) unless env.body.nil?
+    unless @env.body.nil?
+      @env.body = crypto.generate_signed_jws(header: { nonce: pop_nonce }, payload: env.body)
+      @env.request_headers['Content-Type'] ||= 'application/json'
+    end
     @app.call(env).on_complete { |response_env| on_complete(response_env) }
   end
 
