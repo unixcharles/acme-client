@@ -7,7 +7,23 @@ You can find the ACME reference implementations of the [server](https://github.c
 
 ACME is part of the [Letsencrypt](https://letsencrypt.org/) project, which goal is to provide free SSL/TLS certificates with  automation of the acquiring and renewal process.
 
+## Installation
+
+Via Rubygems:
+
+	$ gem install acme-client
+
+Or add it to a Gemfile:
+
+```ruby
+gem 'acme-client'
+```
+
 ## Usage
+
+### Register client
+
+In order to authenticate our client, we have to create an account for it.
 
 ```ruby
 # We're going to need a private key.
@@ -29,16 +45,22 @@ registration = client.register(contact: 'mailto:contact@example.com')
 
 # You may need to agree to the terms of service (that's up the to the server to require it or not but boulder does by default)
 registration.agree_terms
+```
 
-# Let's try to optain a certificate for example.org
+### Authorize for domain
 
-# We need to prove that we control the domain using one of the challenges method.
+Before you are able to obtain certificates for your domain, you have to prove that you are in control of it.
+
+```ruby
 authorization = client.authorize(domain: 'example.org')
 
-# This example is using the http-01 challenge type.
+# This example is using the http-01 challenge type. Other challenges are dns-01 or tls-sni-01.
 challenge = authorization.http01
 
-# The http-01 method will require you to respond to an HTTP request.
+# The http-01 method will require you to respond to a HTTP request.
+
+# You can retrieve the challenge token
+callenege.token # => "some_token"
 
 # You can retrieve the expected path for the file.
 challenge.filename # => ".well-known/acme-challenge/:some_token"
@@ -60,7 +82,8 @@ File.write('challenge', challenge.to_h.to_json)
 
 # The challenge file can be served with a Ruby webserver.
 # You can run a webserver in another console for that purpose. You may need to forward ports on your router.
-#ruby -run -e httpd public -p 8080 --bind-address 0.0.0.0
+#
+# $ ruby -run -e httpd public -p 8080 --bind-address 0.0.0.0
 
 # Load a saved challenge. This is only required if you need to reuse a saved challenge as outlined above.
 challenge = client.challenge_from_hash(JSON.parse(File.read('challenge')))
@@ -69,17 +92,23 @@ challenge = client.challenge_from_hash(JSON.parse(File.read('challenge')))
 challenge.request_verification # => true
 challenge.verify_status # => 'pending'
 
-# Wait a bit for the server to make the request, or just blink, it should be fast.
+# Wait a bit for the server to make the request, or just blink. It should be fast.
 sleep(1)
 
 challenge.verify_status # => 'valid'
+```
 
+### Obtain a certificate
+
+Now that your account is authorized for the domain, you should be able to obtain a certificate for it.
+
+```ruby
 # We're going to need a certificate signing request. If not explicitly
 # specified, the first name listed becomes the common name.
 csr = Acme::Client::CertificateRequest.new(names: %w[example.org www.example.org])
 
-# We can now request a certificate, you can pass anything that returns
-# a valid DER encoded CSR when calling to_der on it, for example a
+# We can now request a certificate. You can pass anything that returns
+# a valid DER encoded CSR when calling to_der on it. For example an
 # OpenSSL::X509::Request should work too.
 certificate = client.new_certificate(csr) # => #<Acme::Client::Certificate ....>
 
