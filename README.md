@@ -60,7 +60,7 @@ challenge = authorization.http01
 # The http-01 method will require you to respond to a HTTP request.
 
 # You can retrieve the challenge token
-callenege.token # => "some_token"
+challenge.token # => "some_token"
 
 # You can retrieve the expected path for the file.
 challenge.filename # => ".well-known/acme-challenge/:some_token"
