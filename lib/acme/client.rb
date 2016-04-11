@@ -46,7 +46,7 @@ class Acme::Client
     }
 
     response = connection.post(@operation_endpoints.fetch('new-cert'), payload)
-    ::Acme::Client::Certificate.new(OpenSSL::X509::Certificate.new(response.body), fetch_chain(response), csr)
+    ::Acme::Client::Certificate.new(OpenSSL::X509::Certificate.new(response.body), response.headers['location'], fetch_chain(response), csr)
   end
 
   def revoke_certificate(certificate)

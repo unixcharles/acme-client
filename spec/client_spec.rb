@@ -91,6 +91,7 @@ describe Acme::Client do
       expect(certificate.x509).to be_a(OpenSSL::X509::Certificate)
       expect(certificate.x509_chain).not_to be_empty
       expect(certificate.x509_chain).to contain_exactly(a_kind_of(OpenSSL::X509::Certificate), a_kind_of(OpenSSL::X509::Certificate))
+      expect(certificate.url).to eq('http://127.0.0.1:4000/acme/cert/ff87f2112cf6596eddb5df39113701b1572a')
     end
 
     it 'retrieve a new certificate successfully using a CertificateRequest', vcr: { cassette_name: 'new_certificate_success' } do
@@ -106,6 +107,7 @@ describe Acme::Client do
       expect(certificate.x509_chain).not_to be_empty
       expect(certificate.x509_chain).to contain_exactly(a_kind_of(OpenSSL::X509::Certificate), a_kind_of(OpenSSL::X509::Certificate))
       expect(certificate.x509_fullchain.first).to be(certificate.x509)
+      expect(certificate.url).to eq('http://127.0.0.1:4000/acme/cert/ff87f2112cf6596eddb5df39113701b1572a')
     end
   end
 
