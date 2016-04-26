@@ -38,7 +38,7 @@ endpoint = 'https://acme-v01.api.letsencrypt.org/'
 
 # Initialize the client
 require 'acme/client'
-client = Acme::Client.new(private_key: private_key, endpoint: endpoint)
+client = Acme::Client.new(private_key: private_key, endpoint: endpoint, connection_options: { request: { open_timeout: 5, timeout: 5 } })
 
 # If the private key is not known to the server, we need to register it for the first time.
 registration = client.register(contact: 'mailto:contact@example.com')

@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Acme::Client do
-  let(:unregistered_client) { Acme::Client.new(private_key: generate_private_key) }
+  let(:connection_options) { {} }
+  let(:unregistered_client) { Acme::Client.new(private_key: generate_private_key, connection_options: connection_options) }
 
   let(:registered_client) do
     client = Acme::Client.new(private_key: generate_private_key)
@@ -14,6 +15,27 @@ describe Acme::Client do
     registration = client.register(contact: 'mailto:mail@example.com')
     registration.agree_terms
     client
+  end
+
+  context 'connection_options' do
+    let(:connection_options) { { request: { open_timeout: 5, timeout: 5 } } }
+
+    before(:each) do
+      stub_request(:head, 'http://127.0.0.1:4000/acme/new-reg').with(
+        headers: { 'Accept' => '*/*', 'User-Agent' => 'Faraday v0.9.2' }
+      ).to_timeout
+    end
+
+    it 'passes the connection options to faraday' do
+      expect(unregistered_client.connection.options.open_timeout).to eq(5)
+      expect(unregistered_client.connection.options.timeout).to eq(5)
+    end
+
+    it 'fails with a timeout' do
+      expect {
+        unregistered_client.register(contact: %w(mailto:cert-admin@example.com tel:+15145552222))
+      }.to raise_error(Acme::Client::Error::Timeout)
+    end
   end
 
   context '#register' do
