@@ -9,8 +9,8 @@ class Acme::Client
     'revoke-cert' => '/acme/revoke-cert'
   }.freeze
 
-  def initialize(private_key:, endpoint: DEFAULT_ENDPOINT, directory_uri: nil)
-    @endpoint, @private_key, @directory_uri = endpoint, private_key, directory_uri
+  def initialize(private_key:, endpoint: DEFAULT_ENDPOINT, directory_uri: nil, connection_options: {})
+    @endpoint, @private_key, @directory_uri, @connection_options = endpoint, private_key, directory_uri, connection_options
     @nonces ||= []
     load_directory!
   end
@@ -62,7 +62,7 @@ class Acme::Client
   end
 
   def connection
-    @connection ||= Faraday.new(@endpoint) do |configuration|
+    @connection ||= Faraday.new(@endpoint, **@connection_options) do |configuration|
       configuration.use Acme::Client::FaradayMiddleware, client: self
       configuration.adapter Faraday.default_adapter
     end

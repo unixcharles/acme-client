@@ -5,6 +5,7 @@ require 'acme/client'
 
 require 'rspec'
 require 'vcr'
+require 'webmock/rspec'
 
 require 'http_helper'
 require 'retry_helper'

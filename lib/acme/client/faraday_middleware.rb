@@ -10,6 +10,8 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
     @env = env
     @env.body = crypto.generate_signed_jws(header: { nonce: pop_nonce }, payload: env.body)
     @app.call(env).on_complete { |response_env| on_complete(response_env) }
+  rescue Faraday::TimeoutError
+    raise Acme::Client::Error::Timeout
   end
 
   def on_complete(env)
