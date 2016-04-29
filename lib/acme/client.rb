@@ -1,5 +1,3 @@
-require 'acme-client'
-
 class Acme::Client
   DEFAULT_ENDPOINT = 'http://127.0.0.1:4000'.freeze
   DIRECTORY_DEFAULT = {
