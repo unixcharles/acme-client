@@ -19,6 +19,11 @@ class Acme::Client::Resources::Challenges::Base
     response.success?
   end
 
+  def revoke_verification
+    response = @client.connection.post(@uri, resource: 'challenge', type: challenge_type, keyAuthorization: "invalid.#{crypto.thumbprint}")
+    response.success?
+  end
+
   def to_h
     { 'token' => token, 'uri' => uri, 'type' => challenge_type }
   end
