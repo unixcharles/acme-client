@@ -11,4 +11,5 @@ class Acme::Client::Error < StandardError
   class UnknownHost < Acme::Client::Error; end
   class Timeout < Acme::Client::Error; end
   class RateLimited < Acme::Client::Error; end
+  class RejectedIdentifier < Acme::Client::Error; end
 end
