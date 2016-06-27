@@ -206,9 +206,9 @@ describe Acme::Client do
     end
 
     it 'returns nil if an unsupported challenge type is provided' do
-      challenge = client.challenge_from_hash(challenge_hash.merge('type' => 'nope'))
-
-      expect(challenge).to be_nil
+      expect {
+        client.challenge_from_hash(challenge_hash.merge('type' => 'nope'))
+      }.to raise_error(RuntimeError, 'Unsupported resource type')
     end
   end
 end

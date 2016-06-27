@@ -66,7 +66,12 @@ class Acme::Client
     end
   end
 
-  def challenge_from_hash(attributes)
+  def challenge_from_hash(arguments)
+    attributes = arguments.to_h
+    %w(type uri token).each do |key|
+      raise ArgumentError, "missing key: #{key}" unless attributes.key?(key)
+    end
+
     case attributes.fetch('type')
     when 'http-01'
       Acme::Client::Resources::Challenges::HTTP01.new(self, attributes)
@@ -74,6 +79,8 @@ class Acme::Client
       Acme::Client::Resources::Challenges::DNS01.new(self, attributes)
     when 'tls-sni-01'
       Acme::Client::Resources::Challenges::TLSSNI01.new(self, attributes)
+    else
+      raise 'Unsupported resource type'
     end
   end
 
