@@ -46,11 +46,18 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def error_class
-    error_name = env.body['type'].gsub('urn:acme:error:', '').classify
-    if Acme::Client::Error.qualified_const_defined?(error_name)
+    if error_name.present? && Acme::Client::Error.qualified_const_defined?(error_name)
       "Acme::Client::Error::#{error_name}".constantize
     else
       Acme::Client::Error
+    end
+  end
+
+  def error_name
+    @error_name ||= begin
+      return unless env.present? && env.body.present? && env.body.key?('type')
+
+      env.body['type'].gsub('urn:acme:error:', '').classify
     end
   end
 
