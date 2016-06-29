@@ -73,6 +73,12 @@ describe Acme::Client do
       }.to raise_error(Acme::Client::Error, /Must agree to subscriber agreement before any further actions/)
     end
 
+    it 'fail when the client receive an error without a type', vcr: { cassette_name: 'authorize_fail_server_error' } do
+      expect {
+        registered_client.authorize(domain: 'example.org')
+      }.to raise_error(Acme::Client::Error)
+    end
+
     it 'fail when the domain is not valid', vcr: { cassette_name: 'authorize_invalid_domain' } do
       expect {
         active_client.authorize(domain: 'notadomain.invalid')
