@@ -17,6 +17,14 @@ describe Acme::Client do
     client
   end
 
+  context 'generic errors' do
+    it 'raises on error with a non jose+json body', vcr: { cassette_name: 'non_json' } do
+      expect {
+        active_client.agree_terms
+      }.to raise_error(Acme::Client::Error)
+    end
+  end
+
   context 'connection_options' do
     let(:connection_options) { { request: { open_timeout: 5, timeout: 5 } } }
 
