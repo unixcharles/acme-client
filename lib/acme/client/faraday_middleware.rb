@@ -55,7 +55,8 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
 
   def error_name
     @error_name ||= begin
-      return unless env.present? && env.body.present? && env.body.key?('type')
+      return unless env.body.is_a?(Hash)
+      return unless env.body.key?('type')
 
       env.body['type'].gsub('urn:acme:error:', '').classify
     end
