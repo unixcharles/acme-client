@@ -81,6 +81,7 @@ class Acme::Client::CertificateRequest
     OpenSSL::X509::Request.new.tap do |csr|
       csr.public_key = @private_key.public_key
       csr.subject = generate_subject
+      csr.version = 2
       add_extension(csr)
       csr.sign @private_key, @digest
     end
