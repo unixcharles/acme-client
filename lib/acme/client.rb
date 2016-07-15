@@ -1,3 +1,21 @@
+require 'faraday'
+require 'json'
+require 'json/jwt'
+require 'openssl'
+require 'digest'
+require 'forwardable'
+
+module Acme; end
+class Acme::Client; end
+
+require 'acme/client/certificate'
+require 'acme/client/certificate_request'
+require 'acme/client/self_sign_certificate'
+require 'acme/client/crypto'
+require 'acme/client/resources'
+require 'acme/client/faraday_middleware'
+require 'acme/client/error'
+
 class Acme::Client
   DEFAULT_ENDPOINT = 'http://127.0.0.1:4000'.freeze
   DIRECTORY_DEFAULT = {
