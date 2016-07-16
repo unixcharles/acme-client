@@ -8,6 +8,7 @@ require 'forwardable'
 module Acme; end
 
 require 'acme/client'
+require 'acme/client/version'
 require 'acme/client/certificate'
 require 'acme/client/certificate_request'
 require 'acme/client/self_sign_certificate'
