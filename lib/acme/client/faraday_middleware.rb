@@ -104,7 +104,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def get_nonce
-    response = Faraday.head(env.url, nil, { 'User-Agent' => user_agent })
+    response = Faraday.head(env.url, nil, 'User-Agent' => user_agent)
     response.headers['replay-nonce']
   end
 
