@@ -8,6 +8,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
 
   def call(env)
     @env = env
+    @env[:request_headers]['User-Agent'] = user_agent
     @env.body = crypto.generate_signed_jws(header: { nonce: pop_nonce }, payload: env.body)
     @app.call(env).on_complete { |response_env| on_complete(response_env) }
   rescue Faraday::TimeoutError
@@ -28,6 +29,10 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   private
+
+  def user_agent
+    "Acme::Client v#{Acme::Client::VERSION} (https://github.com/unixcharles/acme-client)"
+  end
 
   def raise_on_not_found!
     raise Acme::Client::Error::NotFound, env.url.to_s if env.status == 404
@@ -99,7 +104,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def get_nonce
-    response = Faraday.head(env.url)
+    response = Faraday.head(env.url, nil, 'User-Agent' => user_agent)
     response.headers['replay-nonce']
   end
 
