@@ -1,3 +1,7 @@
+# This file lives here for backward compatibility only and should be deprecated soon
+# gem named acme-client should be required as
+# require 'acme/client'
+
 require 'faraday'
 require 'json'
 require 'json/jwt'

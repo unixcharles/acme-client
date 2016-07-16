@@ -47,7 +47,8 @@ module SSLHelper
           common_name,
           OpenSSL::ASN1::UTF8STRING
         ]
-      ])
+      ]
+    )
 
     request.public_key = private_key.public_key
     request.sign(private_key, OpenSSL::Digest::SHA256.new)
