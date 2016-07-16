@@ -30,7 +30,7 @@ describe Acme::Client do
 
     before(:each) do
       stub_request(:head, 'http://127.0.0.1:4000/acme/new-reg').with(
-        headers: { 'Accept' => '*/*', 'User-Agent' => 'Acme::Client v0.3.6' }
+        headers: { 'Accept' => '*/*', 'User-Agent' => 'Acme::Client v0.3.6 (https://github.com/unixcharles/acme-client)' }
       ).to_timeout
     end
 
