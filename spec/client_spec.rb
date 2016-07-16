@@ -30,7 +30,10 @@ describe Acme::Client do
 
     before(:each) do
       stub_request(:head, 'http://127.0.0.1:4000/acme/new-reg').with(
-        headers: { 'Accept' => '*/*', 'User-Agent' => 'Faraday v0.9.2' }
+        headers: {
+          'Accept' => '*/*',
+          'User-Agent' => Acme::Client::FaradayMiddleware::USER_AGENT
+        }
       ).to_timeout
     end
 
