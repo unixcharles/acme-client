@@ -31,7 +31,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   private
 
   def user_agent
-    "Acme::Client v#{Acme::Client::VERSION}"
+    "Acme::Client v#{Acme::Client::VERSION} (https://github.com/unixcharles/acme-client)"
   end
 
   def raise_on_not_found!
