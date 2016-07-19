@@ -50,7 +50,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def error_class
-    if error_name.present? && Acme::Client::Error.qualified_const_defined?(error_name)
+    if error_name.present? && Acme::Client::Error.const_defined?(error_name)
       "Acme::Client::Error::#{error_name}".constantize
     else
       Acme::Client::Error
