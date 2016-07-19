@@ -9,8 +9,8 @@ class Acme::Client::Crypto
     jwt = JSON::JWT.new(payload || {})
     jwt.header.merge!(header || {})
     jwt.header[:jwk] = jwk
-    jwt.signature = jwt.sign(private_key, :RS256).signature
-    jwt.to_json(syntax: :flattened)
+    jws = jwt.sign(private_key, :RS256)
+    jws.to_json(syntax: :flattened)
   end
 
   def thumbprint
