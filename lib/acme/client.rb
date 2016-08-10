@@ -2,10 +2,10 @@
 
 require 'faraday'
 require 'json'
-require 'json/jwt'
 require 'openssl'
 require 'digest'
 require 'forwardable'
+require 'base64'
 
 module Acme; end
 class Acme::Client; end
