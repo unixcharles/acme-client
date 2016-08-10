@@ -12,7 +12,7 @@ describe Acme::Client::Resources::Authorization do
 
   it 'returns the correct metadata', vcr: { cassette_name: 'authorization' } do
     expect(authorization.expires).to be_a(Time)
-    expect(authorization.expires).to be_within(1.second).of Time.gm(2015, 12, 14, 21, 46, 33)
+    expect(authorization.expires).to be_within(1).of Time.gm(2015, 12, 14, 21, 46, 33)
   end
 
   context '#http01' do

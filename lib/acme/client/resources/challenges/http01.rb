@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Acme::Client::Resources::Challenges::HTTP01 < Acme::Client::Resources::Challenges::Base
   CHALLENGE_TYPE = 'http-01'.freeze
   CONTENT_TYPE = 'text/plain'.freeze

@@ -11,9 +11,15 @@ describe Acme::Client::Crypto do
   context '#generate_signed_jws' do
     it 'signs the data' do
       signed_jws = crypto.generate_signed_jws(header: { 'a-header' => 'header-value' }, payload: { 'some' => 'data' })
-      decoded_jwt = JSON::JWT.decode(JSON.load(signed_jws), private_key.public_key)
-      expect(decoded_jwt).to include('some' => 'data')
-      expect(decoded_jwt.header).to include('a-header' => 'header-value')
+      jws = JSON.parse(signed_jws)
+      header = JSON.parse(Base64.decode64(jws['protected']))
+      payload = JSON.parse(Base64.decode64(jws['payload']))
+
+      expect(header).to include('a-header' => 'header-value')
+      expect(header['typ']).to eq('JWT')
+      expect(header['alg']).to eq('RS256')
+      expect(header['jwk']['kty']).to eq('RSA')
+      expect(payload).to include('some' => 'data')
     end
   end
 end
