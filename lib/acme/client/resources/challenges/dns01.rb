@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Acme::Client::Resources::Challenges::DNS01 < Acme::Client::Resources::Challenges::Base
   CHALLENGE_TYPE = 'dns-01'.freeze
   RECORD_NAME = '_acme-challenge'.freeze

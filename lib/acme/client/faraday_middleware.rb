@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Acme::Client::FaradayMiddleware < Faraday::Middleware
   attr_reader :env, :response, :client
 

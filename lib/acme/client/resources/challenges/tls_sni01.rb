@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Acme::Client::Resources::Challenges::TLSSNI01 < Acme::Client::Resources::Challenges::Base
   CHALLENGE_TYPE = 'tls-sni-01'.freeze
 
