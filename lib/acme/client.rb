@@ -6,6 +6,7 @@ require 'openssl'
 require 'digest'
 require 'forwardable'
 require 'base64'
+require 'time'
 
 module Acme; end
 class Acme::Client; end
