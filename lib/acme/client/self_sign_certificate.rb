@@ -47,6 +47,7 @@ class Acme::Client::SelfSignCertificate
     certificate.not_before = not_before
     certificate.not_after = not_after
     certificate.public_key = private_key.public_key
+    certificate.version = 2
     certificate
   end
 
