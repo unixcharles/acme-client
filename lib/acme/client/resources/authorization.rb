@@ -7,11 +7,25 @@ class Acme::Client::Resources::Authorization
 
   def initialize(client, response)
     @client = client
-    assign_challenges(response.body['challenges'])
+    @uri = response.headers['Location']
     assign_attributes(response.body)
   end
 
+  def verify_status
+    response = @client.connection.get(@uri)
+
+    assign_attributes(response.body)
+    status
+  end
+
   private
+
+  def assign_attributes(body)
+    @expires = Time.iso8601(body['expires']) if body.key? 'expires'
+    @domain = body['identifier']['value']
+    @status = body['status']
+    assign_challenges(body['challenges'])
+  end
 
   def assign_challenges(challenges)
     challenges.each do |attributes|
@@ -22,11 +36,5 @@ class Acme::Client::Resources::Authorization
         # else no-op
       end
     end
-  end
-
-  def assign_attributes(body)
-    @expires = Time.iso8601(body['expires']) if body.key? 'expires'
-    @domain = body['identifier']['value']
-    @status = body['status']
   end
 end

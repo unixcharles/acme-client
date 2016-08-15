@@ -54,6 +54,10 @@ Before you are able to obtain certificates for your domain, you have to prove th
 ```ruby
 authorization = client.authorize(domain: 'example.org')
 
+# If authorization.status returns valid here you can already get a certificate
+# and _must not_ try to solve another challenge
+authorization.status # => "pending"
+
 # This example is using the http-01 challenge type. Other challenges are dns-01 or tls-sni-01.
 challenge = authorization.http01
 
@@ -90,11 +94,18 @@ challenge = client.challenge_from_hash(JSON.parse(File.read('challenge')))
 
 # Once you are ready to serve the confirmation request you can proceed.
 challenge.request_verification # => true
+authorization.verify_status # => 'pending'
 challenge.verify_status # => 'pending'
 
 # Wait a bit for the server to make the request, or just blink. It should be fast.
 sleep(1)
 
+# Rely on authorization.verify_status more than on challenge.verify_status,
+# if the former is 'valid' you can already issue a certificate and the status of
+# the challenge is not relevant and in fact may never change from pending.
+# However if authorization.verify_status is 'invalid', you can get at the error
+# message only through the challenge.
+authorization.verify_status # => 'valid'
 challenge.verify_status # => 'valid'
 ```
 
