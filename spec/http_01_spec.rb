@@ -12,9 +12,6 @@ describe Acme::Client::Resources::Challenges::HTTP01 do
   it 'returns the correct metadata', vcr: { cassette_name: 'http01_metadata' } do
     expect(http01.filename).to start_with('.well-known/acme-challenge')
     expect(http01.file_content).to be_a(String)
-    expect(http01.to_h['token']).to eq(http01.token)
-    expect(http01.to_h['uri']).to eq(http01.uri)
-    expect(http01.to_h['type']).to eq(http01.class::CHALLENGE_TYPE)
   end
 
   context '#verify' do

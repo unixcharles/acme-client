@@ -171,7 +171,7 @@ http_interactions:
   recorded_at: Sun, 20 Dec 2015 20:15:48 GMT
 - request:
     method: get
-    uri: http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/2
+    uri: http://127.0.0.1:4000/acme/authz/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ
     body:
       encoding: UTF-8
       string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiaVRxS1RpY2tLQXlJRnNVSm0zT09hNEJRU0s4bTdESmdWUlFfRG9vcGJuWSIsImp3ayI6eyJrdHkiOiJSU0EiLCJlIjoiQVFBQiIsIm4iOiIzNHIzZDBYZEJvUWNXTHBhcHRocjdvdjVpMHl3Wk9DaEpIVzA5RW5yc3Fqbm5QZ1F3RXVCdmp5TGV5QU04ME56MU5oaVZnWmRvOXpZeWRoSEpxa3JpUHVKNVJ2eWV5SGowdHFXbkN5US1IOFh0QUJPeXdnUE9YbnZyb3NHa3lSY2R5VzJaeGhHZUV5NzEyVnB4TXBiTmNRQ0w5R0dBbGJQN0QxT1VoSDdyTHRhbGZ3aFBoSXgzcXJ4ZG1NWklsbzAwTGxzWU5kRzQ3RThiMnVmTDRKZHA2d1VQVHA1bzh6amNwSUE2M2hTQTRhRHd3R3ppYV95ZWd6aFNOQjBmcWQ1RWtDTjc4anEwd21CeU5BTG13RC1kVVdyb2FHY010R2R2S1g3ZkdoZnZxczB2NHFiSEVncVllU0xvM2c2ODdRUzB5aXJ0R1VyUktqQW9WZ2Z4eGd6N1EifX0","payload":"e30","signature":"NZyZaxFz3OLY6Quospi84wkc0hEYZQ5X3YHXkR4g7x5Fc47IX8ufOnNhnusdFJpZS2NWl7fz3hsinjIe94-Ep_1YlOGmnwNIXljEpY7GcnlwsF8x2QO7eWrQhTy4ZJKxPrHDyX27tBnSZLRXPumCWWAW28ud2-V1atNgrZDjLaDBL2Y8DrNbVFfHrvBW7uQtJWeFWK2gDY8mpQ9uYUH3iqZ7oUQEK9XF3htkY6p_r4g6clbnhE4vMnaldmE-fXME_VD92zA1VcO7AScBm4wTZlaJeX_hRePa493WacJyV7hx9lmWUWpU2mQxeDnjog7P2vGqwY8ITOeMoPsM8ZkBMw"}'
@@ -184,29 +184,28 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 202
-      message: Accepted
+      code: 200
+      message: OK
     headers:
       Content-Type:
       - application/json
       Link:
-      - <http://127.0.0.1:4000/acme/authz/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ>;rel="up"
-      Location:
-      - http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/2
+      - <http://127.0.0.1:4000/acme/new-cert>;rel="next"
       Replay-Nonce:
       - kFngWNuTEtVdzgMRAAUDyJN3gZJsCrteto9tN9CfNgE
       Date:
       - Sun, 20 Dec 2015 20:15:48 GMT
       Content-Length:
-      - '291'
+      - '718'
     body:
       encoding: UTF-8
-      string: '{"type":"http-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/2","token":"gPFqUzqC5KCPFVLsKFupokvixUtMjLKFKo3DRr6IYqw","keyAuthorization":"gPFqUzqC5KCPFVLsKFupokvixUtMjLKFKo3DRr6IYqw.qI1ruB5BfZ_zok5ktYHWjcc6zK-TeyGTgF5xd3vPImI"}'
+      string: '{"identifier":{"type":"dns","value":"test.example.org"},"status":"pending","expires":"2015-12-27T15:15:48.677021543-05:00","challenges":[{"type":"tls-sni-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/1","token":"8_i1GV0-Bbhn1XGxpG_bHAKiyKgoonKJVeE3M5BySdg"},{"type":"http-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/2","token":"gPFqUzqC5KCPFVLsKFupokvixUtMjLKFKo3DRr6IYqw"},{"type":"dns-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/3","token":"r1YR1nqXAYB_1tAp-5zThtXSWqPFVyvyQdHrbFeYUY0"}],"combinations":[[2],[1],[0]]}'
     http_version: 
   recorded_at: Sun, 20 Dec 2015 20:15:48 GMT
-- request:
+- &1
+  request:
     method: get
-    uri: http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/2
+    uri: http://127.0.0.1:4000/acme/authz/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ
     body:
       encoding: UTF-8
       string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoia0ZuZ1dOdVRFdFZkemdNUkFBVUR5Sk4zZ1pKc0NydGV0bzl0TjlDZk5nRSIsImp3ayI6eyJrdHkiOiJSU0EiLCJlIjoiQVFBQiIsIm4iOiIzNHIzZDBYZEJvUWNXTHBhcHRocjdvdjVpMHl3Wk9DaEpIVzA5RW5yc3Fqbm5QZ1F3RXVCdmp5TGV5QU04ME56MU5oaVZnWmRvOXpZeWRoSEpxa3JpUHVKNVJ2eWV5SGowdHFXbkN5US1IOFh0QUJPeXdnUE9YbnZyb3NHa3lSY2R5VzJaeGhHZUV5NzEyVnB4TXBiTmNRQ0w5R0dBbGJQN0QxT1VoSDdyTHRhbGZ3aFBoSXgzcXJ4ZG1NWklsbzAwTGxzWU5kRzQ3RThiMnVmTDRKZHA2d1VQVHA1bzh6amNwSUE2M2hTQTRhRHd3R3ppYV95ZWd6aFNOQjBmcWQ1RWtDTjc4anEwd21CeU5BTG13RC1kVVdyb2FHY010R2R2S1g3ZkdoZnZxczB2NHFiSEVncVllU0xvM2c2ODdRUzB5aXJ0R1VyUktqQW9WZ2Z4eGd6N1EifX0","payload":"e30","signature":"FcBpL0LLHBRkfiNQVSuMj5ka91Z1CGAQxQVHZugT_tUt-kobIz0NzFn-3Xqsnt3PndbFC8QLSv2A8_Alyx-UjhCEn1DYXVFpH986nPSNMGk2EDIvXBG9fFSAdJ39o2CbrlorgC59Pd6M5kmke1fRiqAo6J9g_xJSQBG_uLkkh-n9drdZR7emIAzKCKm2XW4iC92v-21L4ItoXlCRElCT61Mpa4X_VMvimh1uw_RWtKOQgGa3uU7q3sIn0wqb69KTprOjXpQzPdJ8sTU98302npvnE0Af9M2hVmDes0FWhh4rYTerUDvTK5nRYIVQUnHuH5k8jofDpnjndI28xcyPRg"}'
@@ -219,26 +218,25 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 202
-      message: Accepted
+      code: 200
+      message: OK
     headers:
       Content-Type:
       - application/json
       Link:
-      - <http://127.0.0.1:4000/acme/authz/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ>;rel="up"
-      Location:
-      - http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/2
+      - <http://127.0.0.1:4000/acme/new-cert>;rel="next"
       Replay-Nonce:
       - MkVixvDaD5Hx6ugNMJcHoK9P4IOHxGIpw8DuTC0NUhU
       Date:
       - Sun, 20 Dec 2015 20:15:48 GMT
       Content-Length:
-      - '524'
+      - 1058
     body:
       encoding: UTF-8
-      string: '{"type":"http-01","status":"valid","uri":"http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/2","token":"gPFqUzqC5KCPFVLsKFupokvixUtMjLKFKo3DRr6IYqw","keyAuthorization":"gPFqUzqC5KCPFVLsKFupokvixUtMjLKFKo3DRr6IYqw.qI1ruB5BfZ_zok5ktYHWjcc6zK-TeyGTgF5xd3vPImI","validationRecord":[{"url":"http://test.example.org:5002/.well-known/acme-challenge/gPFqUzqC5KCPFVLsKFupokvixUtMjLKFKo3DRr6IYqw","hostname":"test.example.org","port":"5002","addressesResolved":["127.0.0.1"],"addressUsed":"127.0.0.1"}]}'
+      string: '{"identifier":{"type":"dns","value":"test.example.org"},"status":"valid","expires":"2015-12-27T15:15:48.677021543-05:00","challenges":[{"type":"tls-sni-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/1","token":"8_i1GV0-Bbhn1XGxpG_bHAKiyKgoonKJVeE3M5BySdg"},{"type":"http-01","status":"valid","uri":"http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/2","token":"gPFqUzqC5KCPFVLsKFupokvixUtMjLKFKo3DRr6IYqw","keyAuthorization":"gPFqUzqC5KCPFVLsKFupokvixUtMjLKFKo3DRr6IYqw.qI1ruB5BfZ_zok5ktYHWjcc6zK-TeyGTgF5xd3vPImI","validationRecord":[{"url":"http://test.example.org:5002/.well-known/acme-challenge/gPFqUzqC5KCPFVLsKFupokvixUtMjLKFKo3DRr6IYqw","hostname":"test.example.org","port":"5002","addressesResolved":["127.0.0.1"],"addressUsed":"127.0.0.1"}]},{"type":"dns-01","status":"pending","uri":"http://127.0.0.1:4000/acme/challenge/Yz8aW9C-OQoCUfNTSNCMmz3uygDov1RPSRm8x7UJkbQ/3","token":"r1YR1nqXAYB_1tAp-5zThtXSWqPFVyvyQdHrbFeYUY0"}],"combinations":[[2],[1],[0]]}'
     http_version: 
   recorded_at: Sun, 20 Dec 2015 20:15:48 GMT
+- *1
 - request:
     method: post
     uri: http://127.0.0.1:4000/acme/new-cert

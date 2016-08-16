@@ -3,11 +3,11 @@ class Acme::Client::Resources::Authorization
   DNS01 = Acme::Client::Resources::Challenges::DNS01
   TLSSNI01 = Acme::Client::Resources::Challenges::TLSSNI01
 
-  attr_reader :domain, :status, :expires, :http01, :dns01, :tls_sni01
+  attr_reader :client, :uri, :domain, :status, :expires, :http01, :dns01, :tls_sni01
 
-  def initialize(client, response)
+  def initialize(client, uri, response)
     @client = client
-    @uri = response.headers['Location']
+    @uri = uri
     assign_attributes(response.body)
   end
 
@@ -29,12 +29,16 @@ class Acme::Client::Resources::Authorization
 
   def assign_challenges(challenges)
     challenges.each do |attributes|
-      case attributes.fetch('type')
-      when 'http-01' then @http01 = HTTP01.new(@client, attributes)
-      when 'dns-01' then @dns01 = DNS01.new(@client, attributes)
-      when 'tls-sni-01' then @tls_sni01 = TLSSNI01.new(@client, attributes)
-        # else no-op
+      challenge = case attributes.fetch('type')
+                  when 'http-01'
+                    @http01 ||= HTTP01.new(self)
+                  when 'dns-01'
+                    @dns01 ||= DNS01.new(self)
+                  when 'tls-sni-01'
+                    @tls_sni01 ||= TLSSNI01.new(self)
       end
+
+      challenge.assign_attributes(attributes) if challenge
     end
   end
 end
