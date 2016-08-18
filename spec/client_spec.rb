@@ -97,6 +97,27 @@ describe Acme::Client do
     end
   end
 
+  context '#fetch_authorization' do
+    it 'succeed', vcr: { cassette_name: 'fetch_authorization' } do
+      authorization = active_client.fetch_authorization('http://127.0.0.1:4000/acme/authz/k6cRX6YUNQ1POyoapFpeZPRxWqH1eCRXnGjiwDzCens')
+
+      expect(authorization.uri).to eq('http://127.0.0.1:4000/acme/authz/k6cRX6YUNQ1POyoapFpeZPRxWqH1eCRXnGjiwDzCens')
+      expect(authorization.status).to eq('pending')
+
+      expect(authorization.http01.status).to eq('pending')
+      expect(authorization.http01.uri).to eq('http://127.0.0.1:4000/acme/challenge/k6cRX6YUNQ1POyoapFpeZPRxWqH1eCRXnGjiwDzCens/89')
+      expect(authorization.http01.token).to eq('bO70GbcVxjrFOc4WRTfzk6TkTkiXiUUvZJoDEJtnwKA')
+
+      expect(authorization.dns01.status).to eq('pending')
+      expect(authorization.dns01.uri).to eq('http://127.0.0.1:4000/acme/challenge/k6cRX6YUNQ1POyoapFpeZPRxWqH1eCRXnGjiwDzCens/86')
+      expect(authorization.dns01.token).to eq('Lb77RFlLHhFk3Fl6wXwpHL1jxeuzkDdg40jVY8YLehc')
+
+      expect(authorization.tls_sni01.status).to eq('pending')
+      expect(authorization.tls_sni01.uri).to eq('http://127.0.0.1:4000/acme/challenge/k6cRX6YUNQ1POyoapFpeZPRxWqH1eCRXnGjiwDzCens/87')
+      expect(authorization.tls_sni01.token).to eq('hoQ2KTahYeGh77T5I0E4xp8ebCbT1OHkSkX3kDaWy4Q')
+    end
+  end
+
   context '#new_certificate' do
     let(:domain) { 'test.example.org' }
     let(:private_key) { generate_private_key }
@@ -185,47 +206,6 @@ describe Acme::Client do
 
     it 'revoke a certificate fail when using an unknown key', vcr: { cassette_name: 'revoke_certificate_bad_key' } do
       expect { bad_client.revoke_certificate(certificate) }.to raise_error(Acme::Client::Error::Unauthorized)
-    end
-  end
-
-  context '#challenge_from_hash' do
-    let(:challenge_hash) do
-      { 'token' => 'some-token', 'uri' => '/some-uri' }
-    end
-
-    let(:client) { Acme::Client.new(private_key: 'fake-key') }
-    let(:http01) { Acme::Client::Resources::Challenges::HTTP01 }
-    let(:dns01) { Acme::Client::Resources::Challenges::DNS01 }
-    let(:tls_sni01) { Acme::Client::Resources::Challenges::TLSSNI01 }
-
-    it 'returns an HTTP01 challenge object with the specified parameters' do
-      challenge = client.challenge_from_hash(challenge_hash.merge('type' => http01::CHALLENGE_TYPE))
-
-      expect(challenge).to be_a(http01)
-      expect(challenge.uri).to eq challenge_hash['uri']
-      expect(challenge.token).to eq challenge_hash['token']
-    end
-
-    it 'returns a DNS01 challenge object with the specified parameters' do
-      challenge = client.challenge_from_hash(challenge_hash.merge('type' => dns01::CHALLENGE_TYPE))
-
-      expect(challenge).to be_a(dns01)
-      expect(challenge.uri).to eq challenge_hash['uri']
-      expect(challenge.token).to eq challenge_hash['token']
-    end
-
-    it 'returns an TLSSNI01 challenge object with the specified parameters' do
-      challenge = client.challenge_from_hash(challenge_hash.merge('type' => tls_sni01::CHALLENGE_TYPE))
-
-      expect(challenge).to be_a(tls_sni01)
-      expect(challenge.uri).to eq challenge_hash['uri']
-      expect(challenge.token).to eq challenge_hash['token']
-    end
-
-    it 'returns nil if an unsupported challenge type is provided' do
-      expect {
-        client.challenge_from_hash(challenge_hash.merge('type' => 'nope'))
-      }.to raise_error(RuntimeError, 'Unsupported resource type')
     end
   end
 end

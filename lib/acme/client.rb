@@ -56,7 +56,12 @@ class Acme::Client
     }
 
     response = connection.post(@operation_endpoints.fetch('new-authz'), payload)
-    ::Acme::Client::Resources::Authorization.new(self, response)
+    ::Acme::Client::Resources::Authorization.new(self, response.headers['Location'], response)
+  end
+
+  def fetch_authorization(uri)
+    response = connection.get(uri)
+    ::Acme::Client::Resources::Authorization.new(self, uri, response)
   end
 
   def new_certificate(csr)
@@ -85,24 +90,6 @@ class Acme::Client
     @connection ||= Faraday.new(@endpoint, **@connection_options) do |configuration|
       configuration.use Acme::Client::FaradayMiddleware, client: self
       configuration.adapter Faraday.default_adapter
-    end
-  end
-
-  def challenge_from_hash(arguments)
-    attributes = arguments.to_h
-    %w(type uri token).each do |key|
-      raise ArgumentError, "missing key: #{key}" unless attributes.key?(key)
-    end
-
-    case attributes.fetch('type')
-    when 'http-01'
-      Acme::Client::Resources::Challenges::HTTP01.new(self, attributes)
-    when 'dns-01'
-      Acme::Client::Resources::Challenges::DNS01.new(self, attributes)
-    when 'tls-sni-01'
-      Acme::Client::Resources::Challenges::TLSSNI01.new(self, attributes)
-    else
-      raise 'Unsupported resource type'
     end
   end
 

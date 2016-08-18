@@ -12,9 +12,6 @@ describe Acme::Client::Resources::Challenges::TLSSNI01 do
   it 'returns the correct certificate', vcr: { cassette_name: 'tls_sni01_metadata' } do
     expect(tls_sni01.certificate).to be_a(OpenSSL::X509::Certificate)
     expect(tls_sni01.private_key).to be_a(OpenSSL::PKey::RSA)
-    expect(tls_sni01.to_h['token']).to eq(tls_sni01.token)
-    expect(tls_sni01.to_h['uri']).to eq(tls_sni01.uri)
-    expect(tls_sni01.to_h['type']).to eq(tls_sni01.class::CHALLENGE_TYPE)
   end
 
   context '#verify' do
