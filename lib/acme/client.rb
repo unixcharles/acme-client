@@ -35,7 +35,7 @@ class Acme::Client
     load_directory!
   end
 
-  attr_reader :private_key, :nonces, :operation_endpoints
+  attr_reader :private_key, :nonces, :endpoint, :directory_uri, :operation_endpoints
 
   def register(contact:)
     payload = {
