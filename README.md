@@ -1,17 +1,18 @@
 # Acme::Client
+
 [![Build Status](https://travis-ci.org/unixcharles/acme-client.svg?branch=master)](https://travis-ci.org/unixcharles/acme-client)
 
 `acme-client` is a client implementation of the [ACME](https://letsencrypt.github.io/acme-spec) protocol in Ruby.
 
 You can find the ACME reference implementations of the [server](https://github.com/letsencrypt/boulder) in Go and the [client](https://github.com/letsencrypt/letsencrypt) in Python.
 
-ACME is part of the [Letsencrypt](https://letsencrypt.org/) project, which goal is to provide free SSL/TLS certificates with  automation of the acquiring and renewal process.
+ACME is part of the [Letsencrypt](https://letsencrypt.org/) project, which goal is to provide free SSL/TLS certificates with automation of the acquiring and renewal process.
 
 ## Installation
 
-Via Rubygems:
+Via RubyGems:
 
-	$ gem install acme-client
+    $ gem install acme-client
 
 Or add it to a Gemfile:
 
@@ -155,7 +156,7 @@ Ruby >= 2.1
 ## Development
 
 All the tests use VCR to mock the interaction with the server but if you
-need to record new interation against the server simply clone boulder and
+need to record new interaction against the server simply clone boulder and
 run it normally with `./start.py`.
 
 ## Pull request?
