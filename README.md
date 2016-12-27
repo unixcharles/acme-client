@@ -86,16 +86,16 @@ FileUtils.mkdir_p( File.join( 'public', File.dirname( challenge.filename ) ) )
 # We'll write the content of the file
 File.write( File.join( 'public', challenge.filename), challenge.file_content )
 
-# Optionally save the challenge for use at another time (eg: by a background job processor)
-File.write('challenge', challenge.to_h.to_json)
+# Optionally save the authorization URI for use at another time (eg: by a background job processor)
+File.write('authorization_uri', authorization.uri)
 
 # The challenge file can be served with a Ruby webserver.
 # You can run a webserver in another console for that purpose. You may need to forward ports on your router.
 #
 # $ ruby -run -e httpd public -p 8080 --bind-address 0.0.0.0
 
-# Load a saved challenge. This is only required if you need to reuse a saved challenge as outlined above.
-challenge = client.challenge_from_hash(JSON.parse(File.read('challenge')))
+# Load a challenge based on stored authorization URI. This is only required if you need to reuse a challenge as outlined above.
+challenge = client.fetch_authorization(File.read('authorization_uri')).http01
 
 # Once you are ready to serve the confirmation request you can proceed.
 challenge.request_verification # => true
