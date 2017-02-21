@@ -19,4 +19,10 @@ describe Acme::Client::SelfSignCertificate do
     self_sign_certificate = Acme::Client::SelfSignCertificate.new(private_key: private_key, subject_alt_names: ['test.example.org'])
     expect(self_sign_certificate.certificate.version).to eql(2)
   end
+
+  it 'sets the certificates serial number' do
+    private_key = generate_private_key
+    self_sign_certificate = Acme::Client::SelfSignCertificate.new(private_key: private_key, subject_alt_names: ['test.example.org'])
+    expect(self_sign_certificate.certificate.serial).to eql(1)
+  end
 end
