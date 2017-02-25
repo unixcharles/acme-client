@@ -7,6 +7,7 @@ require 'rspec'
 require 'vcr'
 require 'webmock/rspec'
 
+require 'asn1_helper'
 require 'http_helper'
 require 'retry_helper'
 require 'ssl_helper'
@@ -14,6 +15,7 @@ require 'tls_helper'
 require 'profile_helper' if ENV['RUBY_PROF']
 
 RSpec.configure do |c|
+  c.include Asn1Helper
   c.include HttpHelper
   c.include TlsHelper
   c.include RetryHelper
