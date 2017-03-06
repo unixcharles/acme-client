@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'acme-client'
+
+version = Acme::Client::VERSION
+
+`git add lib/acme/client/version.rb`
+`git commit -m "bump to #{version}"`
+`git tag 'v#{version}'`
+`git push --tags origin master`
+`gem build acme-client.gemspec`
+`gem push acme-client-#{version}.gem`
+`rm acme-client-#{version}.gem`
