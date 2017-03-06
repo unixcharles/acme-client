@@ -64,8 +64,12 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
       return unless env.body.is_a?(Hash)
       return unless env.body.key?('type')
 
-      env.body['type'].gsub('urn:acme:error:', '').split(/[_-]/).map {|type| type[0].upcase + type[1..-1] }.join
+      error_type_to_name env.body['type']
     end
+  end
+
+  def error_type_to_name(type)
+    type.gsub('urn:acme:error:', '').split(/[_-]/).map { |type| type[0].upcase + type[1..-1] }.join
   end
 
   def decode_body
