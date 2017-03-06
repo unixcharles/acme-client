@@ -130,10 +130,10 @@ describe Acme::Client::CertificateRequest do
     request = Acme::Client::CertificateRequest.new(names: %w(example.org www.example.org), private_key: test_key)
 
     extension = request.csr.attributes.find { |attribute|
-      attribute.value.first.first.value.first.value == 'subjectAltName'
+      asn1_dig(attribute).first.value == 'subjectAltName'
     }
     expect(extension).not_to be_nil
-    value = extension.value.first.first.value.last.value
+    value = asn1_dig(extension).last.value
     expect(value).to include('example.org')
     expect(value).to include('www.example.org')
   end
