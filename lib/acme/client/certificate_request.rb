@@ -79,7 +79,7 @@ class Acme::Client::CertificateRequest
 
   def generate
     OpenSSL::X509::Request.new.tap do |csr|
-      if @private_key.is_a? OpenSSL::PKey::EC and RbConfig::CONFIG['MAJOR'] == '2' and
+      if @private_key.is_a? OpenSSL::PKey::EC && RbConfig::CONFIG['MAJOR'] == '2' &&
          RbConfig::CONFIG['MINOR'].to_i < 4
         # OpenSSL::PKey::EC does not respect classic PKey interface (as defined by
         # PKey::RSA and PKey::DSA) until ruby 2.4.
