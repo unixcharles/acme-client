@@ -69,7 +69,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def error_type_to_klass(type)
-    type.gsub('urn:acme:error:', '').split(/[_-]/).map { |type_part| type_part[0].upcase + type_part[1..-1] }.join
+    type.gsub('urn:acme:error:', '').split(/[_-]/).sub(/^./) { |c| c.upcase }.join
   end
 
   def decode_body
