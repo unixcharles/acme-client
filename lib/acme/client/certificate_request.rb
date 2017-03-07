@@ -79,7 +79,15 @@ class Acme::Client::CertificateRequest
 
   def generate
     OpenSSL::X509::Request.new.tap do |csr|
-      csr.public_key = @private_key.public_key
+      if @private_key.is_a?(OpenSSL::PKey::EC) && RbConfig::CONFIG['MAJOR'] == '2' &&
+         RbConfig::CONFIG['MINOR'].to_i < 4
+        # OpenSSL::PKey::EC does not respect classic PKey interface (as defined by
+        # PKey::RSA and PKey::DSA) until ruby 2.4.
+        # Supporting this interface needs monkey patching of OpenSSL:PKey::EC, or
+        # subclassing it. Here, use a subclass.
+        @private_key = ECKeyPatch.new(@private_key)
+      end
+      csr.public_key = @private_key
       csr.subject = generate_subject
       csr.version = 2
       add_extension(csr)
@@ -109,3 +117,5 @@ class Acme::Client::CertificateRequest
     )
   end
 end
+
+require 'acme/client/certificate_request/ec_key_patch'
