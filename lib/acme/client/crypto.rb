@@ -2,7 +2,12 @@ class Acme::Client::Crypto
   attr_reader :private_key
 
   def initialize(private_key)
-    @private_key = private_key
+    if private_key.is_a?(OpenSSL::PKey::EC) && RbConfig::CONFIG['MAJOR'] == '2' &&
+       RbConfig::CONFIG['MINOR'].to_i < 4
+      @private_key = Acme::Client::CertificateRequest::ECKeyPatch.new(private_key)
+    else
+      @private_key = private_key
+    end
   end
 
   def generate_signed_jws(header:, payload:)

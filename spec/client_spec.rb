@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Acme::Client do
   let(:connection_options) { {} }
   let(:unregistered_client) { Acme::Client.new(private_key: generate_private_key, connection_options: connection_options) }
+  let(:unregistered_client_ecdsa) { Acme::Client.new(private_key: generate_ecdsa_private_key, connection_options: connection_options) }
 
   let(:registered_client) do
     client = Acme::Client.new(private_key: generate_private_key)
@@ -53,6 +54,13 @@ describe Acme::Client do
     it 'register successfully', vcr: { cassette_name: 'register_success' } do
       expect {
         registration = unregistered_client.register(contact: %w(mailto:cert-admin@example.com tel:+15145552222))
+        expect(registration).to be_a(Acme::Client::Resources::Registration)
+      }.to_not raise_error
+    end
+
+    it 'register successfully with a ECDSA key', vcr: { cassette_name: 'register_success_ecdsa' } do
+      expect {
+        registration = unregistered_client_ecdsa.register(contact: %w(mailto:cert-admin@example.com tel:+15145552222))
         expect(registration).to be_a(Acme::Client::Resources::Registration)
       }.to_not raise_error
     end
