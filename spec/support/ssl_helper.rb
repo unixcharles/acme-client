@@ -38,6 +38,12 @@ module SSLHelper
     KEYSTASH.next
   end
 
+  def generate_ecdsa_private_key
+    ec_key = OpenSSL::PKey::EC.new('prime256v1')
+    ec_key.generate_key
+    ec_key
+  end
+
   def generate_csr(common_name, private_key)
     request = OpenSSL::X509::Request.new
     request.subject = OpenSSL::X509::Name.new(
