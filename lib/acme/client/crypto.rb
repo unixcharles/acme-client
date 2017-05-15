@@ -1,16 +1,24 @@
 class Acme::Client::Crypto
   THUMBPRINT_DIGEST = OpenSSL::Digest::SHA256
 
-  attr_reader :jwk
+  attr_accessor :jwk
 
-  def initialize(private_key)
-    case private_key
-    when OpenSSL::PKey::RSA
-      @jwk = Acme::Client::JWK::RSA.new(private_key)
-    when OpenSSL::PKey::EC
-      @jwk = Acme::Client::JWK::ECDSA.new(private_key)
+  def self.from_jwk(jwk)
+    new(nil, jwk: jwk)
+  end
+
+  def initialize(private_key, jwk: nil)
+    if jwk.nil?
+      case private_key
+      when OpenSSL::PKey::RSA
+        @jwk = Acme::Client::JWK::RSA.new(private_key)
+      when OpenSSL::PKey::EC
+        @jwk = Acme::Client::JWK::ECDSA.new(private_key)
+      else
+        raise ArgumentError, "Can't handle #{private_key} as private key, only OpenSSL::PKey::RSA and OpenSSL::PKey::EC"
+      end
     else
-      raise ArgumentError, "Can't handle #{private_key} as private key, only OpenSSL::PKey::RSA and OpenSSL::PKey::EC"
+      @jwk = jwk
     end
   end
 
