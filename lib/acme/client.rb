@@ -18,6 +18,7 @@ require 'acme/client/self_sign_certificate'
 require 'acme/client/crypto'
 require 'acme/client/resources'
 require 'acme/client/faraday_middleware'
+require 'acme/client/jwk'
 require 'acme/client/error'
 
 class Acme::Client

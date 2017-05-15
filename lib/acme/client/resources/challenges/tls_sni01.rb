@@ -2,9 +2,10 @@
 
 class Acme::Client::Resources::Challenges::TLSSNI01 < Acme::Client::Resources::Challenges::Base
   CHALLENGE_TYPE = 'tls-sni-01'.freeze
+  DIGEST = OpenSSL::Digest::SHA256
 
   def hostname
-    digest = crypto.digest.hexdigest(authorization_key)
+    digest = DIGEST.hexdigest(authorization_key)
     "#{digest[0..31]}.#{digest[32..64]}.acme.invalid"
   end
 
