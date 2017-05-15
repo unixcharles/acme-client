@@ -20,6 +20,7 @@ require 'acme/client/resources'
 require 'acme/client/faraday_middleware'
 require 'acme/client/jwk'
 require 'acme/client/error'
+require 'acme/client/util'
 
 class Acme::Client
   DEFAULT_ENDPOINT = 'http://127.0.0.1:4000'.freeze

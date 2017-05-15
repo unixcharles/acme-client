@@ -22,9 +22,9 @@ class Acme::Client::JWK::RSA < Acme::Client::JWK::Base
   # Returns a Hash.
   def to_h
     {
-      e: Acme::Client::Crypto.urlsafe_base64(public_key.e.to_s(2)),
+      e: Acme::Client::Util.urlsafe_base64(public_key.e.to_s(2)),
       kty: 'RSA',
-      n: Acme::Client::Crypto.urlsafe_base64(public_key.n.to_s(2))
+      n: Acme::Client::Util.urlsafe_base64(public_key.n.to_s(2))
     }
   end
 

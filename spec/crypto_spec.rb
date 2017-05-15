@@ -4,8 +4,10 @@ describe Acme::Client::Crypto do
   let(:private_key) { generate_private_key }
   subject(:crypto) { Acme::Client::Crypto.new(private_key) }
 
-  it 'returns the private key' do
-    expect(crypto.private_key).to be(private_key)
+  context '#jwk' do
+    it 'is a JWK::Base subclass' do
+      expect(subject.jwk).to be_a(Acme::Client::JWK::Base)
+    end
   end
 
   context '#generate_signed_jws' do
@@ -17,8 +19,8 @@ describe Acme::Client::Crypto do
 
       expect(header).to include('a-header' => 'header-value')
       expect(header['typ']).to eq('JWT')
-      expect(header['alg']).to eq('RS256')
-      expect(header['jwk']['kty']).to eq('RSA')
+      expect(%w(RS256 ES256 ES384 ES512)).to include(header['alg'])
+      expect(%w(RSA EC)).to include(header['jwk']['kty'])
       expect(payload).to include('some' => 'data')
     end
   end

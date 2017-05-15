@@ -98,7 +98,7 @@ describe Acme::Client::CertificateRequest do
   it 'assigns the public key' do
     request = Acme::Client::CertificateRequest.new(common_name: 'example.org', private_key: test_key)
 
-    expect(request.csr.public_key.to_der).to eq(test_key.public_key.to_der)
+    expect(request.csr.public_key.to_der).to eq(Acme::Client::Util.public_key_to_der(test_key))
     expect(request.csr.verify(request.csr.public_key)).to be(true)
   end
 
@@ -141,7 +141,7 @@ describe Acme::Client::CertificateRequest do
   it 'signs the request with the private key' do
     request = Acme::Client::CertificateRequest.new(common_name: 'example.org', private_key: test_key)
 
-    expect(request.csr.verify(test_key.public_key)).to be(true)
+    expect(Acme::Client::Util.verify_csr(request.csr, test_key)).to be(true)
   end
 
   it 'supports ECDSA keys' do

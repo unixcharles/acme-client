@@ -59,8 +59,8 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
     {
       crv: @jwa_crv,
       kty: 'EC',
-      x: Acme::Client::Crypto.urlsafe_base64(coordinates[:x].to_s(2)),
-      y: Acme::Client::Crypto.urlsafe_base64(coordinates[:y].to_s(2))
+      x: Acme::Client::Util.urlsafe_base64(coordinates[:x].to_s(2)),
+      y: Acme::Client::Util.urlsafe_base64(coordinates[:y].to_s(2))
     }
   end
 

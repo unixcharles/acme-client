@@ -3,10 +3,6 @@ class Acme::Client::Crypto
 
   attr_reader :jwk
 
-  def self.urlsafe_base64(data)
-    Base64.urlsafe_encode64(data).sub(/[\s=]*\z/, '')
-  end
-
   def initialize(private_key)
     case private_key
     when OpenSSL::PKey::RSA
@@ -20,12 +16,12 @@ class Acme::Client::Crypto
 
   def generate_signed_jws(header:, payload:)
     header = base_jws_header.merge(header)
-    encoded_header = self.class.urlsafe_base64(header.to_json)
-    encoded_payload = self.class.urlsafe_base64(payload.to_json)
+    encoded_header = Acme::Client::Util.urlsafe_base64(header.to_json)
+    encoded_payload = Acme::Client::Util.urlsafe_base64(payload.to_json)
     signature_data = "#{encoded_header}.#{encoded_payload}"
 
     signature = jwk.sign signature_data
-    encoded_signature = self.class.urlsafe_base64(signature)
+    encoded_signature = Acme::Client::Util.urlsafe_base64(signature)
 
     {
       protected: encoded_header,
@@ -43,7 +39,7 @@ class Acme::Client::Crypto
   end
 
   def thumbprint
-    self.class.urlsafe_base64 THUMBPRINT_DIGEST.digest(jwk.to_json)
+    Acme::Client::Util.urlsafe_base64 THUMBPRINT_DIGEST.digest(jwk.to_json)
   end
 
   def private_key
