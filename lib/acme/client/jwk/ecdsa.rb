@@ -35,7 +35,7 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
 
   # Instantiate a new ECDSA JWK.
   #
-  # pricvate_key - A OpenSSL::PKey::EC instance.
+  # private_key - A OpenSSL::PKey::EC instance.
   #
   # Returns nothing.
   def initialize(private_key)
