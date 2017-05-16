@@ -4,7 +4,7 @@ class Acme::Client::JWK::RSA < Acme::Client::JWK::Base
 
   # Instantiate a new RSA JWK.
   #
-  # private_key - A 256 bit OpenSSL::PKey::RSA instance.
+  # private_key - A OpenSSL::PKey::RSA instance.
   #
   # Returns nothing.
   def initialize(private_key)
