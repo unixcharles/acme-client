@@ -36,10 +36,10 @@ describe Acme::Client::JWK do
 
     describe '#jwt' do
       it 'generates a valid JWT' do
-        jwt_s = subject.jwt(header: { 'a-header' => 'header-value' }, payload: { 'some' => 'data' })
-        jwt = JSON.parse(jwt_s)
-        header = JSON.parse(Base64.decode64(jwt['protected']))
-        payload = JSON.parse(Base64.decode64(jwt['payload']))
+        jws_s = subject.jws(header: { 'a-header' => 'header-value' }, payload: { 'some' => 'data' })
+        jws = JSON.parse(jws_s)
+        header = JSON.parse(Base64.decode64(jws['protected']))
+        payload = JSON.parse(Base64.decode64(jws['payload']))
 
         expect(header).to include('a-header' => 'header-value')
         expect(header['typ']).to eq('JWT')
@@ -81,10 +81,10 @@ describe Acme::Client::JWK do
 
     describe '#jwt' do
       it 'generates a valid JWT' do
-        jwt_s = subject.jwt(header: { 'a-header' => 'header-value' }, payload: { 'some' => 'data' })
-        jwt = JSON.parse(jwt_s)
-        header = JSON.parse(Base64.decode64(jwt['protected']))
-        payload = JSON.parse(Base64.decode64(jwt['payload']))
+        jws_s = subject.jws(header: { 'a-header' => 'header-value' }, payload: { 'some' => 'data' })
+        jws = JSON.parse(jws_s)
+        header = JSON.parse(Base64.decode64(jws['protected']))
+        payload = JSON.parse(Base64.decode64(jws['payload']))
 
         expect(header).to include('a-header' => 'header-value')
         expect(header['typ']).to eq('JWT')

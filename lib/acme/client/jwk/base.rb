@@ -1,17 +1,7 @@
 class Acme::Client::JWK::Base
   THUMBPRINT_DIGEST = OpenSSL::Digest::SHA256
 
-  # Generate a JWS JSON web token.
-  #
-  # header  - A Hash of extra header fields to include.
-  # payload - A Hash of payload data.
-  #
-  # Returns a JSON String.
-  def jwt(header: {}, payload: {})
-    jws(header: header.merge(typ: 'JWT'), payload: payload)
-  end
-
-  # Generate a JSON web signature.
+  # Generate a JWS JSON web signature.
   #
   # header  - A Hash of extra header fields to include.
   # payload - A Hash of payload data.
@@ -61,6 +51,7 @@ class Acme::Client::JWK::Base
   # Returns a Hash.
   def jws_header
     {
+      typ: 'JWT',
       alg: jwa_alg,
       jwk: to_h
     }
