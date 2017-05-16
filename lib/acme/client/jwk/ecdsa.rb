@@ -31,7 +31,7 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
     'secp521r1'  => 'ES512'
   }.freeze
 
-  attr_reader :private_key, :jwa_alg
+  attr_reader :jwa_alg
 
   # Instantiate a new ECDSA JWK.
   #
@@ -70,7 +70,7 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
   #
   # Returns a String signature.
   def sign(message)
-    private_key.sign(@digest.new, message)
+    @private_key.sign(@digest.new, message)
   end
 
   private
@@ -92,6 +92,6 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
   # rubocop:enable Metrics/AbcSize
 
   def public_key
-    private_key.public_key
+    @private_key.public_key
   end
 end

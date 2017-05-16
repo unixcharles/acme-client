@@ -34,10 +34,10 @@ class Acme::Client::Resources::Challenges::Base
   end
 
   def authorization_key
-    "#{token}.#{crypto.thumbprint}"
+    "#{token}.#{jwk.thumbprint}"
   end
 
-  def crypto
-    @crypto ||= Acme::Client::Crypto.new(client.private_key)
+  def jwk
+    @jwk ||= Acme::Client::JWK.from_private_key(client.private_key)
   end
 end

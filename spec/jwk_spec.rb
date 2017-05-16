@@ -34,9 +34,18 @@ describe Acme::Client::JWK do
       end
     end
 
-    describe '#private_key' do
-      it 'returns a OpenSSL::PKey::RSA' do
-        expect(subject.private_key).to be_a(key_class)
+    describe '#jwt' do
+      it 'generates a valid JWT' do
+        jwt_s = subject.jwt(header: { 'a-header' => 'header-value' }, payload: { 'some' => 'data' })
+        jwt = JSON.parse(jwt_s)
+        header = JSON.parse(Base64.decode64(jwt['protected']))
+        payload = JSON.parse(Base64.decode64(jwt['payload']))
+
+        expect(header).to include('a-header' => 'header-value')
+        expect(header['typ']).to eq('JWT')
+        expect(header['alg']).to eq('RS256')
+        expect(header['jwk']['kty']).to eq('RSA')
+        expect(payload).to include('some' => 'data')
       end
     end
   end
@@ -70,9 +79,18 @@ describe Acme::Client::JWK do
       end
     end
 
-    describe '#private_key' do
-      it 'returns a OpenSSL::PKey::RSA' do
-        expect(subject.private_key).to be_a(key_class)
+    describe '#jwt' do
+      it 'generates a valid JWT' do
+        jwt_s = subject.jwt(header: { 'a-header' => 'header-value' }, payload: { 'some' => 'data' })
+        jwt = JSON.parse(jwt_s)
+        header = JSON.parse(Base64.decode64(jwt['protected']))
+        payload = JSON.parse(Base64.decode64(jwt['payload']))
+
+        expect(header).to include('a-header' => 'header-value')
+        expect(header['typ']).to eq('JWT')
+        expect(%w(ES256 ES384 ES512)).to include(header['alg'])
+        expect(header['jwk']['kty']).to eq('EC')
+        expect(payload).to include('some' => 'data')
       end
     end
   end

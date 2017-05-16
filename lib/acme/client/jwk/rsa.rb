@@ -2,8 +2,6 @@ class Acme::Client::JWK::RSA < Acme::Client::JWK::Base
   # Digest algorithm to use when signing.
   DIGEST = OpenSSL::Digest::SHA256
 
-  attr_reader :private_key
-
   # Instantiate a new RSA JWK.
   #
   # private_key - A 256 bit OpenSSL::PKey::RSA instance.
@@ -34,7 +32,7 @@ class Acme::Client::JWK::RSA < Acme::Client::JWK::Base
   #
   # Returns a String signature.
   def sign(message)
-    private_key.sign(DIGEST.new, message)
+    @private_key.sign(DIGEST.new, message)
   end
 
   # The name of the algorithm as needed for the `alg` member of a JWS object.
@@ -49,6 +47,6 @@ class Acme::Client::JWK::RSA < Acme::Client::JWK::Base
   private
 
   def public_key
-    private_key.public_key
+    @private_key.public_key
   end
 end
