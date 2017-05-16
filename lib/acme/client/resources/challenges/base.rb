@@ -34,10 +34,6 @@ class Acme::Client::Resources::Challenges::Base
   end
 
   def authorization_key
-    "#{token}.#{jwk.thumbprint}"
-  end
-
-  def jwk
-    @jwk ||= Acme::Client::JWK.from_private_key(client.private_key)
+    "#{token}.#{client.jwk.thumbprint}"
   end
 end

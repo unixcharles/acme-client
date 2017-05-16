@@ -14,7 +14,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   def call(env)
     @env = env
     @env[:request_headers]['User-Agent'] = USER_AGENT
-    @env.body = jwk.jwt(header: { nonce: pop_nonce }, payload: env.body)
+    @env.body = client.jwk.jwt(header: { nonce: pop_nonce }, payload: env.body)
     @app.call(env).on_complete { |response_env| on_complete(response_env) }
   rescue Faraday::TimeoutError
     raise Acme::Client::Error::Timeout
@@ -115,13 +115,5 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
 
   def nonces
     client.nonces
-  end
-
-  def private_key
-    client.private_key
-  end
-
-  def jwk
-    @jwk ||= Acme::Client::JWK.from_private_key(private_key)
   end
 end

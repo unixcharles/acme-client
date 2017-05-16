@@ -30,13 +30,23 @@ class Acme::Client
     'revoke-cert' => '/acme/revoke-cert'
   }.freeze
 
-  def initialize(private_key:, endpoint: DEFAULT_ENDPOINT, directory_uri: nil, connection_options: {})
-    @endpoint, @private_key, @directory_uri, @connection_options = endpoint, private_key, directory_uri, connection_options
+  def initialize(jwk: nil, private_key: nil, endpoint: DEFAULT_ENDPOINT, directory_uri: nil, connection_options: {})
+    if jwk.nil? && private_key.nil?
+      raise ArgumentError, 'must specify jwk or private_key'
+    end
+
+    @jwk = if jwk
+      jwk
+    else
+      Acme::Client::JWK.from_private_key(private_key)
+    end
+
+    @endpoint, @directory_uri, @connection_options = endpoint, directory_uri, connection_options
     @nonces ||= []
     load_directory!
   end
 
-  attr_reader :private_key, :nonces, :endpoint, :directory_uri, :operation_endpoints
+  attr_reader :jwk, :nonces, :endpoint, :directory_uri, :operation_endpoints
 
   def register(contact:)
     payload = {
