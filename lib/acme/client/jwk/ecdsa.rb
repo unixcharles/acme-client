@@ -70,7 +70,23 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
   #
   # Returns a String signature.
   def sign(message)
-    @private_key.sign(@digest.new, message)
+    # DER encoded ASN.1 signature
+    der = @private_key.sign(@digest.new, message)
+
+    # ASN.1 SEQUENCE
+    seq = OpenSSL::ASN1.decode(der)
+
+    # ASN.1 INTs
+    ints = seq.value
+
+    # BigNumbers
+    bns = ints.map(&:value)
+
+    # Binary R/S values
+    r, s = bns.map { |bn| [bn.to_s(16)].pack('H*') }
+
+    # JWS wants raw R/S concatenated.
+    [r, s].join
   end
 
   private

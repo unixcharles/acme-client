@@ -71,6 +71,12 @@ describe Acme::Client::JWK do
       it 'returns a String' do
         expect(subject.sign(message)).to be_a(String)
       end
+
+      it 'is not ASN.1 encoded' do
+        expect {
+          OpenSSL::ASN1.decode(subject.sign(message))
+        }.to raise_error
+      end
     end
 
     describe '#jwa_alg' do
