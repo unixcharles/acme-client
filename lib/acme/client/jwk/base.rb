@@ -1,6 +1,13 @@
 class Acme::Client::JWK::Base
   THUMBPRINT_DIGEST = OpenSSL::Digest::SHA256
 
+  # Initialize a new JWK.
+  #
+  # Returns nothing.
+  def initialize(_private_key)
+    raise NotImplementedError
+  end
+
   # Generate a JWS JSON web signature.
   #
   # header  - A Hash of extra header fields to include.
