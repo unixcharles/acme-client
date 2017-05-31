@@ -34,7 +34,7 @@ class Acme::Client::JWK::Base
   #
   # Returns a Hash.
   def to_h
-    raise 'not implemented'
+    raise NotImplementedError
   end
 
   # JWK thumbprint as used for key authorization.
@@ -61,7 +61,7 @@ class Acme::Client::JWK::Base
   #
   # Returns a String.
   def jwa_alg
-    raise 'not implemented'
+    raise NotImplementedError
   end
 
   # Sign a message with the private key.
@@ -71,7 +71,7 @@ class Acme::Client::JWK::Base
   # Returns a String signature.
   # rubocop:disable Lint/UnusedMethodArgument
   def sign(message)
-    raise 'not implemented'
+    raise NotImplementedError
   end
   # rubocop:enable Lint/UnusedMethodArgument
 end
