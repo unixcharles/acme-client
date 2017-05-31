@@ -1,37 +1,23 @@
 class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
-  # ECDSA Curves supported by JWA.
+  # JWA parameters for supported OpenSSL curves.
   # https://tools.ietf.org/html/rfc7518#section-3.1
-  KNOWN_CURVES = %w(
-    prime256v1
-    secp384r1
-    secp521r1
-  ).freeze
-
-  # Mapping from OpenSSL curve names to associated digests.
-  # https://tools.ietf.org/html/rfc7518#section-3.1
-  DIGEST_MAP = {
-    'prime256v1' => OpenSSL::Digest::SHA256,
-    'secp384r1'  => OpenSSL::Digest::SHA384,
-    'secp521r1'  => OpenSSL::Digest::SHA512
+  KNWON_CURVES = {
+    'prime256v1' => {
+      jwa_crv: 'P-256',
+      jwa_alg: 'ES384',
+      digest: OpenSSL::Digest::SHA256
+    }.freeze,
+    'secp384r1' => {
+      jwa_crv: 'P-384',
+      jwa_alg: 'ES384',
+      digest: OpenSSL::Digest::SHA384
+    }.freeze,
+    'secp521r1' => {
+      jwa_crv: 'P-521',
+      jwa_alg: 'ES512',
+      digest: OpenSSL::Digest::SHA512
+    }.freeze
   }.freeze
-
-  # Mappings from OpenSSL to JWA "crv" names.
-  # https://tools.ietf.org/html/rfc7518#section-3.1
-  JWA_CRV_MAP = {
-    'prime256v1' => 'P-256',
-    'secp384r1'  => 'P-384',
-    'secp521r1'  => 'P-521'
-  }.freeze
-
-  # Mapping from OpenSSL curve names to associated JWS "alg" names.
-  # https://tools.ietf.org/html/rfc7518#section-3.1
-  JWA_ALG_MAP = {
-    'prime256v1' => 'ES256',
-    'secp384r1'  => 'ES384',
-    'secp521r1'  => 'ES512'
-  }.freeze
-
-  attr_reader :jwa_alg
 
   # Instantiate a new ECDSA JWK.
   #
@@ -43,13 +29,18 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
       raise ArgumentError, 'private_key must be a OpenSSL::PKey::EC'
     end
 
-    curve = private_key.group.curve_name
-    raise ArgumentError, 'Unknown EC curve' unless KNOWN_CURVES.include?(curve)
+    unless @curve_params = KNWON_CURVES[private_key.group.curve_name]
+      raise ArgumentError, 'Unknown EC curve'
+    end
 
     @private_key = private_key
-    @digest = DIGEST_MAP[curve]
-    @jwa_crv = JWA_CRV_MAP[curve]
-    @jwa_alg = JWA_ALG_MAP[curve]
+  end
+
+  # The name of the algorithm as needed for the `alg` member of a JWS object.
+  #
+  # Returns a String.
+  def jwa_alg
+    @curve_params[:jwa_alg]
   end
 
   # Get this JWK as a Hash for JSON serialization.
@@ -57,7 +48,7 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
   # Returns a Hash.
   def to_h
     {
-      crv: @jwa_crv,
+      crv: @curve_params[:jwa_crv],
       kty: 'EC',
       x: Acme::Client::Util.urlsafe_base64(coordinates[:x].to_s(2)),
       y: Acme::Client::Util.urlsafe_base64(coordinates[:y].to_s(2))
@@ -71,7 +62,7 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
   # Returns a String signature.
   def sign(message)
     # DER encoded ASN.1 signature
-    der = @private_key.sign(@digest.new, message)
+    der = @private_key.sign(@curve_params[:digest].new, message)
 
     # ASN.1 SEQUENCE
     seq = OpenSSL::ASN1.decode(der)
