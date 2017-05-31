@@ -4,7 +4,7 @@ class Acme::Client::JWK::Base
   # Initialize a new JWK.
   #
   # Returns nothing.
-  def initialize(_private_key)
+  def initialize
     raise NotImplementedError
   end
 
