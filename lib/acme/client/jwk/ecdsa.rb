@@ -1,10 +1,10 @@
 class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
   # JWA parameters for supported OpenSSL curves.
   # https://tools.ietf.org/html/rfc7518#section-3.1
-  KNWON_CURVES = {
+  KNOWN_CURVES = {
     'prime256v1' => {
       jwa_crv: 'P-256',
-      jwa_alg: 'ES384',
+      jwa_alg: 'ES256',
       digest: OpenSSL::Digest::SHA256
     }.freeze,
     'secp384r1' => {
@@ -29,7 +29,7 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
       raise ArgumentError, 'private_key must be a OpenSSL::PKey::EC'
     end
 
-    unless @curve_params = KNWON_CURVES[private_key.group.curve_name]
+    unless @curve_params = KNOWN_CURVES[private_key.group.curve_name]
       raise ArgumentError, 'Unknown EC curve'
     end
 
