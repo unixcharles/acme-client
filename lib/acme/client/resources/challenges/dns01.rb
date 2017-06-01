@@ -4,6 +4,7 @@ class Acme::Client::Resources::Challenges::DNS01 < Acme::Client::Resources::Chal
   CHALLENGE_TYPE = 'dns-01'.freeze
   RECORD_NAME = '_acme-challenge'.freeze
   RECORD_TYPE = 'TXT'.freeze
+  DIGEST = OpenSSL::Digest::SHA256
 
   def record_name
     RECORD_NAME
@@ -14,6 +15,6 @@ class Acme::Client::Resources::Challenges::DNS01 < Acme::Client::Resources::Chal
   end
 
   def record_content
-    crypto.urlsafe_base64(crypto.digest.digest(authorization_key))
+    Acme::Client::Util.urlsafe_base64(DIGEST.digest(authorization_key))
   end
 end

@@ -46,7 +46,7 @@ class Acme::Client::SelfSignCertificate
     certificate = OpenSSL::X509::Certificate.new
     certificate.not_before = not_before
     certificate.not_after = not_after
-    certificate.public_key = private_key.public_key
+    Acme::Client::Util.set_public_key(certificate, private_key)
     certificate.version = 2
     certificate.serial = 1
     certificate
