@@ -19,6 +19,7 @@ require 'acme/client/resources'
 require 'acme/client/faraday_middleware'
 require 'acme/client/jwk'
 require 'acme/client/error'
+require 'acme/client/error/rate_limited'
 require 'acme/client/util'
 
 class Acme::Client

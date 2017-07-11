@@ -126,15 +126,17 @@ describe Acme::Client do
     let(:request) { Acme::Client::CertificateRequest.new(common_name: domain, private_key: generate_private_key) }
 
     before(:each) do
-      registration = client.register(contact: 'mailto:info@example.com')
-      registration.agree_terms
-      authorization = client.authorize(domain: domain)
-      http01 = authorization.http01
+      VCR.use_cassette 'new_reg_success' do
+        registration = client.register(contact: 'mailto:info@example.com')
+        registration.agree_terms
+        authorization = client.authorize(domain: domain)
+        http01 = authorization.http01
 
-      serve_once(http01.file_content) do
-        http01.request_verification
-        retry_until(condition: lambda { http01.status != 'pending' }) do
-          http01.verify_status
+        serve_once(http01.file_content) do
+          http01.request_verification
+          retry_until(condition: lambda { http01.status != 'pending' }) do
+            http01.verify_status
+          end
         end
       end
     end
@@ -168,6 +170,34 @@ describe Acme::Client do
       expect(certificate.x509_chain).to contain_exactly(a_kind_of(OpenSSL::X509::Certificate), a_kind_of(OpenSSL::X509::Certificate))
       expect(certificate.x509_fullchain.first).to be(certificate.x509)
       expect(certificate.url).to eq('http://127.0.0.1:4000/acme/cert/ff87f2112cf6596eddb5df39113701b1572a')
+    end
+
+    it 'fails to create when rate limited and raises the proper exception' do
+      seven_days = 7 * 24 * 60 * 60 # 7 days
+      error_message = "Error creating new cert :: too many certificates already issued for exact set of domains: #{domain}"
+
+      stub_request(:post, 'http://127.0.0.1:4000/acme/new-cert').with(
+        headers: {
+          'Accept' => '*/*',
+          'User-Agent' => Acme::Client::FaradayMiddleware::USER_AGENT
+        }
+      ).to_return(
+        body: {
+          type: 'urn:acme:error:rateLimited',
+          detail: error_message
+        }.to_json,
+        status: 429,
+        headers: {
+          'Content-Type' => 'application/problem+json',
+          'Retry-After' => seven_days.to_s
+        }
+      )
+
+      expect { client.new_certificate(request) }.to raise_error { |error|
+        expect(error).to be_a(Acme::Client::Error::RateLimited)
+        expect(error.retry_after).to eq(seven_days)
+        expect(error.message).to eq(error_message)
+      }
     end
   end
 
