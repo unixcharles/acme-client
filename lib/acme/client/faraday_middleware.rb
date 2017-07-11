@@ -40,10 +40,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def raise_on_error!
-    if error_class == Acme::Client::Error::RateLimited
-      raise error_class.new(error_message, env.response_headers['Retry-After'])
-    end
-    raise error_class, error_message
+    raise error_class.new(error_message, env)
   end
 
   def error_message

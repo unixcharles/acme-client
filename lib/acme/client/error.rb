@@ -1,4 +1,9 @@
 class Acme::Client::Error < StandardError
+  def initialize(message = nil, env = nil)
+    super(message)
+    @env = env
+  end
+
   class NotFound < Acme::Client::Error; end
   class BadCSR < Acme::Client::Error; end
   class BadNonce < Acme::Client::Error; end

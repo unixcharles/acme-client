@@ -1,8 +1,7 @@
 class Acme::Client::Error::RateLimited < Acme::Client::Error
-  attr_reader :retry_after
+  DEFAULT_RETRY_AFTER = 10
 
-  def initialize(message, retry_after = 10)
-    super(message)
-    @retry_after = retry_after.nil? ? 10 : retry_after.to_i
+  def retry_after
+    @env.response_headers.fetch('Retry-After', DEFAULT_RETRY_AFTER).to_i
   end
 end
