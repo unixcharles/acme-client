@@ -60,12 +60,10 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def error_name
-    @error_name ||= begin
-      return unless env.body.is_a?(Hash)
-      return unless env.body.key?('type')
+    return unless env.body.is_a?(Hash)
+    return unless env.body.key?('type')
 
-      error_type_to_klass env.body['type']
-    end
+    error_type_to_klass env.body['type']
   end
 
   def error_type_to_klass(type)
