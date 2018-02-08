@@ -15,6 +15,6 @@ class Acme::Client::Resources::Challenges::DNS01 < Acme::Client::Resources::Chal
   end
 
   def record_content
-    Acme::Client::Util.urlsafe_base64(DIGEST.digest(authorization_key))
+    Acme::Client::Util.urlsafe_base64(DIGEST.digest(key_authorization))
   end
 end

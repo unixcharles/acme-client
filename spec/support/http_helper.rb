@@ -16,6 +16,7 @@ module HttpHelper
       end
 
       yield
+      sleep(1)
     ensure
       server.shutdown
       thread.join(5)

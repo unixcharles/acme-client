@@ -15,7 +15,7 @@ class Acme::Client::JWK::Base
   #
   # Returns a JSON String.
   def jws(header: {}, payload: {})
-    header = jws_header.merge(header)
+    header = jws_header(header)
     encoded_header = Acme::Client::Util.urlsafe_base64(header.to_json)
     encoded_payload = Acme::Client::Util.urlsafe_base64(payload.to_json)
 
@@ -56,12 +56,13 @@ class Acme::Client::JWK::Base
   # typ: - Value for the `typ` field. Default 'JWT'.
   #
   # Returns a Hash.
-  def jws_header
-    {
+  def jws_header(header)
+    jws = {
       typ: 'JWT',
       alg: jwa_alg,
-      jwk: to_h
-    }
+    }.merge(header)
+    jws[:jwk] = to_h if header[:kid].nil?
+    jws
   end
 
   # The name of the algorithm as needed for the `alg` member of a JWS object.

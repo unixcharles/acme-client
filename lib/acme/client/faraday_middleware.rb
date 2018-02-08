@@ -3,18 +3,17 @@
 class Acme::Client::FaradayMiddleware < Faraday::Middleware
   attr_reader :env, :response, :client
 
-  repo_url = 'https://github.com/unixcharles/acme-client'
-  USER_AGENT = "Acme::Client v#{Acme::Client::VERSION} (#{repo_url})".freeze
-
-  def initialize(app, client:)
+  def initialize(app, client:, mode:)
     super(app)
     @client = client
+    @mode = mode
   end
 
   def call(env)
     @env = env
-    @env[:request_headers]['User-Agent'] = USER_AGENT
-    @env.body = client.jwk.jws(header: { nonce: pop_nonce }, payload: env.body)
+    @env[:request_headers]['User-Agent'] = Acme::Client::USER_AGENT
+
+    @env.body = client.jwk.jws(header: jws_header, payload: env.body)
     @app.call(env).on_complete { |response_env| on_complete(response_env) }
   rescue Faraday::TimeoutError, Faraday::ConnectionFailed
     raise Acme::Client::Error::Timeout
@@ -34,6 +33,12 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   private
+
+  def jws_header
+    headers = { nonce: pop_nonce, url: env.url.to_s }
+    headers[:kid] = client.kid if @mode == :kid
+    headers
+  end
 
   def raise_on_not_found!
     raise Acme::Client::Error::NotFound, env.url.to_s if env.status == 404
@@ -67,13 +72,13 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def error_type_to_klass(type)
-    type.gsub('urn:acme:error:', '').split(/[_-]/).map { |type_part| type_part[0].upcase + type_part[1..-1] }.join
+    type.gsub('urn:ietf:params:acme:error:', '').split(/[_-]/).map { |type_part| type_part[0].upcase + type_part[1..-1] }.join
   end
 
   def decode_body
-    content_type = env.response_headers['Content-Type']
+    content_type = env.response_headers['Content-Type'].to_s
 
-    if content_type == 'application/json' || content_type == 'application/problem+json'
+    if content_type.start_with?('application/json') || content_type.start_with?('application/problem+json')
       JSON.parse(env.body)
     else
       env.body
@@ -95,20 +100,20 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def store_nonce
-    nonces << env.response_headers['replay-nonce']
+    nonce = env.response_headers['replay-nonce']
+    nonces << nonce if nonce
   end
 
   def pop_nonce
     if nonces.empty?
       get_nonce
-    else
-      nonces.pop
     end
+
+    nonces.pop
   end
 
   def get_nonce
-    response = Faraday.head(env.url, nil, 'User-Agent' => USER_AGENT)
-    response.headers['replay-nonce']
+    client.get_nonce
   end
 
   def nonces

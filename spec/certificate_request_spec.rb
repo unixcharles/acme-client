@@ -120,12 +120,6 @@ describe Acme::Client::CertificateRequest do
     expect(csr_subject).to eq(subject)
   end
 
-  it 'does not create a subjectAltName extension with a single domain' do
-    request = Acme::Client::CertificateRequest.new(common_name: 'example.org', private_key: test_key)
-
-    expect(request.csr.attributes).to be_empty
-  end
-
   it 'creates a subjectAltName extension with multiple names' do
     request = Acme::Client::CertificateRequest.new(names: %w(example.org www.example.org), private_key: test_key)
 
