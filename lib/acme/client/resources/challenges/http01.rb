@@ -9,7 +9,7 @@ class Acme::Client::Resources::Challenges::HTTP01 < Acme::Client::Resources::Cha
   end
 
   def file_content
-    authorization_key
+    key_authorization
   end
 
   def filename

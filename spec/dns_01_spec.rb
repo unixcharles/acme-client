@@ -1,46 +1,25 @@
 require 'spec_helper'
 
 describe Acme::Client::Resources::Challenges::DNS01 do
-  let(:dns01) do
-    client = Acme::Client.new(private_key: generate_private_key)
-    registration = client.register(contact: 'mailto:info@example.com')
-    registration.agree_terms
-    authorization = client.authorize(domain: 'test.example.com')
-    authorization.dns01
+  let(:private_key) { generate_private_key }
+  let(:client) do
+    client = Acme::Client.new(private_key: private_key, directory: $directory_url)
+    client
   end
 
-  it 'returns the correct record metadata', vcr: { cassette_name: 'dns01_metadata' } do
+  let(:dns01) do
+    Acme::Client::Resources::Challenges::DNS01.new(
+      client,
+      url: 'https://0.0.0.0:14000/chalZ/pvR3znNWodojN2UaQMHXwgS3wgChw8UkDkqfUUw2t9g',
+      token: 'teKdptO0MN73jZL9MtC7tqWr80tyInBIo1P1uqQNHuw',
+      status: 'pending',
+    )
+  end
+
+  it 'returns the correct record metadata' do
     expect(dns01.record_name).to eq '_acme-challenge'
     expect(dns01.record_type).to eq 'TXT'
     expect(dns01.record_content).to be_a(String)
   end
 
-  it 'successfully verify the challenge', vcr: { cassette_name: 'dns01_verify_success' } do
-    expect {
-      expect(dns01.request_verification).to be(true)
-    }.to_not raise_error
-
-    expect {
-      retry_until(condition: lambda { dns01.status != 'pending' }) do
-        dns01.verify_status
-      end
-    }.to_not raise_error
-
-    expect(dns01.status).to eq('valid')
-  end
-
-  it 'fail to verify the challenge and return the status', vcr: { cassette_name: 'dns01_verify_failure' } do
-    expect {
-      expect(dns01.request_verification).to be(true)
-    }.to_not raise_error
-
-    expect {
-      retry_until(condition: lambda { dns01.status != 'pending' }) do
-        dns01.verify_status
-      end
-    }.to_not raise_error
-
-    expect(dns01.status).to eq('invalid')
-    expect(dns01.error).to_not be_empty
-  end
 end

@@ -1,39 +1,43 @@
+# frozen_string_literal: true
+
 class Acme::Client::Resources::Challenges::Base
-  attr_reader :authorization, :status, :uri, :token, :error
+  attr_reader :status, :url, :token, :error
 
-  def initialize(authorization)
-    @authorization = authorization
+  def initialize(client, **arguments)
+    @client = client
+    assign_attributes(arguments)
   end
-
-  def client
-    authorization.client
-  end
-
-  def verify_status
-    authorization.verify_status
-
-    status
-  end
-
-  def request_verification
-    response = client.connection.post(@uri, resource: 'challenge', type: challenge_type, keyAuthorization: authorization_key)
-    response.success?
-  end
-
-  def assign_attributes(attributes)
-    @status = attributes.fetch('status', 'pending')
-    @uri = attributes.fetch('uri')
-    @token = attributes.fetch('token')
-    @error = attributes['error']
-  end
-
-  private
 
   def challenge_type
     self.class::CHALLENGE_TYPE
   end
 
-  def authorization_key
-    "#{token}.#{client.jwk.thumbprint}"
+  def key_authorization
+    "#{token}.#{@client.jwk.thumbprint}"
+  end
+
+  def reload
+    assign_attributes **@client.challenge(url: url).to_h
+    true
+  end
+
+  def request_validation
+    assign_attributes **@client.request_challenge_validation(
+      url: url, key_authorization: key_authorization
+    ).to_h
+    true
+  end
+
+  def to_h
+    { status: status, url: url, token: token, error: error }
+  end
+
+  private
+
+  def assign_attributes(status:, url:, token:, error: nil)
+    @status = status
+    @url = url
+    @token = token
+    @error = error
   end
 end

@@ -104,8 +104,6 @@ class Acme::Client::CertificateRequest
   end
 
   def add_extension(csr)
-    return if @names.size <= 1
-
     extension = OpenSSL::X509::ExtensionFactory.new.create_extension(
       'subjectAltName', @names.map { |name| "DNS:#{name}" }.join(', '), false
     )

@@ -1,16 +1,31 @@
 class Acme::Client::Error < StandardError
-  class NotFound < Acme::Client::Error; end
-  class BadCSR < Acme::Client::Error; end
-  class BadNonce < Acme::Client::Error; end
-  class Connection < Acme::Client::Error; end
-  class Dnssec < Acme::Client::Error; end
-  class Malformed < Acme::Client::Error; end
-  class ServerInternal < Acme::Client::Error; end
-  class Acme::Tls < Acme::Client::Error; end
-  class Unauthorized < Acme::Client::Error; end
-  class UnknownHost < Acme::Client::Error; end
   class Timeout < Acme::Client::Error; end
-  class RateLimited < Acme::Client::Error; end
-  class RejectedIdentifier < Acme::Client::Error; end
-  class UnsupportedIdentifier < Acme::Client::Error; end
+
+  class ClientError < Acme::Client::Error; end
+  class InvalidDirectory < ClientError; end
+  class UnsupporedOperation < ClientError; end
+  class UnsupportedChallengeType < ClientError; end
+  class NotFound < ClientError; end
+
+  class ServerError < Acme::Client::Error; end
+  class BadCSR < ServerError; end
+  class BadNonce < ServerError; end
+  class BadSignatureAlgorithm < ServerError; end
+  class InvalidContact < ServerError; end
+  class UnsupportedContact < ServerError; end
+  class ExternalAccountRequired < ServerError; end
+  class AccountDoesNotExist < ServerError; end
+  class Malformed < ServerError; end
+  class RateLimited < ServerError; end
+  class RejectedIdentifier < ServerError; end
+  class ServerInternal < ServerError; end
+  class Unauthorized < ServerError; end
+  class UnsupportedIdentifier < ServerError; end
+  class UserActionRequired < ServerError; end
+  class BadRevocationReason < ServerError; end
+  class Caa < ServerError; end
+  class Dns < ServerError; end
+  class Connection < ServerError; end
+  class Tls < ServerError; end
+  class IncorrectResponse < ServerError; end
 end

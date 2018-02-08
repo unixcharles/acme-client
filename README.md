@@ -46,7 +46,7 @@ require 'acme-client'
 client = Acme::Client.new(private_key: private_key, endpoint: endpoint, connection_options: { request: { open_timeout: 5, timeout: 5 } })
 
 # If the private key is not known to the server, we need to register it for the first time.
-registration = client.register(contact: 'mailto:contact@example.com')
+registration = client.register(terms_of_service_agreed: true, contact: 'mailto:contact@example.com')
 
 # You may need to agree to the terms of service (that's up the to the server to require it or not but boulder does by default)
 registration.agree_terms

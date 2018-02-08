@@ -26,7 +26,8 @@ module SSLHelper
       when 2
         generate_ecdsa_key('secp384r1')
       when 3
-        generate_ecdsa_key('secp521r1')
+        # generate_ecdsa_key('secp521r1')
+        OpenSSL::PKey::RSA.new(2048)
       end
     end
 
