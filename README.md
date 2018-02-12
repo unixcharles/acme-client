@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/unixcharles/acme-client.svg?branch=master)](https://travis-ci.org/unixcharles/acme-client)
 
-`acme-client` is a client implementation of the [ACME](https://letsencrypt.github.io/acme-spec) protocol in Ruby.
+`acme-client` is a client implementation of the [ACME](https://github.com/ietf-wg-acme/acme/) protocol in Ruby.
 
 You can find the ACME reference implementations of the [server](https://github.com/letsencrypt/boulder) in Go and the [client](https://github.com/letsencrypt/letsencrypt) in Python.
 
