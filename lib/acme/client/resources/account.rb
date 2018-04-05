@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Acme::Client::Resources::Account
-  attr_reader :status, :contact, :term_of_service, :orders_url
+  attr_reader :url, :status, :contact, :term_of_service, :orders_url
 
   def self.arguments_from_response(response)
     attributes = response.body
