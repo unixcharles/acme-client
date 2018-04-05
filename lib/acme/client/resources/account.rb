@@ -17,6 +17,10 @@ class Acme::Client::Resources::Account
     assign_attributes(arguments)
   end
 
+  def kid
+    url
+  end
+
   def reload
     assign_attributes **@client.authorization(location: url).to_h
     true
@@ -32,7 +36,8 @@ class Acme::Client::Resources::Account
 
   private
 
-  def assign_attributes(term_of_service:, status:, contact:)
+  def assign_attributes(url:, term_of_service:, status:, contact:)
+    @url = url
     @term_of_service = term_of_service
     @status = status
     @contact = contact
