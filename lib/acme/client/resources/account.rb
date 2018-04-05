@@ -21,13 +21,26 @@ class Acme::Client::Resources::Account
     url
   end
 
+  def update(contact: nil, terms_of_service_agreed: nil)
+    assign_attributes **@client.account_update(
+      contact: contact, terms_of_service_agreed: term_of_service
+    ).to_h
+    true
+  end
+
+  def deactivate
+    assign_attributes **@client.account_deactivate.to_h
+    true
+  end
+
   def reload
-    assign_attributes **@client.authorization(location: url).to_h
+    assign_attributes **@client.account.to_h
     true
   end
 
   def to_h
     {
+      url: url,
       term_of_service: term_of_service,
       status: status,
       contact: contact
