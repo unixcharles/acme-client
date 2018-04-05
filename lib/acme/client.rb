@@ -61,7 +61,7 @@ class Acme::Client
       account
     else
       arguments = Acme::Client::Resources::Account.arguments_from_response(response)
-      Acme::Client::Resources::Account.new(self, **arguments)
+      Acme::Client::Resources::Account.new(self, url: @kid, **arguments)
     end
   end
 
@@ -72,13 +72,13 @@ class Acme::Client
 
     response = post(kid, payload: payload)
     arguments = Acme::Client::Resources::Account.arguments_from_response(response)
-    Acme::Client::Resources::Account.new(self, **arguments)
+    Acme::Client::Resources::Account.new(self, url: kid, **arguments)
   end
 
   def account_deactivate
     response = post(kid, payload: { status: 'deactivated' })
     arguments = Acme::Client::Resources::Account.arguments_from_response(response)
-    Acme::Client::Resources::Account.new(self, **arguments)
+    Acme::Client::Resources::Account.new(self, url: kid, **arguments)
   end
 
   def account
@@ -89,7 +89,7 @@ class Acme::Client
 
     response = post(@kid)
     arguments = Acme::Client::Resources::Account.arguments_from_response(response)
-    Acme::Client::Resources::Account.new(self, **arguments)
+    Acme::Client::Resources::Account.new(self, url: @kid, **arguments)
   end
 
   def kid
