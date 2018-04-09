@@ -97,7 +97,14 @@ class Acme::Client
   end
 
   def new_order(identifiers:, not_before: nil, not_after: nil)
-    payload = { 'identifiers' => identifiers }
+    payload = {}
+    payload['identifiers'] = if identifiers.is_a?(Hash)
+      identifiers
+    else
+      Array(identifiers).map do |identifier|
+        { type: 'dns', 'value': identifier }
+      end
+    end
     payload['notBefore'] = not_before if not_before
     payload['notAfter'] = not_after if not_after
 

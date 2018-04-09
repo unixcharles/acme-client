@@ -23,24 +23,15 @@ class Acme::Client::Resources::Authorization
     assign_attributes(arguments)
   end
 
-  def assign_attributes(url:, status:, expires:, challenges:, wildcard:)
-    @url = url
-    @status = status
-    @expires = expires
-    @challenges = challenges
-    @wildcard = wildcard
-  end
-
   def deactivate
-    assign_attributes **@client.deactivate_authorization(location: url).to_h
+    assign_attributes **@client.deactivate_authorization(url: url).to_h
     true
   end
 
   def reload
-    assign_attributes **@client.authorization(location: url).to_h
+    assign_attributes **@client.authorization(url: url).to_h
     true
   end
-
 
   def challenges
     @challenges.map do |challenge|
@@ -57,7 +48,7 @@ class Acme::Client::Resources::Authorization
 
   def dns01
     @http01 = challenges.find do |challenge|
-      challenge.is_a?(Acme::Client::Resources::Challenges::HTTP01)
+      challenge.is_a?(Acme::Client::Resources::Challenges::DNS01)
     end
   end
   alias_method :dns, :dns01
@@ -67,7 +58,8 @@ class Acme::Client::Resources::Authorization
       url: url,
       status: status,
       expires: expires,
-      challenges: @challenges
+      challenges: @challenges,
+      wildcard: wildcard
     }
   end
 
@@ -82,5 +74,13 @@ class Acme::Client::Resources::Authorization
       error: attributes['error']
     }
     Acme::Client::Resources::Challenges.new(@client, **arguments)
+  end
+
+  def assign_attributes(url:, status:, expires:, challenges:, wildcard:)
+    @url = url
+    @status = status
+    @expires = expires
+    @challenges = challenges
+    @wildcard = wildcard
   end
 end
