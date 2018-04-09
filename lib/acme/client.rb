@@ -126,6 +126,11 @@ class Acme::Client
     Acme::Client::Resources::Order.new(self, **arguments)
   end
 
+  def certificate(url:)
+    response = download(url)
+    response.body
+  end
+
   def authorization(url:)
     response = get(url)
     arguments = Acme::Client::Resources::Authorization.arguments_from_response(response)
@@ -150,11 +155,6 @@ class Acme::Client
     response = post(url, payload: payload)
     arguments = Acme::Client::Resources::Challenges.arguments_from_response(response)
     Acme::Client::Resources::Challenges.new(self, **arguments)
-  end
-
-  def certificate(url:)
-    response = download(url)
-    response.body
   end
 
   def revoke(certificate:, reason: nil)

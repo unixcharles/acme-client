@@ -1,0 +1,206 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: "<DIRECTORY_URL>"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Replay-Nonce:
+      - 6AL7cdGHhpTdvhoXetpqpg
+      Date:
+      - Fri, 06 Apr 2018 21:03:35 GMT
+      Content-Length:
+      - '240'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+           "meta": {
+              "termsOfService": "data:text/plain,Do%20what%20thou%20wilt"
+           },
+           "newAccount": "https://0.0.0.0:14000/sign-me-up",
+           "newNonce": "https://0.0.0.0:14000/nonce-plz",
+           "newOrder": "https://0.0.0.0:14000/order-plz"
+        }
+    http_version: 
+  recorded_at: Fri, 06 Apr 2018 21:03:35 GMT
+- request:
+    method: head
+    uri: https://0.0.0.0:14000/nonce-plz
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Replay-Nonce:
+      - 90UTNnM3O9ubrZ8XfQJTaQ
+      Date:
+      - Fri, 06 Apr 2018 21:03:35 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Fri, 06 Apr 2018 21:03:35 GMT
+- request:
+    method: post
+    uri: https://0.0.0.0:14000/sign-me-up
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiOTBVVE5uTTNPOXViclo4WGZRSlRhUSIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImUiOiJBUUFCIiwia3R5IjoiUlNBIiwibiI6IjAwUnp4WEl6NGJXY0RqNTFrdVQ2R0xEdFhqaE1QUE84T052bFJ2QXV1eUctWEJubnVWQzBoYndsN1JSVEVoMUZKRTM5MkxuMUp4dkZCSTBVUXkzV3dZRVU0bV94WExxOWVncG1rVW9ZdHZFNV9VU2gwNi15dzdiRVg2RDJleUNpN0VaNVJYRjNSWXF1RURQUFE3VUNjUmprSl9Hak9iRFBlb05ZN0NEUG1Pd1N2X05YOXFFTzRka3d0cHA0cVpSM0p3UGJDMzVUWi1kMEdaMUYwd0pSSDNiV2NBcjZLd3FhOVd5bVBBMWdNcGJJRS0wTVpGcmRWbU5XM1o4SU5PRU9UX2cwREJVOTNYeWFNX0hHMkF3eDg5S1hTRElPamhHeS1IX1BiOVZ2X0VScERPRlpQakhTdGFiQWwtMm5DWFVoQ1ZWOWc4eWJNYjliSFRaVmNVU0FCdyJ9fQ","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"M_O9bpf5MJeUWmnd-rIe3-658R5sC8eXarGv0PK3D5j31uXmSEbY9JIPFmvwlE7zhrsLL5loz69Bri42xemYfXNOvUc6SAiuo1SVJlD9vd7LQoZQrw6ClcOS0SwCJf76_MtaO3uLY-OkCbfQvrSvlx-voKKQ7QXcEaNyItHEPlTF1gN8xAN73q9peUDZtxzvRTLDM-l-_qIsHDZGtou_JfyhkFFz8ei2-onPaczzeXPYlLeB-mg94egvtr4RgDuxf_HutlYNqRDAWgZN-CGpqd_gl3kmyxjQIoL0AKxtxvkZBdjzrRjufzps4Rkpvso-HPuaUxMOopOnIuBMNHTLuw"}'
+    headers:
+      User-Agent:
+      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Location:
+      - https://0.0.0.0:14000/my-account/6c4da4e773aede6beef2a9251ac78daa9007bf88215590e2f00f71a0642603ab
+      Replay-Nonce:
+      - H3NJ1kjhUEIyJPipINVU9g
+      Date:
+      - Fri, 06 Apr 2018 21:03:35 GMT
+      Content-Length:
+      - '4'
+    body:
+      encoding: UTF-8
+      string: 'null'
+    http_version: 
+  recorded_at: Fri, 06 Apr 2018 21:03:35 GMT
+- request:
+    method: post
+    uri: https://0.0.0.0:14000/my-account/6c4da4e773aede6beef2a9251ac78daa9007bf88215590e2f00f71a0642603ab
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiSDNOSjFramhVRUl5SlBpcElOVlU5ZyIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9teS1hY2NvdW50LzZjNGRhNGU3NzNhZWRlNmJlZWYyYTkyNTFhYzc4ZGFhOTAwN2JmODgyMTU1OTBlMmYwMGY3MWEwNjQyNjAzYWIiLCJraWQiOiJodHRwczovLzAuMC4wLjA6MTQwMDAvbXktYWNjb3VudC82YzRkYTRlNzczYWVkZTZiZWVmMmE5MjUxYWM3OGRhYTkwMDdiZjg4MjE1NTkwZTJmMDBmNzFhMDY0MjYwM2FiIn0","payload":"e30","signature":"v1aO3r-18rZCDl-IHz8T9H5FZJYLxx8lz7_gHa_ClazfkFvpTL50JTTFi02TcrBk2KzJc9GFB7B7PzSBP1CDfMwD-IYfqdjbpCRBPHDsY0BUSVlCNtv4dp0elafdKwUqcICqTkgjnTwOYc4tZyZSG89Jscaz3UZ5Lb7647mNP40pscjAs8o5FLlsGMedGHR76f7SMgS6JNVuDfJZrNC94pODY-ueGABmlODIjIPIu1kP9AbAPVHttB8stBiJzMiqqgvBwb_WrS5ZB3DTTmZJV0tHJujzxL7XP85GI-f_B-LWo4edhRm2D7W_eHvDuT2ZMNcglK9u6Qe3MI3hs7WqEw"}'
+    headers:
+      User-Agent:
+      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Replay-Nonce:
+      - lkgfMdfd2QIfVfjtvm_Mcg
+      Date:
+      - Fri, 06 Apr 2018 21:03:35 GMT
+      Content-Length:
+      - '568'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+           "status": "valid",
+           "contact": [
+              "mailto:info@example.com"
+           ],
+           "key": {
+              "kty": "RSA",
+              "n": "00RzxXIz4bWcDj51kuT6GLDtXjhMPPO8ONvlRvAuuyG-XBnnuVC0hbwl7RRTEh1FJE392Ln1JxvFBI0UQy3WwYEU4m_xXLq9egpmkUoYtvE5_USh06-yw7bEX6D2eyCi7EZ5RXF3RYquEDPPQ7UCcRjkJ_GjObDPeoNY7CDPmOwSv_NX9qEO4dkwtpp4qZR3JwPbC35TZ-d0GZ1F0wJRH3bWcAr6Kwqa9WymPA1gMpbIE-0MZFrdVmNW3Z8INOEOT_g0DBU93XyaM_HG2Awx89KXSDIOjhGy-H_Pb9Vv_ERpDOFZPjHStabAl-2nCXUhCVV9g8ybMb9bHTZVcUSABw",
+              "e": "AQAB"
+           },
+           "ID": "6c4da4e773aede6beef2a9251ac78daa9007bf88215590e2f00f71a0642603ab"
+        }
+    http_version: 
+  recorded_at: Fri, 06 Apr 2018 21:03:35 GMT
+- request:
+    method: post
+    uri: https://0.0.0.0:14000/order-plz
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoibGtnZk1kZmQyUUlmVmZqdHZtX01jZyIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9vcmRlci1wbHoiLCJraWQiOiJodHRwczovLzAuMC4wLjA6MTQwMDAvbXktYWNjb3VudC82YzRkYTRlNzczYWVkZTZiZWVmMmE5MjUxYWM3OGRhYTkwMDdiZjg4MjE1NTkwZTJmMDBmNzFhMDY0MjYwM2FiIn0","payload":"eyJpZGVudGlmaWVycyI6W3sidHlwZSI6ImRucyIsInZhbHVlIjoiZXhhbXBsZS5jb20ifV19","signature":"CsLa8f6n8Snf4EBqsZ2Qxhumi3PM9NCBeJDt9_fkbkx1q_ghIrDd4O70FImENs1JimZxjlHzdvpw-P0wTz0dQeOCKVPcJ6gOekYcHSbbhInXx6X298jmsO8VPZYUxpRZeQGCs7hc9WK1tOg9YYlQo9eYGKlF_9Ml24rDEC29Ibt8RIG2ToGe4zSYWEbTTjxQtsUWY4pjOXFVIzKcR_fNJ39m3bVwAJ3horXiFAAPo9RVJxwp7ZRL7EadFRT1OrF3oD8NOyHJQ7n2yUvr9UJzs658ir5zHXDfSS9GWA76eWoOCHHE7FLBNdnUKN0kfiWBCW76Xu8aJw3ygo33RJy58Q"}'
+    headers:
+      User-Agent:
+      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Location:
+      - https://0.0.0.0:14000/my-order/AOuL3TuDMtnasM6-jyaUG3AoSS3_gkWsTNV5R-ijcb0
+      Replay-Nonce:
+      - r2XLlx008dA0TeRZaWocYg
+      Date:
+      - Fri, 06 Apr 2018 21:03:36 GMT
+      Content-Length:
+      - '370'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+           "status": "pending",
+           "expires": "2018-04-07T21:03:36Z",
+           "identifiers": [
+              {
+                 "type": "dns",
+                 "value": "example.com"
+              }
+           ],
+           "finalize": "https://0.0.0.0:14000/finalize-order/AOuL3TuDMtnasM6-jyaUG3AoSS3_gkWsTNV5R-ijcb0",
+           "authorizations": [
+              "https://0.0.0.0:14000/authZ/ydHc6-rCh3ujyW0SwAvBMtiAusFhJ9sFuoOLCd1q3-8"
+           ]
+        }
+    http_version: 
+  recorded_at: Fri, 06 Apr 2018 21:03:36 GMT
+recorded_with: VCR 3.0.3

@@ -16,7 +16,7 @@ describe Acme::Client::Resources::Account do
     client.account
   end
 
-  context 'account' do
+  context 'status' do
     it 'send the agreement for the terms', vcr: { cassette_name: 'registration_agree_terms' } do
       expect(account.status).to eq('valid')
     end
@@ -35,6 +35,12 @@ describe Acme::Client::Resources::Account do
       expect(account.status).to eq('valid')
       account.deactivate
       expect(account.status).to eq('deactivated')
+    end
+  end
+
+  context 'reload', vcr: { cassette_name: 'account_reload' } do
+    it 'reload' do
+      expect { account.reload }.not_to raise_error
     end
   end
 end

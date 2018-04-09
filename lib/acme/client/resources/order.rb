@@ -36,9 +36,23 @@ class Acme::Client::Resources::Order
     true
   end
 
+  def authorizations
+    @authorization_urls.map do |authorization_url|
+      @client.authorization(url: authorization_url)
+    end
+  end
+
   def finalize(csr:)
     assign_attributes **@client.finalize(url: finalize_url, csr: csr).to_h
     true
+  end
+
+  def certificate
+    if certificate_url
+      @client.certificate(url: certificate_url)
+    else
+      raise Acme::Client::Error::CertificateNotReady, 'No certificate_url to collect the order'
+    end
   end
 
   def to_h
