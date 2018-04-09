@@ -74,7 +74,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
     content_type = env.response_headers['Content-Type']
 
     if content_type == 'application/json' || content_type == 'application/problem+json'
-      JSON.load(env.body)
+      JSON.parse(env.body)
     else
       env.body
     end

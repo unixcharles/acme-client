@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.1
   Exclude:
     - 'bin/*'
     - 'vendor/**/*'
@@ -7,7 +7,7 @@ AllCops:
 Rails:
   Enabled: false
 
-Style/FileName:
+Naming/FileName:
   Exclude:
     - 'lib/acme-client.rb'
 
@@ -20,22 +20,49 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   Enabled: false
 
 Style/SignalException:
   EnforcedStyle: only_raise
 
-Style/AlignParameters:
+Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
-Style/FirstParameterIndentation:
+Layout/ElseAlignment:
+  Enabled: false
+
+Style/MultipleComparison:
+  Enabled: false
+
+Style/RescueStandardError:
+  Enabled: false
+
+Layout/IndentationWidth:
+  Enabled: false
+
+TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Layout/FirstParameterIndentation:
   EnforcedStyle: consistent
 
 Style/TrailingCommaInArguments:
   Enabled: false
 
-Style/TrailingCommaInLiteral:
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Layout/SpaceInsideBlockBraces:
+  Enabled: false
+
+Style/ExpandPathArguments:
   Enabled: false
 
 Style/StringLiterals:
@@ -48,8 +75,8 @@ Metrics/ParameterLists:
   Max: 5
   CountKeywordArgs: false
 
-Lint/EndAlignment:
-  AlignWith: variable
+Layout/EndAlignment:
+  Enabled: false
 
 Style/ParallelAssignment:
   Enabled: false
@@ -81,5 +108,5 @@ Style/BlockDelimiters:
 Style/Lambda:
   Enabled: false
 
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
