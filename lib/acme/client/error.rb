@@ -6,6 +6,7 @@ class Acme::Client::Error < StandardError
   class UnsupporedOperation < ClientError; end
   class UnsupportedChallengeType < ClientError; end
   class NotFound < ClientError; end
+  class CertificateNotReady < ClientError; end
 
   class ServerError < Acme::Client::Error; end
   class BadCSR < ServerError; end
