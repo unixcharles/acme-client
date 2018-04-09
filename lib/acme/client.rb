@@ -102,7 +102,7 @@ class Acme::Client
       identifiers
     else
       Array(identifiers).map do |identifier|
-        { type: 'dns', 'value': identifier }
+        { type: 'dns', value: identifier }
       end
     end
     payload['notBefore'] = not_before if not_before
