@@ -95,6 +95,12 @@ describe Acme::Client do
 
         expect(order).to be_a(Acme::Client::Resources::Order)
       end
+
+      it 'creates a new order', vcr: { cassette_name: 'simpler_identifiers_order' } do
+        order = client.new_order(identifiers: 'example.com')
+
+        expect(order).to be_a(Acme::Client::Resources::Order)
+      end
     end
 
     context 'order' do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Acme::Client::Resources::Authorization do
@@ -13,7 +15,7 @@ describe Acme::Client::Resources::Authorization do
   end
   let(:authorization) { client.authorization(url: order.authorization_urls.first) }
 
-  context '#deactivate' do
+  context 'deactivate' do
     it 'successfully deactive the authorization', vcr: { cassette_name: 'authorization_deactivate' } do
       expect(authorization.status).to eq('pending')
       expect { authorization.deactivate }.not_to raise_error
@@ -21,7 +23,21 @@ describe Acme::Client::Resources::Authorization do
     end
   end
 
-  context '#reload' do
+  context 'challenges' do
+    it 'returns the challenges', vcr: { cassette_name: 'authorization_challenges' } do
+      expect(authorization.challenges).to all(be_kind_of(Acme::Client::Resources::Challenges::Base))
+    end
+
+    it 'returns the HTTP challenge', vcr: { cassette_name: 'authorization_http_challenge' } do
+      expect(authorization.http).to be_a(Acme::Client::Resources::Challenges::HTTP01)
+    end
+
+    it 'returns the DNS challenge', vcr: { cassette_name: 'authorization_dns_challenge' } do
+      expect(authorization.dns).to be_a(Acme::Client::Resources::Challenges::DNS01)
+    end
+  end
+
+  context 'reload' do
     it 'successfully reload the authorization', vcr: { cassette_name: 'authorization_reload' } do
       expect { authorization.reload }.not_to raise_error
     end

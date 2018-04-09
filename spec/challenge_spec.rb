@@ -14,7 +14,21 @@ describe Acme::Client::Resources::Challenges do
   let(:authorization) { client.authorization(url: order.authorization_urls.first) }
   let(:http01) { authorization.http01 }
 
-  context '#request_validation' do
+  context 'reload', vcr: { cassette_name: 'challenge_reload' } do
+    it 'reload reload the challenge' do
+      expect { http01.reload }.not_to raise_error
+    end
+  end
+
+  context 'key_authorization', vcr: { cassette_name: 'challenge_key_authorization' } do
+    it 'returns a key authorization' do
+      token, jwk_thumbprint = http01.key_authorization.split('.')
+      expect(token).to eq(http01.token)
+      expect(jwk_thumbprint).to be_a(String)
+    end
+  end
+
+  context 'request_validation' do
     it 'successfully verify the challenge', vcr: { cassette_name: 'challenge_verify_success' } do
       serve_once(http01.file_content) do
         expect {

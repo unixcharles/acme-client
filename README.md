@@ -6,9 +6,9 @@ This branch track the client for ACMEv1.
 
 [![Build Status](https://travis-ci.org/unixcharles/acme-client.svg?branch=master)](https://travis-ci.org/unixcharles/acme-client)
 
-`acme-client` is a client implementation of the [ACME](https://github.com/ietf-wg-acme/acme/) protocol in Ruby.
+`acme-client` is a client implementation of the [ACME](https://github.com/ietf-wg-acme/acme) protocol in Ruby.
 
-You can find the ACME reference implementations of the [server](https://github.com/letsencrypt/boulder) in Go and the [client](https://github.com/letsencrypt/letsencrypt) in Python.
+You can find the ACME reference implementations of the [server](https://github.com/letsencrypt/boulder) in Go and the [client](https://github.com/certbot/certbot) in Python.
 
 ACME is part of the [Letsencrypt](https://letsencrypt.org/) project, which goal is to provide free SSL/TLS certificates with automation of the acquiring and renewal process.
 
@@ -25,135 +25,171 @@ gem 'acme-client'
 ```
 
 ## Usage
+1. [Setting up a client](#client)
+2. [Account management](#account-management)
+3. [Obtaining a certificate](#obtaining-a-certificate)
+  * [Ordering a certificate](#ordering-a-certificate)
+  * [Completing an HTTP challenge](#preparing-for-http-challenge)
+  * [Completing an DNS challenge](#preparing-for-dns-challenge)
+  * [Request a challenge verification](#request-a-challenge-verification)
+  * [Downloading a certificate](#downloading-a-certificate)
+4. [Extra](#extra)
+  * [Certificate revokation](#certificate-revokation)
+  * [Certificate renewal](#certificate-renewal)
 
-### Register client
+## Setting up a client
 
-In order to authenticate our client, we have to create an account for it.
+The client is initialized with a private key and the directory of your ACME provider.
 
-```ruby
-# We're going to need a private key.
+LetsEncrypt's `directory` is `https://acme-v01.api.letsencrypt.org/directory`
+
+`acme-ruby` expect `OpenSSL::PKey::RSA` or `OpenSSL::PKey::EC`
+
+You can generate one in Ruby using OpenSSL.
+
+```
 require 'openssl'
 private_key = OpenSSL::PKey::RSA.new(4096)
-
-# We need an ACME server to talk to, see github.com/letsencrypt/boulder
-# WARNING: This endpoint is the production endpoint, which is rate limited and will produce valid certificates.
-# You should probably use the staging endpoint for all your experimentation:
-# endpoint = 'https://acme-staging.api.letsencrypt.org/'
-endpoint = 'https://acme-v01.api.letsencrypt.org/'
-
-# Initialize the client
-require 'acme-client'
-client = Acme::Client.new(private_key: private_key, endpoint: endpoint, connection_options: { request: { open_timeout: 5, timeout: 5 } })
-
-# If the private key is not known to the server, we need to register it for the first time.
-registration = client.register(terms_of_service_agreed: true, contact: 'mailto:contact@example.com')
-
-# You may need to agree to the terms of service (that's up the to the server to require it or not but boulder does by default)
-registration.agree_terms
 ```
 
-### Authorize for domain
+Or load one from a PEM file
 
-Before you are able to obtain certificates for your domain, you have to prove that you are in control of it.
+```
+require 'openssl'
+OpenSSL::PKey::RSA.new(File.read('/path/to/private_key.pem'))
+```
+
+See [RSA](https://ruby.github.io/openssl/OpenSSL/PKey/RSA.html) and [EC](https://ruby.github.io/openssl/OpenSSL/PKey/EC.html) for documentation.
+
 
 ```ruby
-authorization = client.authorize(domain: 'example.org')
-
-# If authorization.status returns 'valid' here you can already get a certificate
-# and _must not_ try to solve another challenge.
-authorization.status # => 'pending'
-
-# You can can store the authorization's URI to fully recover it and
-# any associated challenges via Acme::Client#fetch_authorization.
-authorization.uri # => '...'
-
-# This example is using the http-01 challenge type. Other challenges are dns-01 or tls-sni-01.
-challenge = authorization.http01
-
-# The http-01 method will require you to respond to a HTTP request.
-
-# You can retrieve the challenge token
-challenge.token # => "some_token"
-
-# You can retrieve the expected path for the file.
-challenge.filename # => ".well-known/acme-challenge/:some_token"
-
-# You can generate the body of the expected response.
-challenge.file_content # => 'string token and JWK thumbprint'
-
-# You are not required to send a Content-Type. This method will return the right Content-Type should you decide to include one.
-challenge.content_type
-
-# Save the file. We'll create a public directory to serve it from, and inside it we'll create the challenge file.
-FileUtils.mkdir_p( File.join( 'public', File.dirname( challenge.filename ) ) )
-
-# We'll write the content of the file
-File.write( File.join( 'public', challenge.filename), challenge.file_content )
-
-# Optionally save the authorization URI for use at another time (eg: by a background job processor)
-File.write('authorization_uri', authorization.uri)
-
-# The challenge file can be served with a Ruby webserver.
-# You can run a webserver in another console for that purpose. You may need to forward ports on your router.
-#
-# $ ruby -run -e httpd public -p 8080 --bind-address 0.0.0.0
-
-# Load a challenge based on stored authorization URI. This is only required if you need to reuse a challenge as outlined above.
-challenge = client.fetch_authorization(File.read('authorization_uri')).http01
-
-# Once you are ready to serve the confirmation request you can proceed.
-challenge.request_verification # => true
-challenge.authorization.verify_status # => 'pending'
-
-# Wait a bit for the server to make the request, or just blink. It should be fast.
-sleep(1)
-
-# Rely on authorization.verify_status more than on challenge.verify_status,
-# if the former is 'valid' you can already issue a certificate and the status of
-# the challenge is not relevant and in fact may never change from pending.
-challenge.authorization.verify_status # => 'valid'
-challenge.error # => nil
-
-# If authorization.verify_status is 'invalid', you can get at the error
-# message only through the failed challenge.
-authorization.verify_status # => 'invalid'
-authorization.http01.error # => {"type" => "...", "detail" => "..."}
+client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v01.api.letsencrypt.org/directory')
 ```
 
-### Obtain a certificate
-
-Now that your account is authorized for the domain, you should be able to obtain a certificate for it.
+If your account is already registered, you can save some API call by passing you key ID directly. This will avoid unnessassary API call to retrive it from your private key.
 
 ```ruby
-# We're going to need a certificate signing request. If not explicitly
-# specified, the first name listed becomes the common name.
-csr = Acme::Client::CertificateRequest.new(names: %w[example.org www.example.org])
-
-# We can now request a certificate. You can pass anything that returns
-# a valid DER encoded CSR when calling to_der on it. For example an
-# OpenSSL::X509::Request should work too.
-certificate = client.new_certificate(csr) # => #<Acme::Client::Certificate ....>
-
-# Save the certificate and the private key to files
-File.write("privkey.pem", certificate.request.private_key.to_pem)
-File.write("cert.pem", certificate.to_pem)
-File.write("chain.pem", certificate.chain_to_pem)
-File.write("fullchain.pem", certificate.fullchain_to_pem)
-
-# Start a webserver, using your shiny new certificate
-# ruby -r openssl -r webrick -r 'webrick/https' -e "s = WEBrick::HTTPServer.new(
-#   :Port => 8443,
-#   :DocumentRoot => Dir.pwd,
-#   :SSLEnable => true,
-#   :SSLPrivateKey => OpenSSL::PKey::RSA.new( File.read('privkey.pem') ),
-#   :SSLCertificate => OpenSSL::X509::Certificate.new( File.read('cert.pem') )); trap('INT') { s.shutdown }; s.start"
+client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v01.api.letsencrypt.org/directory', kid: 'https://example.com/acme/acct/1')
 ```
 
-# Not implemented
+## Account management
 
-- Recovery methods are not implemented.
+Account are tied to a private key. Before being allowed to create orders, the account must be registered and the ToS accepted using the private key. The account will be assigned a key ID.
 
-# Requirements
+```ruby
+client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v01.api.letsencrypt.org/directory')
+account = client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
+```
+
+## Obtaining a certificate
+### Ordering a certificate
+
+To order a new certificate, the client must provider a list of identifiers.
+
+The returned order will contains a list of `Authorization` that need to be completed in other to finalize the order, generally one per identifiers.
+
+Each authorization contains multiple challenges, typically a `dns-01` and a `http-01` challenge. The applicant is only required to complete one of the two challenge.
+
+You can access the challenge you wish to complete using the `#dns` or `#http` method.
+
+```ruby
+order = client.new_order(identifiers: ['example.com'])
+authorization = order.authorizations.first
+challenge = authorization.http
+```
+
+### Preparing for HTTP challenge
+
+To complete the HTTP challenge, you must prepare return a file using HTTP.
+
+The path follow the following format:
+
+> .well-known/acme-challenge/#{token}
+
+And the file content is the key authorization. The HTTP01 object as utility methods to generate them.
+
+```ruby
+> http_challenge.content_type # => 'text/plain'
+> http_challenge.file_content # => example_token.TO1xJ0UDgfQ8WY5zT3txynup87UU3PhcDEIcuPyw4QU
+> http_challenge.filename # => '.well-known/acme-challenge/example_token'
+> http_challenge.token # => 'example_token'
+```
+
+For test purpose you can just save the challenge file and use Ruby to serve it:
+
+```bash
+ruby -run -e httpd public -p 8080 --bind-address 0.0.0.0
+```
+
+### Preparing for DNS challenge
+
+To complete the DNS challenge, you must set a DNS record to prove that you control the domain.
+
+The DNS01 object as utility methods to generate them.
+
+```ruby
+> dns_challenge.record_name # => '_acme-challenge'
+> dns_challenge.record_type # => 'TXT'
+> dns_challenge.record_content # => 'HRV3PS5sRDyV-ous4HJk4z24s5JjmUTjcCaUjFt28-8'
+```
+
+### Request a challenge verification
+
+Once your are ready to complete the challenge, you can request to server to perform the verification.
+
+```ruby
+challenge.request_validation
+```
+
+The validation is performed asynchronously and can take some time to be performed by the server.
+
+You can poll until its status change.
+
+```ruby
+until challenge.status != 'pending'
+  sleep(2)
+  challenge.reload
+end
+challenge.status # => 'valid'
+```
+
+### Downloading a certificate
+
+Once all required authorizations have been validated through challenges, the order can be finalized using a CSR ([Certificate Signing Request](https://en.wikipedia.org/wiki/Certificate_signing_request)).
+
+CSR can be slightly tricky to generate using OpenSSL from Ruby standard library. The `acme-client` provide a utility class `CertificateRequest` to help with that.
+
+The certificate generation is happening asynchronously. You may need to poll.
+
+```
+csr = Acme::Client::CertificateRequest.new(private_key: private_key, subject: { common_name: 'example.com' })
+order.finalize(csr: csr)
+until order.status != 'processing'
+  sleep(1)
+end
+order.certificate # => PEM format certificate
+```
+
+## Extra
+
+### Certificate revokation
+
+To revoke a certificate you can call `#revoke` with certificate.
+
+```ruby
+client.revoke(certificate: certificate)
+```
+
+### Certificate renewal
+
+The is no renewal precess, just create a new order.
+
+
+## Not implemented
+
+- Account Key Roll-over.
+
+## Requirements
 
 Ruby >= 2.1
 
