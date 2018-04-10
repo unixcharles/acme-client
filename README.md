@@ -25,15 +25,15 @@ gem 'acme-client'
 ```
 
 ## Usage
-1. [Setting up a client](#client)
-2. [Account management](#account-management)
-3. [Obtaining a certificate](#obtaining-a-certificate)
+* [Setting up a client](#setting-up-a-client)
+* [Account management](#account-management)
+* [Obtaining a certificate](#obtaining-a-certificate)
   * [Ordering a certificate](#ordering-a-certificate)
   * [Completing an HTTP challenge](#preparing-for-http-challenge)
   * [Completing an DNS challenge](#preparing-for-dns-challenge)
   * [Request a challenge verification](#request-a-challenge-verification)
   * [Downloading a certificate](#downloading-a-certificate)
-4. [Extra](#extra)
+* [Extra](#extra)
   * [Certificate revokation](#certificate-revokation)
   * [Certificate renewal](#certificate-renewal)
 
