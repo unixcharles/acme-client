@@ -16,7 +16,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
     @env[:request_headers]['User-Agent'] = USER_AGENT
     @env.body = client.jwk.jws(header: { nonce: pop_nonce }, payload: env.body)
     @app.call(env).on_complete { |response_env| on_complete(response_env) }
-  rescue Faraday::TimeoutError
+  rescue Faraday::TimeoutError, Faraday::ConnectionFailed
     raise Acme::Client::Error::Timeout
   end
 
