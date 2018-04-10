@@ -7,7 +7,7 @@ module Acme::Client::Resources::Challenges
 
   CHALLENGE_TYPES = {
     'http-01' => Acme::Client::Resources::Challenges::HTTP01,
-    'dns-01' => Acme::Client::Resources::Challenges::DNS01,
+    'dns-01' => Acme::Client::Resources::Challenges::DNS01
   }
 
   def self.arguments_from_response(response)

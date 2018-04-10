@@ -9,7 +9,7 @@ describe Acme::Client::Resources::Challenges do
   end
 
   let(:order) do
-    client.new_order(identifiers: [{type: 'dns', value: 'example.com'}])
+    client.new_order(identifiers: [{ type: 'dns', value: 'example.com' }])
   end
   let(:authorization) { client.authorization(url: order.authorization_urls.first) }
   let(:http01) { authorization.http01 }

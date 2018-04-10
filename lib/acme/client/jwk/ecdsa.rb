@@ -82,7 +82,6 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
 
   private
 
-  # rubocop:disable Metrics/AbcSize
   def coordinates
     @coordinates ||= begin
       hex = public_key.to_bn.to_s(16)
@@ -96,7 +95,6 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
       }
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def public_key
     @private_key.public_key

@@ -59,7 +59,7 @@ class Acme::Client::JWK::Base
   def jws_header(header)
     jws = {
       typ: 'JWT',
-      alg: jwa_alg,
+      alg: jwa_alg
     }.merge(header)
     jws[:jwk] = to_h if header[:kid].nil?
     jws

@@ -99,5 +99,41 @@ Style/BlockDelimiters:
 Style/Lambda:
   Enabled: false
 
+Style/GuardClause:
+  Enabled: false
+
+Style/Alias:
+  Enabled: false
+
+Lint/AmbiguousOperator:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/GlobalVars:
+  Enabled: false
+
+Style/ExpandPathArguments:
+  Enabled: false
+
+Security/JSONLoad:
+  Enabled: false
+
 Naming/AccessorMethodName:
   Enabled: false

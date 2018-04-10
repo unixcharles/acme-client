@@ -43,7 +43,7 @@ class Acme::Client
     @nonces ||= []
   end
 
-  attr_reader :jwk, :kid, :nonces, :directory
+  attr_reader :jwk, :nonces, :directory
 
   def new_account(contact:, terms_of_service_agreed: nil)
     payload = {
@@ -51,7 +51,7 @@ class Acme::Client
     }
 
     if terms_of_service_agreed
-      payload.merge!({ termsOfServiceAgreed: terms_of_service_agreed })
+      payload['termsOfServiceAgreed'] = terms_of_service_agreed
     end
 
     response = post(endpoint_for('newAccount'), payload: payload, mode: :jws)
@@ -128,7 +128,6 @@ class Acme::Client
 
     payload = { csr: base64_der_csr }
     response = post(url, payload: payload)
-    order_url = response.headers[:location]
     arguments = Acme::Client::Resources::Order.arguments_from_response(response)
     Acme::Client::Resources::Order.new(self, **arguments)
   end
@@ -173,7 +172,7 @@ class Acme::Client
 
     base64_der_certificate = Acme::Client::Util.urlsafe_base64(der_certificate)
     payload = { certificate: base64_der_certificate }
-    payload[:reason] = reason unless reason.nil? 
+    payload[:reason] = reason unless reason.nil?
 
     response = post(endpoint_for('revokeCert'), payload: payload)
     response.success?
@@ -232,20 +231,15 @@ class Acme::Client
 
   def endpoint_for(key)
     load_directory! unless @directory_loaded
-    @directory.fetch(key) do |key|
+    @directory.fetch(key) do |missing_key|
       raise Acme::Client::Error::UnsupporedOperation,
-        "Directory at #{@directory_url} does not include `#{key}`"
+        "Directory at #{@directory_url} does not include `#{missing_key}`"
     end
   end
 
   def load_directory!
     return false if @directory_loaded
-
-    connection = Faraday.new(url: @directory)
-    connection.headers[:user_agent] = USER_AGENT
-    response = connection.get(@directory_url)
-    body = JSON.load(response.body)
-
+    body = fetch_directory
     @meta = body['meta']
 
     @directory = {}
@@ -257,8 +251,14 @@ class Acme::Client
     @directory['keyChange'] = URI(body['keyChange']) if body['keyChange']
 
     @directory_loaded = true
-
   rescue JSON::ParserError => exception
     raise InvalidDirectory, "Invalid directory url\n#{@directory} did not return a valid directory\n#{exception.inspect}"
+  end
+
+  def fetch_directory
+    connection = Faraday.new(url: @directory)
+    connection.headers[:user_agent] = USER_AGENT
+    response = connection.get(@directory_url)
+    JSON.parse(response.body)
   end
 end
