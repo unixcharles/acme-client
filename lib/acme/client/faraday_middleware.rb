@@ -40,7 +40,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def raise_on_error!
-    raise error_class, error_message
+    raise error_class.new(error_message, env)
   end
 
   def error_message
