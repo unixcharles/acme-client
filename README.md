@@ -47,14 +47,14 @@ LetsEncrypt's `directory` is `https://acme-v01.api.letsencrypt.org/directory`
 
 You can generate one in Ruby using OpenSSL.
 
-```
+```ruby
 require 'openssl'
 private_key = OpenSSL::PKey::RSA.new(4096)
 ```
 
 Or load one from a PEM file
 
-```
+```ruby
 require 'openssl'
 OpenSSL::PKey::RSA.new(File.read('/path/to/private_key.pem'))
 ```
@@ -161,7 +161,7 @@ CSR can be slightly tricky to generate using OpenSSL from Ruby standard library.
 
 The certificate generation is happening asynchronously. You may need to poll.
 
-```
+```ruby
 csr = Acme::Client::CertificateRequest.new(private_key: private_key, subject: { common_name: 'example.com' })
 order.finalize(csr: csr)
 until order.status != 'processing'
