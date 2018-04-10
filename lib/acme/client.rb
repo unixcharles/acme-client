@@ -124,7 +124,7 @@ class Acme::Client
         'new-reg' => body.fetch('new-reg'),
         'new-authz' => body.fetch('new-authz'),
         'new-cert' => body.fetch('new-cert'),
-        'revoke-cert' => body.fetch('revoke-cert'),
+        'revoke-cert' => body.fetch('revoke-cert')
       }
     else
       DIRECTORY_DEFAULT

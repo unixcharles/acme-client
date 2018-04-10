@@ -35,13 +35,7 @@ Layout/ElseAlignment:
 Style/MultipleComparison:
   Enabled: false
 
-Style/RescueStandardError:
-  Enabled: false
-
 Layout/IndentationWidth:
-  Enabled: false
-
-TrailingCommaInHashLiteral:
   Enabled: false
 
 Style/SymbolArray:
@@ -60,9 +54,6 @@ Metrics/BlockLength:
   Enabled: false
 
 Layout/SpaceInsideBlockBraces:
-  Enabled: false
-
-Style/ExpandPathArguments:
   Enabled: false
 
 Style/StringLiterals:
