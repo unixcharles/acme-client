@@ -1,3 +1,7 @@
+## `0.6.3`
+
+* Handle Faraday::ConnectionFailed errors as Timeout error.
+
 ## `0.6.2`
 
 * Do not cache error type
