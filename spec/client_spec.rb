@@ -5,7 +5,7 @@ describe Acme::Client do
   let(:csr) { Acme::Client::CertificateRequest.new(names: %w[example.com]) }
 
   let(:order) do
-    client.new_order(identifiers: [{type: 'dns', value: 'example.com'}])
+    client.new_order(identifiers: [{ type: 'dns', value: 'example.com' }])
   end
 
   let(:unregistered_client) { Acme::Client.new(private_key: private_key, directory: $directory_url) }
@@ -71,7 +71,7 @@ describe Acme::Client do
         client.account_update(contact: 'mailto:updated@example.com')
         expect(
           client.account.contact
-        ).to eq(["mailto:updated@example.com"])
+        ).to eq(['mailto:updated@example.com'])
       end
     end
 
@@ -89,9 +89,7 @@ describe Acme::Client do
   context 'order operation' do
     context 'new order' do
       it 'creates a new order', vcr: { cassette_name: 'new_order' } do
-        order = client.new_order(identifiers:
-          [{type: 'dns', value: 'example.com'}]
-        )
+        order = client.new_order(identifiers: [{ type: 'dns', value: 'example.com' }])
 
         expect(order).to be_a(Acme::Client::Resources::Order)
       end
@@ -174,7 +172,7 @@ describe Acme::Client do
         }.to raise_error(Acme::Client::Error::Unauthorized)
       end
 
-      it 'finalize an order raise on incomplete authorization', vcr: { cassette_name: 'finalize_incomplete_challenge' } do        
+      it 'finalize an order raise on incomplete authorization', vcr: { cassette_name: 'finalize_incomplete_challenge' } do
         expect {
           client.finalize(url: finalize_url, csr: csr)
         }.to raise_error(Acme::Client::Error::Unauthorized)
@@ -226,7 +224,7 @@ describe Acme::Client do
         client.certificate(url: finalized_order.certificate_url)
       end
 
-      # Todo: find a way to record fixtures for this, unsupported by pebble at the moment.
+      # TODO: find a way to record fixtures for this, unsupported by pebble at the moment.
       xit 'revoke a PEM string certificate', vcr: { cassette_name: 'revoke_pem_sucess' } do
         serve_once(challenge.file_content) do
           client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)

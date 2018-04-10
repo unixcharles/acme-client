@@ -11,7 +11,7 @@ describe Acme::Client::Resources::Authorization do
   end
 
   let(:order) do
-    client.new_order(identifiers: [{type: 'dns', value: 'example.com'}])
+    client.new_order(identifiers: [{ type: 'dns', value: 'example.com' }])
   end
   let(:authorization) { client.authorization(url: order.authorization_urls.first) }
 

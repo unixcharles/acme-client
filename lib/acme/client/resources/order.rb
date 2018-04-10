@@ -8,7 +8,7 @@ class Acme::Client::Resources::Order
 
     url = response.headers[:location]
     status = attributes.fetch('status')
-    expires =  Time.parse(attributes.fetch('expires'))
+    expires = Time.parse(attributes.fetch('expires'))
     finalize_url = attributes.fetch('finalize')
     authorization_urls = attributes.fetch('authorizations')
     identifiers = attributes.fetch('identifiers')
@@ -57,13 +57,13 @@ class Acme::Client::Resources::Order
 
   def to_h
     {
-      url: url, 
-      status: status, 
-      expires: expires, 
-      finalize_url: finalize_url, 
-      authorization_urls: authorization_urls, 
-      identifiers: identifiers, 
-      certificate_url: certificate_url, 
+      url: url,
+      status: status,
+      expires: expires,
+      finalize_url: finalize_url,
+      authorization_urls: authorization_urls,
+      identifiers: identifiers,
+      certificate_url: certificate_url
     }
   end
 

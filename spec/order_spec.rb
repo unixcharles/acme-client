@@ -15,7 +15,7 @@ describe Acme::Client::Resources::Order do
   end
 
   let(:order) do
-    client.new_order(identifiers: [{type: 'dns', value: 'example.com'}])
+    client.new_order(identifiers: [{ type: 'dns', value: 'example.com' }])
   end
 
   context 'status' do
@@ -28,12 +28,12 @@ describe Acme::Client::Resources::Order do
     let(:authorization) { order.authorizations.first }
     let(:challenge) { authorization.http01 }
 
-    it 'call client finalize failure' , vcr: { cassette_name: 'order_finalize_fail' } do
+    it 'call client finalize failure', vcr: { cassette_name: 'order_finalize_fail' } do
       csr = Acme::Client::CertificateRequest.new(names: %w[example.com])
       expect { order.finalize(csr: csr) }.to raise_error(Acme::Client::Error::Unauthorized)
     end
 
-    it 'call client finalize sucess' , vcr: { cassette_name: 'order_finalize_sucess' } do
+    it 'call client finalize sucess', vcr: { cassette_name: 'order_finalize_sucess' } do
       serve_once(challenge.file_content) do
         challenge.request_validation
       end
@@ -47,7 +47,7 @@ describe Acme::Client::Resources::Order do
     let(:authorization) { order.authorizations.first }
     let(:challenge) { authorization.http01 }
 
-    it 'call client certificate sucess' , vcr: { cassette_name: 'order_certificate_download_sucess' } do
+    it 'call client certificate sucess', vcr: { cassette_name: 'order_certificate_download_sucess' } do
       serve_once(challenge.file_content) do
         challenge.request_validation
       end
@@ -60,20 +60,19 @@ describe Acme::Client::Resources::Order do
       expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
     end
 
-    it 'call client certificate fail' , vcr: { cassette_name: 'order_certificate_download_fail' } do
-      csr = Acme::Client::CertificateRequest.new(names: %w[example.com])
+    it 'call client certificate fail', vcr: { cassette_name: 'order_certificate_download_fail' } do
       expect { order.certificate }.to raise_error(Acme::Client::Error::CertificateNotReady)
     end
   end
 
   context 'reload' do
-    it 'reload a update attributes' , vcr: { cassette_name: 'order_reload' } do
+    it 'reload a update attributes', vcr: { cassette_name: 'order_reload' } do
       expect { order.reload }.not_to raise_error
     end
   end
 
   context 'authorizations' do
-    it 'load authorizations' , vcr: { cassette_name: 'order_authorizations' } do
+    it 'load authorizations', vcr: { cassette_name: 'order_authorizations' } do
       authorizations = order.authorizations
       expect(authorizations).to all(be_a(Acme::Client::Resources::Authorization))
     end

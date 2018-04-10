@@ -44,7 +44,7 @@ module SSLHelper
         YAML.load_file(KEYSTASH_PATH).shuffle.map do |pem|
           begin
             OpenSSL::PKey::RSA.new(pem)
-          rescue
+          rescue StandardError
             Acme::Client::CertificateRequest::ECKeyPatch.new(pem)
           end
         end

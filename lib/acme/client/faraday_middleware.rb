@@ -81,8 +81,8 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   def decode_body
     content_type = env.response_headers['Content-Type'].to_s
 
-    if content_type.start_with?('application/json') || content_type.start_with?('application/problem+json')
-      JSON.parse(env.body)
+    if content_type.start_with?('application/json', 'application/problem+json')
+      JSON.load(env.body)
     else
       env.body
     end
