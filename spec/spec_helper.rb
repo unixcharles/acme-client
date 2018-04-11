@@ -3,7 +3,7 @@ $LOAD_PATH.unshift File.join(__dir__, 'support')
 
 require 'openssl'
 
-$directory_url = ENV['ACME_DIRECTORY_URL'] || 'https://127.0.0.1/directory'
+DIRECTORY_URL = ENV['ACME_DIRECTORY_URL'] || 'https://127.0.0.1/directory'
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 require 'acme/client'
@@ -37,5 +37,5 @@ VCR.configure do |c|
   c.ignore_localhost = false
   c.default_cassette_options = { record: :once, match_requests_on: [:method, :path, :query] }
   c.allow_http_connections_when_no_cassette = false
-  c.filter_sensitive_data('<DIRECTORY_URL>') { $directory_url }
+  c.filter_sensitive_data('<DIRECTORY_URL>') { DIRECTORY_URL }
 end

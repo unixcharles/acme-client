@@ -3,13 +3,13 @@ require 'spec_helper'
 describe Acme::Client::Resources::Order do
   let(:private_key) { generate_private_key }
   let(:unregistered_client) do
-    client = Acme::Client.new(private_key: private_key, directory: $directory_url)
+    client = Acme::Client.new(private_key: private_key, directory: DIRECTORY_URL)
     client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
     client
   end
 
   let(:client) do
-    client = Acme::Client.new(private_key: private_key, directory: $directory_url)
+    client = Acme::Client.new(private_key: private_key, directory: DIRECTORY_URL)
     client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
     client
   end

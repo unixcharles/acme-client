@@ -8,9 +8,9 @@ describe Acme::Client do
     client.new_order(identifiers: [{ type: 'dns', value: 'example.com' }])
   end
 
-  let(:unregistered_client) { Acme::Client.new(private_key: private_key, directory: $directory_url) }
+  let(:unregistered_client) { Acme::Client.new(private_key: private_key, directory: DIRECTORY_URL) }
   let(:client) do
-    client = Acme::Client.new(private_key: private_key, directory: $directory_url)
+    client = Acme::Client.new(private_key: private_key, directory: DIRECTORY_URL)
     client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
     client
   end
@@ -45,7 +45,7 @@ describe Acme::Client do
       it 'load account when kid is known', vcr: { cassette_name: 'load_account_valid_kid' } do
         client = Acme::Client.new(
           private_key: private_key,
-          directory: $directory_url,
+          directory: DIRECTORY_URL,
           kid: kid
         )
 
@@ -55,7 +55,7 @@ describe Acme::Client do
       it 'load account from private key if the kid is unknown', vcr: { cassette_name: 'load_account_unkown_kid' } do
         client = Acme::Client.new(
           private_key: private_key,
-          directory: $directory_url
+          directory: DIRECTORY_URL
         )
 
         expect(client.account.status).to eq('valid')
