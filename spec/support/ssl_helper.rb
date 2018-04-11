@@ -26,8 +26,9 @@ module SSLHelper
       when 2
         generate_ecdsa_key('secp384r1')
       when 3
-        # generate_ecdsa_key('secp521r1')
         OpenSSL::PKey::RSA.new(2048)
+        # TODO: ECDSA curve P-521 not allowed at the moment.
+        # generate_ecdsa_key('secp521r1')
       end
     end
 
