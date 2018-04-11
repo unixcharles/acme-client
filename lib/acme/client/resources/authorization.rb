@@ -35,7 +35,7 @@ class Acme::Client::Resources::Authorization
 
   def challenges
     @challenges.map do |challenge|
-      initalize_challenge(challenge)
+      initialize_challenge(challenge)
     end
   end
 
@@ -65,7 +65,7 @@ class Acme::Client::Resources::Authorization
 
   private
 
-  def initalize_challenge(attributes)
+  def initialize_challenge(attributes)
     arguments = {
       type: attributes.fetch('type'),
       status: attributes.fetch('status'),

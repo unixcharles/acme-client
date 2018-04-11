@@ -51,7 +51,7 @@ class Acme::Client
     }
 
     if terms_of_service_agreed
-      payload['termsOfServiceAgreed'] = terms_of_service_agreed
+      payload[:termsOfServiceAgreed] = terms_of_service_agreed
     end
 
     response = post(endpoint_for('newAccount'), payload: payload, mode: :jws)
@@ -82,9 +82,9 @@ class Acme::Client
   end
 
   def account
-    if @kid.nil?
+    @kid ||= begin
       response = post(endpoint_for('newAccount'), payload: { onlyReturnExisting: true }, mode: :jwk)
-      @kid = response.headers.fetch(:location)
+      response.headers.fetch(:location)
     end
 
     response = post(@kid)
@@ -121,20 +121,17 @@ class Acme::Client
 
   def finalize(url:, csr:)
     unless csr.respond_to?(:to_der)
-      raise ArgumentError, 'csr must respond to `to_der`'
+      raise ArgumentError, 'csr must respond to `#to_der`'
     end
 
     base64_der_csr = Acme::Client::Util.urlsafe_base64(csr.to_der)
-
-    payload = { csr: base64_der_csr }
-    response = post(url, payload: payload)
+    response = post(url, payload: { csr: base64_der_csr })
     arguments = Acme::Client::Resources::Order.arguments_from_response(response)
     Acme::Client::Resources::Order.new(self, **arguments)
   end
 
   def certificate(url:)
-    response = download(url)
-    response.body
+    download(url).body
   end
 
   def authorization(url:)
@@ -144,8 +141,7 @@ class Acme::Client
   end
 
   def deactivate_authorization(url:)
-    payload = { status: 'deactivated' }
-    response = post(url, payload: payload)
+    response = post(url, payload: { status: 'deactivated' })
     arguments = Acme::Client::Resources::Authorization.arguments_from_response(response)
     Acme::Client::Resources::Authorization.new(self, url: url, **arguments)
   end
@@ -157,8 +153,7 @@ class Acme::Client
   end
 
   def request_challenge_validation(url:, key_authorization:)
-    payload = { 'keyAuthorization' => key_authorization }
-    response = post(url, payload: payload)
+    response = post(url, payload: { keyAuthorization: key_authorization })
     arguments = Acme::Client::Resources::Challenges.arguments_from_response(response)
     Acme::Client::Resources::Challenges.new(self, **arguments)
   end
