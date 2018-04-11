@@ -60,22 +60,13 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def error_class
-    if error_name && !error_name.empty? && Acme::Client::Error.const_defined?(error_name)
-      Object.const_get("Acme::Client::Error::#{error_name}")
-    else
-      Acme::Client::Error
-    end
+    Acme::Client::Error::ACME_ERRORS.fetch(error_name, Acme::Client::Error)
   end
 
   def error_name
     return unless env.body.is_a?(Hash)
     return unless env.body.key?('type')
-
-    error_type_to_klass env.body['type']
-  end
-
-  def error_type_to_klass(type)
-    type.gsub('urn:ietf:params:acme:error:', '').split(/[_-]/).map { |type_part| type_part[0].upcase + type_part[1..-1] }.join
+    env.body['type']
   end
 
   def decode_body

@@ -29,4 +29,27 @@ class Acme::Client::Error < StandardError
   class Connection < ServerError; end
   class Tls < ServerError; end
   class IncorrectResponse < ServerError; end
+
+  ACME_ERRORS = {
+    'urn:ietf:params:acme:error:badCSR' => BadCSR,
+    'urn:ietf:params:acme:error:badNonce' => BadNonce,
+    'urn:ietf:params:acme:error:badSignatureAlgorithm' => BadSignatureAlgorithm,
+    'urn:ietf:params:acme:error:invalidContact' => InvalidContact,
+    'urn:ietf:params:acme:error:unsupportedContact' => UnsupportedContact,
+    'urn:ietf:params:acme:error:externalAccountRequired' => ExternalAccountRequired,
+    'urn:ietf:params:acme:error:accountDoesNotExist' => AccountDoesNotExist,
+    'urn:ietf:params:acme:error:malformed' => Malformed,
+    'urn:ietf:params:acme:error:rateLimited' => RateLimited,
+    'urn:ietf:params:acme:error:rejectedIdentifier' => RejectedIdentifier,
+    'urn:ietf:params:acme:error:serverInternal' => ServerInternal,
+    'urn:ietf:params:acme:error:unauthorized' => Unauthorized,
+    'urn:ietf:params:acme:error:unsupportedIdentifier' => UnsupportedIdentifier,
+    'urn:ietf:params:acme:error:userActionRequired' => UserActionRequired,
+    'urn:ietf:params:acme:error:badRevocationReason' => BadRevocationReason,
+    'urn:ietf:params:acme:error:caa' => Caa,
+    'urn:ietf:params:acme:error:dns' => Dns,
+    'urn:ietf:params:acme:error:connection' => Connection,
+    'urn:ietf:params:acme:error:tls' => Tls,
+    'urn:ietf:params:acme:error:incorrectResponse' => IncorrectResponse,
+  }
 end
