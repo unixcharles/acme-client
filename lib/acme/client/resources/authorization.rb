@@ -40,14 +40,14 @@ class Acme::Client::Resources::Authorization
   end
 
   def http01
-    @http01 = challenges.find { |challenge|
+    @http01 ||= challenges.find { |challenge|
       challenge.is_a?(Acme::Client::Resources::Challenges::HTTP01)
     }
   end
   alias_method :http, :http01
 
   def dns01
-    @http01 = challenges.find { |challenge|
+    @dns01 ||= challenges.find { |challenge|
       challenge.is_a?(Acme::Client::Resources::Challenges::DNS01)
     }
   end
