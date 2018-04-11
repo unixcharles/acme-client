@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Acme::Client::Resources::Challenges::HTTP01 do
   let(:private_key) { generate_private_key }
   let(:client) do
-    Acme::Client.new(private_key: private_key, directory: $directory_url)
+    Acme::Client.new(private_key: private_key, directory: DIRECTORY_URL)
   end
   let(:attributes) do
     { status: 'pending', url: 'https://example.com/foo/bar', token: 'example_token' }
