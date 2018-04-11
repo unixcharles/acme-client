@@ -39,7 +39,8 @@ class Acme::Client
       Acme::Client::JWK.from_private_key(private_key)
     end
 
-    @kid, @directory_url, @connection_options = kid, URI(directory), connection_options
+    @kid, @connection_options = kid, connection_options
+    @directory = Acme::Client::Resources::Directory.new(URI(directory), @connection_options)
     @nonces ||= []
   end
 
@@ -54,7 +55,7 @@ class Acme::Client
       payload[:termsOfServiceAgreed] = terms_of_service_agreed
     end
 
-    response = post(endpoint_for('newAccount'), payload: payload, mode: :jws)
+    response = post(endpoint_for(:new_account), payload: payload, mode: :jws)
     @kid = response.headers.fetch(:location)
 
     if response.body.nil? || response.body.empty?
@@ -83,7 +84,7 @@ class Acme::Client
 
   def account
     @kid ||= begin
-      response = post(endpoint_for('newAccount'), payload: { onlyReturnExisting: true }, mode: :jwk)
+      response = post(endpoint_for(:new_account), payload: { onlyReturnExisting: true }, mode: :jwk)
       response.headers.fetch(:location)
     end
 
@@ -108,7 +109,7 @@ class Acme::Client
     payload['notBefore'] = not_before if not_before
     payload['notAfter'] = not_after if not_after
 
-    response = post(endpoint_for('newOrder'), payload: payload)
+    response = post(endpoint_for(:new_order), payload: payload)
     arguments = Acme::Client::Resources::Order.arguments_from_response(response)
     Acme::Client::Resources::Order.new(self, **arguments)
   end
@@ -169,12 +170,12 @@ class Acme::Client
     payload = { certificate: base64_der_certificate }
     payload[:reason] = reason unless reason.nil?
 
-    response = post(endpoint_for('revokeCert'), payload: payload)
+    response = post(endpoint_for(:revoke_certificate), payload: payload)
     response.success?
   end
 
   def get_nonce
-    response = Faraday.head(endpoint_for('newNonce'), nil, 'User-Agent' => USER_AGENT)
+    response = Faraday.head(endpoint_for(:new_nonce), nil, 'User-Agent' => USER_AGENT)
     nonces << response.headers['replay-nonce']
     true
   end
@@ -225,35 +226,6 @@ class Acme::Client
   end
 
   def endpoint_for(key)
-    load_directory! unless @directory_loaded
-    @directory.fetch(key) do |missing_key|
-      raise Acme::Client::Error::UnsupporedOperation,
-        "Directory at #{@directory_url} does not include `#{missing_key}`"
-    end
-  end
-
-  def load_directory!
-    return false if @directory_loaded
-    body = fetch_directory
-    @meta = body['meta']
-
-    @directory = {}
-    @directory['newNonce'] = URI(body['newNonce']) if body['newNonce']
-    @directory['newAccount'] = URI(body['newAccount']) if body['newAccount']
-    @directory['newOrder'] = URI(body['newOrder']) if body['newOrder']
-    @directory['newAuthz'] = URI(body['newAuthz']) if body['newAuthz']
-    @directory['revokeCert'] = URI(body['revokeCert']) if body['revokeCert']
-    @directory['keyChange'] = URI(body['keyChange']) if body['keyChange']
-
-    @directory_loaded = true
-  rescue JSON::ParserError => exception
-    raise InvalidDirectory, "Invalid directory url\n#{@directory} did not return a valid directory\n#{exception.inspect}"
-  end
-
-  def fetch_directory
-    connection = Faraday.new(url: @directory)
-    connection.headers[:user_agent] = USER_AGENT
-    response = connection.get(@directory_url)
-    JSON.parse(response.body)
+    @directory.endpoint_for(key)
   end
 end
