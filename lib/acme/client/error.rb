@@ -3,7 +3,7 @@ class Acme::Client::Error < StandardError
 
   class ClientError < Acme::Client::Error; end
   class InvalidDirectory < ClientError; end
-  class UnsupporedOperation < ClientError; end
+  class UnsupportedOperation < ClientError; end
   class UnsupportedChallengeType < ClientError; end
   class NotFound < ClientError; end
   class CertificateNotReady < ClientError; end
