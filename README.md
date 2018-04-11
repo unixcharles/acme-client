@@ -197,6 +197,12 @@ All the tests use VCR to mock the interaction with the server but if you
 need to record new interaction against the server simply clone boulder and
 run it normally with `./start.py`.
 
+You can specify the directory with the `ACME_DIRECTORY_URL` environment variable.
+
+```
+ACME_DIRECTORY_URL=https://acme-staging-v02.api.letsencrypt.org/directory rspec
+```
+
 ## Pull request?
 
 Yes.
