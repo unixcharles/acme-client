@@ -31,7 +31,7 @@ gem 'acme-client'
   * [Ordering a certificate](#ordering-a-certificate)
   * [Completing an HTTP challenge](#preparing-for-http-challenge)
   * [Completing an DNS challenge](#preparing-for-dns-challenge)
-  * [Request a challenge verification](#request-a-challenge-verification)
+  * [Requesting a challenge verification](#requesting-a-challenge-verification)
   * [Downloading a certificate](#downloading-a-certificate)
 * [Extra](#extra)
   * [Certificate revokation](#certificate-revokation)
@@ -41,7 +41,7 @@ gem 'acme-client'
 
 The client is initialized with a private key and the directory of your ACME provider.
 
-LetsEncrypt's `directory` is `https://acme-v01.api.letsencrypt.org/directory`
+LetsEncrypt's `directory` is `https://acme-staging-v02.api.letsencrypt.org/directory`
 
 `acme-ruby` expects `OpenSSL::PKey::RSA` or `OpenSSL::PKey::EC`
 
@@ -74,7 +74,7 @@ client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v01
 
 ## Account management
 
-Account are tied to a private key. Before being allowed to create orders, the account must be registered and the ToS accepted using the private key. The account will be assigned a key ID.
+Accounts are tied to a private key. Before being allowed to create orders, the account must be registered and the ToS accepted using the private key. The account will be assigned a key ID.
 
 ```ruby
 client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v01.api.letsencrypt.org/directory')
@@ -88,7 +88,7 @@ To order a new certificate, the client must provide a list of identifiers.
 
 The returned order will contain a list of `Authorization` that need to be completed in other to finalize the order, generally one per identifier.
 
-Each authorization contains multiple challenges, typically a `dns-01` and a `http-01` challenge. The applicant is only required to complete one of the two challenges.
+Each authorization contains multiple challenges, typically a `dns-01` and a `http-01` challenge. The applicant is only required to complete one the challenges.
 
 You can access the challenge you wish to complete using the `#dns` or `#http` method.
 
@@ -133,7 +133,7 @@ dns_challenge.record_type # => 'TXT'
 dns_challenge.record_content # => 'HRV3PS5sRDyV-ous4HJk4z24s5JjmUTjcCaUjFt28-8'
 ```
 
-### Request a challenge verification
+### Requesting a challenge verification
 
 Once you are ready to complete the challenge, you can request the server perform the verification.
 
@@ -165,7 +165,7 @@ Certificate generation happens asynchronously. You may need to poll.
 csr = Acme::Client::CertificateRequest.new(private_key: private_key, subject: { common_name: 'example.com' })
 order.finalize(csr: csr)
 sleep(1) while order.status == 'processing'
-order.certificate # => PEM format certificate
+order.certificate # => PEM-formatted certificate
 ```
 
 ## Extra
