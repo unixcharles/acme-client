@@ -50,6 +50,6 @@ class Acme::Client::Error < StandardError
     'urn:ietf:params:acme:error:dns' => Dns,
     'urn:ietf:params:acme:error:connection' => Connection,
     'urn:ietf:params:acme:error:tls' => Tls,
-    'urn:ietf:params:acme:error:incorrectResponse' => IncorrectResponse,
+    'urn:ietf:params:acme:error:incorrectResponse' => IncorrectResponse
   }
 end
