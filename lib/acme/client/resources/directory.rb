@@ -10,6 +10,13 @@ class Acme::Client::Resources::Directory
     key_change: 'keyChange'
   }
 
+  DIRECTORY_META = {
+    terms_of_service: 'termsOfService',
+    website: 'website',
+    caa_identities: 'caaIdentities',
+    external_account_required: 'externalAccountRequired'
+  }
+
   def initialize(url, connection_options)
     @url, @connection_options = url, connection_options
   end
@@ -19,6 +26,22 @@ class Acme::Client::Resources::Directory
       raise Acme::Client::Error::UnsupportedOperation,
         "Directory at #{@url} does not include `#{missing_key}`"
     end
+  end
+
+  def terms_of_service
+    meta[DIRECTORY_META[:terms_of_service]]
+  end
+
+  def website
+    meta[DIRECTORY_META[:website]]
+  end
+
+  def caa_identities
+    meta[DIRECTORY_META[:caa_identities]]
+  end
+
+  def external_account_required
+    meta[DIRECTORY_META[:external_account_required]]
   end
 
   def meta
