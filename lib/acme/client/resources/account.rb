@@ -3,15 +3,6 @@
 class Acme::Client::Resources::Account
   attr_reader :url, :status, :contact, :term_of_service, :orders_url
 
-  def self.arguments_from_response(response)
-    attributes = response.body
-    status = attributes.fetch('status')
-    term_of_service = attributes['termsOfServiceAgreed']
-    contact = attributes.fetch('contact', [])
-
-    { term_of_service: term_of_service, status: status, contact: contact }
-  end
-
   def initialize(client, **arguments)
     @client = client
     assign_attributes(arguments)
@@ -53,6 +44,6 @@ class Acme::Client::Resources::Account
     @url = url
     @term_of_service = term_of_service
     @status = status
-    @contact = contact
+    @contact = Array(contact)
   end
 end

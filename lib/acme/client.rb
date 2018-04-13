@@ -61,7 +61,7 @@ class Acme::Client
     if response.body.nil? || response.body.empty?
       account
     else
-      arguments = Acme::Client::Resources::Account.arguments_from_response(response)
+      arguments = attributes_from_account_response(response)
       Acme::Client::Resources::Account.new(self, url: @kid, **arguments)
     end
   end
@@ -72,13 +72,13 @@ class Acme::Client
     payload[:termsOfServiceAgreed] = terms_of_service_agreed if terms_of_service_agreed
 
     response = post(kid, payload: payload)
-    arguments = Acme::Client::Resources::Account.arguments_from_response(response)
+    arguments = attributes_from_account_response(response)
     Acme::Client::Resources::Account.new(self, url: kid, **arguments)
   end
 
   def account_deactivate
     response = post(kid, payload: { status: 'deactivated' })
-    arguments = Acme::Client::Resources::Account.arguments_from_response(response)
+    arguments = attributes_from_account_response(response)
     Acme::Client::Resources::Account.new(self, url: kid, **arguments)
   end
 
@@ -89,7 +89,7 @@ class Acme::Client
     end
 
     response = post(@kid)
-    arguments = Acme::Client::Resources::Account.arguments_from_response(response)
+    arguments = attributes_from_account_response(response)
     Acme::Client::Resources::Account.new(self, url: @kid, **arguments)
   end
 
@@ -110,13 +110,13 @@ class Acme::Client
     payload['notAfter'] = not_after if not_after
 
     response = post(endpoint_for(:new_order), payload: payload)
-    arguments = Acme::Client::Resources::Order.arguments_from_response(response)
+    arguments = attributes_from_order_response(response)
     Acme::Client::Resources::Order.new(self, **arguments)
   end
 
   def order(url:)
     response = get(url)
-    arguments = Acme::Client::Resources::Order.arguments_from_response(response)
+    arguments = attributes_from_order_response(response)
     Acme::Client::Resources::Order.new(self, **arguments.merge(url: url))
   end
 
@@ -127,7 +127,7 @@ class Acme::Client
 
     base64_der_csr = Acme::Client::Util.urlsafe_base64(csr.to_der)
     response = post(url, payload: { csr: base64_der_csr })
-    arguments = Acme::Client::Resources::Order.arguments_from_response(response)
+    arguments = attributes_from_order_response(response)
     Acme::Client::Resources::Order.new(self, **arguments)
   end
 
@@ -137,25 +137,25 @@ class Acme::Client
 
   def authorization(url:)
     response = get(url)
-    arguments = Acme::Client::Resources::Authorization.arguments_from_response(response)
+    arguments = attributes_from_authorization_response(response)
     Acme::Client::Resources::Authorization.new(self, url: url, **arguments)
   end
 
   def deactivate_authorization(url:)
     response = post(url, payload: { status: 'deactivated' })
-    arguments = Acme::Client::Resources::Authorization.arguments_from_response(response)
+    arguments = attributes_from_authorization_response(response)
     Acme::Client::Resources::Authorization.new(self, url: url, **arguments)
   end
 
   def challenge(url:)
     response = get(url)
-    arguments = Acme::Client::Resources::Challenges.arguments_from_response(response)
+    arguments = attributes_from_challenge_response(response)
     Acme::Client::Resources::Challenges.new(self, **arguments)
   end
 
   def request_challenge_validation(url:, key_authorization:)
     response = post(url, payload: { keyAuthorization: key_authorization })
-    arguments = Acme::Client::Resources::Challenges.arguments_from_response(response)
+    arguments = attributes_from_challenge_response(response)
     Acme::Client::Resources::Challenges.new(self, **arguments)
   end
 
@@ -201,6 +201,45 @@ class Acme::Client
   end
 
   private
+
+  def attributes_from_account_response(response)
+    extract_attributes(response.body,
+      :status,
+      [:term_of_service, 'termsOfServiceAgreed'],
+      :contact
+    )
+  end
+
+  def attributes_from_order_response(response)
+    attributes = extract_attributes(response.body,
+      :status,
+      :expires,
+      [:finalize_url, 'finalize'],
+      [:authorization_urls, 'authorizations'],
+      [:certificate_url, 'certificate'],
+      :identifiers
+    )
+
+    attributes[:url] = response.headers[:location] if response.headers[:location]
+    attributes
+  end
+
+  def attributes_from_authorization_response(response)
+    extract_attributes(response.body, :identifier, :status, :expires, :challenges, :wildcard)
+  end
+
+  def attributes_from_challenge_response(response)
+    extract_attributes(response.body, :status, :url, :token, :type, :error)
+  end
+
+  def extract_attributes(input, *attributes)
+    attributes
+      .map {|fields| Array(fields) }
+      .each_with_object({}) { |(key, field), attributes|
+      field ||= key.to_s
+      attributes[key] = input[field]
+    }
+  end
 
   def post(url, payload: {}, mode: :kid)
     connection = connection_for(url: url, mode: mode)
