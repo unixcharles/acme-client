@@ -40,6 +40,7 @@ describe Acme::Client::Resources::Authorization do
   context 'reload' do
     it 'successfully reload the authorization', vcr: { cassette_name: 'authorization_reload' } do
       expect { authorization.reload }.not_to raise_error
+      expect(authorization.url).not_to be_nil
     end
   end
 end

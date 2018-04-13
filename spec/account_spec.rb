@@ -41,6 +41,7 @@ describe Acme::Client::Resources::Account do
   context 'reload', vcr: { cassette_name: 'account_reload' } do
     it 'reload the account' do
       expect { account.reload }.not_to raise_error
+      expect(account.url).not_to be_nil
     end
   end
 end

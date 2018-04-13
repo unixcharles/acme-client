@@ -68,6 +68,7 @@ describe Acme::Client::Resources::Order do
   context 'reload' do
     it 'reload a update attributes', vcr: { cassette_name: 'order_reload' } do
       expect { order.reload }.not_to raise_error
+      expect(order.url).not_to be_nil
     end
   end
 

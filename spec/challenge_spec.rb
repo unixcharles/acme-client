@@ -17,6 +17,7 @@ describe Acme::Client::Resources::Challenges do
   context 'reload', vcr: { cassette_name: 'challenge_reload' } do
     it 'reload reload the challenge' do
       expect { http01.reload }.not_to raise_error
+      expect(http01.url).not_to be_nil
     end
   end
 

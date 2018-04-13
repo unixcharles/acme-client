@@ -117,7 +117,7 @@ class Acme::Client
   def order(url:)
     response = get(url)
     arguments = Acme::Client::Resources::Order.arguments_from_response(response)
-    Acme::Client::Resources::Order.new(self, **arguments)
+    Acme::Client::Resources::Order.new(self, **arguments.merge(url: url))
   end
 
   def finalize(url:, csr:)
