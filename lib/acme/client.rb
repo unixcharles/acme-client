@@ -203,7 +203,8 @@ class Acme::Client
   private
 
   def attributes_from_account_response(response)
-    extract_attributes(response.body,
+    extract_attributes(
+      response.body,
       :status,
       [:term_of_service, 'termsOfServiceAgreed'],
       :contact
@@ -211,7 +212,8 @@ class Acme::Client
   end
 
   def attributes_from_order_response(response)
-    attributes = extract_attributes(response.body,
+    attributes = extract_attributes(
+      response.body,
       :status,
       :expires,
       [:finalize_url, 'finalize'],
@@ -235,9 +237,9 @@ class Acme::Client
   def extract_attributes(input, *attributes)
     attributes
       .map {|fields| Array(fields) }
-      .each_with_object({}) { |(key, field), attributes|
+      .each_with_object({}) { |(key, field), hash|
       field ||= key.to_s
-      attributes[key] = input[field]
+      hash[key] = input[field]
     }
   end
 
