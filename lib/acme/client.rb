@@ -44,7 +44,7 @@ class Acme::Client
     @nonces ||= []
   end
 
-  attr_reader :jwk, :nonces, :directory
+  attr_reader :jwk, :nonces
 
   def new_account(contact:, terms_of_service_agreed: nil)
     payload = {
@@ -178,6 +178,26 @@ class Acme::Client
     response = Faraday.head(endpoint_for(:new_nonce), nil, 'User-Agent' => USER_AGENT)
     nonces << response.headers['replay-nonce']
     true
+  end
+
+  def meta
+    @directory.meta
+  end
+
+  def terms_of_service
+    @directory.terms_of_service
+  end
+
+  def website
+    @directory.website
+  end
+
+  def caa_identities
+    @directory.caa_identities
+  end
+
+  def external_account_required
+    @directory.external_account_required
   end
 
   private

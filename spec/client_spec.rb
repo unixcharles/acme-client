@@ -25,6 +25,13 @@ describe Acme::Client do
     end
   end
 
+  context 'meta', vcr: { cassette_name: 'client_meta' } do
+    it { expect(client.meta).to be_a(Hash) }
+    it { expect(client.terms_of_service).to be_a(String) }
+    it { expect(client.website).to be_a(String) }
+    it { expect(client.external_account_required).to be_nil }
+  end
+
   context 'account operation' do
     context 'new account' do
       it 'accept the terms of service', vcr: { cassette_name: 'new_account_agree_terms' } do
