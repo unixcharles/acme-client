@@ -10,17 +10,6 @@ module Acme::Client::Resources::Challenges
     'dns-01' => Acme::Client::Resources::Challenges::DNS01
   }
 
-  def self.arguments_from_response(response)
-    attributes = response.body
-    status = attributes.fetch('status')
-    url = attributes.fetch('url')
-    token = attributes.fetch('token')
-    type = response.body.fetch('type')
-    error = response.body['error']
-
-    { type: type, status: status, url: url, token: token, error: error }
-  end
-
   def self.new(client, type:, **arguments)
     klass = CHALLENGE_TYPES[type]
     if klass

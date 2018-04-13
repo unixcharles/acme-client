@@ -3,26 +3,6 @@
 class Acme::Client::Resources::Authorization
   attr_reader :url, :identifier, :domain, :expires, :status, :wildcard
 
-  def self.arguments_from_response(response)
-    attributes = response.body
-
-    identifier = attributes.fetch('identifier')
-    domain = identifier.fetch('value')
-    status = attributes.fetch('status')
-    expires =  Time.parse(attributes.fetch('expires'))
-    challenges = attributes.fetch('challenges')
-    wildcard = attributes.fetch('wildcard', false)
-
-    {
-      identifier: identifier,
-      domain: domain,
-      status: status,
-      expires: expires,
-      challenges: challenges,
-      wildcard: wildcard
-    }
-  end
-
   def initialize(client, **arguments)
     @client = client
     assign_attributes(arguments)
@@ -62,7 +42,6 @@ class Acme::Client::Resources::Authorization
     {
       url: url,
       identifier: identifier,
-      domain: domain,
       status: status,
       expires: expires,
       challenges: @challenges,
@@ -83,8 +62,10 @@ class Acme::Client::Resources::Authorization
     Acme::Client::Resources::Challenges.new(@client, **arguments)
   end
 
-  def assign_attributes(url:, status:, expires:, challenges:, identifier:, domain:, wildcard:)
+  def assign_attributes(url:, status:, expires:, challenges:, identifier:, wildcard: false)
     @url = url
+    @identifier = identifier
+    @domain = identifier.fetch('value')
     @status = status
     @expires = expires
     @challenges = challenges
