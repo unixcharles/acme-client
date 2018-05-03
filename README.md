@@ -1,3 +1,7 @@
+# Deprecated
+
+This branch track the client for ACMEv1.
+
 # Acme::Client
 
 [![Build Status](https://travis-ci.org/unixcharles/acme-client.svg?branch=master)](https://travis-ci.org/unixcharles/acme-client)
