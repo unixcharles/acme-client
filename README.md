@@ -1,16 +1,14 @@
-# Deprecated
-
-This branch track the client for ACMEv1.
-
 # Acme::Client
 
 [![Build Status](https://travis-ci.org/unixcharles/acme-client.svg?branch=master)](https://travis-ci.org/unixcharles/acme-client)
 
-`acme-client` is a client implementation of the [ACME](https://github.com/ietf-wg-acme/acme) protocol in Ruby.
+`acme-client` is a client implementation of the [ACMEv2](https://github.com/ietf-wg-acme/acme) protocol in Ruby.
 
 You can find the ACME reference implementations of the [server](https://github.com/letsencrypt/boulder) in Go and the [client](https://github.com/certbot/certbot) in Python.
 
 ACME is part of the [Letsencrypt](https://letsencrypt.org/) project, which goal is to provide free SSL/TLS certificates with automation of the acquiring and renewal process.
+
+You can find ACMEv1 compatible client in the [acme-v1](https://github.com/unixcharles/acme-client/tree/acme-v1) branch.
 
 ## Installation
 
@@ -41,7 +39,9 @@ gem 'acme-client'
 
 The client is initialized with a private key and the directory of your ACME provider.
 
-LetsEncrypt's `directory` is `https://acme-staging-v02.api.letsencrypt.org/directory`
+LetsEncrypt's `directory` is `https://acme-v02.api.letsencrypt.org/directory`.
+
+They also have a staging enpoind at `https://acme-staging-v02.api.letsencrypt.org/directory`.
 
 `acme-ruby` expects `OpenSSL::PKey::RSA` or `OpenSSL::PKey::EC`
 
@@ -63,13 +63,13 @@ See [RSA](https://ruby.github.io/openssl/OpenSSL/PKey/RSA.html) and [EC](https:/
 
 
 ```ruby
-client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v01.api.letsencrypt.org/directory')
+client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory')
 ```
 
 If your account is already registered, you can save some API calls by passing your key ID directly. This will avoid an unnecessary API call to retrieve it from your private key.
 
 ```ruby
-client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v01.api.letsencrypt.org/directory', kid: 'https://example.com/acme/acct/1')
+client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory', kid: 'https://example.com/acme/acct/1')
 ```
 
 ## Account management
@@ -77,8 +77,16 @@ client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v01
 Accounts are tied to a private key. Before being allowed to create orders, the account must be registered and the ToS accepted using the private key. The account will be assigned a key ID.
 
 ```ruby
-client = Acme::Client.new(private_key: private_key, directory: 'https://acme-v01.api.letsencrypt.org/directory')
+client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory')
 account = client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
+```
+
+After the registration you can retrieve the account  key indentifier (kid).
+
+```ruby
+client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory')
+account = client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
+account.kid # => <kid string>
 ```
 
 ## Obtaining a certificate
@@ -193,11 +201,7 @@ Ruby >= 2.1
 
 ## Development
 
-All the tests use VCR to mock the interaction with the server but if you
-need to record new interaction against the server simply clone boulder and
-run it normally with `./start.py`.
-
-You can specify the directory with the `ACME_DIRECTORY_URL` environment variable.
+All the tests use VCR to mock the interaction with the server. If you need to record new interaction you can specify the directory URL with the `ACME_DIRECTORY_URL` environment variable.
 
 ```
 ACME_DIRECTORY_URL=https://acme-staging-v02.api.letsencrypt.org/directory rspec
