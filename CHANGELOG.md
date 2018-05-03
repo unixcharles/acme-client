@@ -1,3 +1,11 @@
+## `2.0.0`
+
+* Release of the `ACMEv2` branch
+
+## `1.0.0`
+
+* Development for `ACMEv1` moved into `1.0.x`
+
 ## `0.6.3`
 
 * Handle Faraday::ConnectionFailed errors as Timeout error.
