@@ -25,7 +25,7 @@ class Acme::Client
   repo_url = 'https://github.com/unixcharles/acme-client'
   USER_AGENT = "Acme::Client v#{Acme::Client::VERSION} (#{repo_url})".freeze
   CONTENT_TYPES = {
-    pkix: 'application/pkix-cert'
+    pem: 'application/pem-certificate-chain'
   }
 
   def initialize(jwk: nil, kid: nil, private_key: nil, directory: DEFAULT_DIRECTORY, connection_options: {})
@@ -132,7 +132,8 @@ class Acme::Client
   end
 
   def certificate(url:)
-    download(url).body
+    response = download(url, format: :pem)
+    response.body
   end
 
   def authorization(url:)
@@ -253,11 +254,11 @@ class Acme::Client
     connection.get(url)
   end
 
-  def download(url)
+  def download(url, format:)
     connection = connection_for(url: url, mode: :download)
     connection.get do |request|
       request.url(url)
-      request.headers['Accept'] = CONTENT_TYPES.fetch(:pkix)
+      request.headers['Accept'] = CONTENT_TYPES.fetch(format)
     end
   end
 
