@@ -41,7 +41,7 @@ The client is initialized with a private key and the directory of your ACME prov
 
 LetsEncrypt's `directory` is `https://acme-v02.api.letsencrypt.org/directory`.
 
-They also have a staging enpoind at `https://acme-staging-v02.api.letsencrypt.org/directory`.
+They also have a staging endpoint at `https://acme-staging-v02.api.letsencrypt.org/directory`.
 
 `acme-ruby` expects `OpenSSL::PKey::RSA` or `OpenSSL::PKey::EC`
 
