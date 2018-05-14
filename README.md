@@ -165,12 +165,12 @@ challenge.status # => 'valid'
 
 Once all required authorizations have been validated through challenges, the order can be finalized using a CSR ([Certificate Signing Request](https://en.wikipedia.org/wiki/Certificate_signing_request)).
 
-A CSR can be slightly tricky to generate using OpenSSL from Ruby standard library. `acme-client` provide a utility class `CertificateRequest` to help with that.
+A CSR can be slightly tricky to generate using OpenSSL from Ruby standard library. `acme-client` provide a utility class `CertificateRequest` to help with that. You'll need to use a different private key for the certificate request than the one you use for your `Acme::Client` account.
 
 Certificate generation happens asynchronously. You may need to poll.
 
 ```ruby
-csr = Acme::Client::CertificateRequest.new(private_key: private_key, subject: { common_name: 'example.com' })
+csr = Acme::Client::CertificateRequest.new(private_key: a_different_private_key, subject: { common_name: 'example.com' })
 order.finalize(csr: csr)
 sleep(1) while order.status == 'processing'
 order.certificate # => PEM-formatted certificate
