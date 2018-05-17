@@ -8,6 +8,10 @@ class Acme::Client::Resources::Challenges::Base
     assign_attributes(arguments)
   end
 
+  def [](key)
+    to_h[key]
+  end
+
   def challenge_type
     self.class::CHALLENGE_TYPE
   end
