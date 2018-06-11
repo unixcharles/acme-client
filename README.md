@@ -96,7 +96,7 @@ To order a new certificate, the client must provide a list of identifiers.
 
 The returned order will contain a list of `Authorization` that need to be completed in other to finalize the order, generally one per identifier.
 
-Each authorization contains multiple challenges, typically a `dns-01` and a `http-01` challenge. The applicant is only required to complete one the challenges.
+Each authorization contains multiple challenges, typically a `dns-01` and a `http-01` challenge. The applicant is only required to complete one of the challenges.
 
 You can access the challenge you wish to complete using the `#dns` or `#http` method.
 
@@ -151,7 +151,7 @@ challenge.request_validation
 
 The validation is performed asynchronously and can take some time to be performed by the server.
 
-You can poll until its status change.
+You can poll until its status changes.
 
 ```ruby
 while challenge.status == 'pending'
