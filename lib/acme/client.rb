@@ -7,6 +7,7 @@ require 'digest'
 require 'forwardable'
 require 'base64'
 require 'time'
+require 'uri'
 
 module Acme; end
 class Acme::Client; end
