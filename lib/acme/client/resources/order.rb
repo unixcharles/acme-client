@@ -8,8 +8,12 @@ class Acme::Client::Resources::Order
     assign_attributes(arguments)
   end
 
+  def get_order
+    @client.order(url: url).to_h
+  end
+  
   def reload
-    assign_attributes **@client.order(url: url).to_h
+    assign_attributes(**get_order)
     true
   end
 
@@ -20,7 +24,7 @@ class Acme::Client::Resources::Order
   end
 
   def finalize(csr:)
-    assign_attributes **@client.finalize(url: finalize_url, csr: csr).to_h
+    assign_attributes(**@client.finalize(url: finalize_url, csr: csr).to_h)
     true
   end
 
