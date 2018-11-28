@@ -75,7 +75,7 @@ describe Acme::Client::JWK do
       it 'is not ASN.1 encoded' do
         expect {
           OpenSSL::ASN1.decode(subject.sign(message))
-        }.to raise_error
+        }.to raise_error(OpenSSL::ASN1::ASN1Error)
       end
     end
 
