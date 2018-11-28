@@ -16,14 +16,13 @@ class Acme::Client::Resources::Account
     @client.account_update(
       contact: contact, terms_of_service_agreed: term_of_service
     ).to_h
-  end 
+  end
 
   def update(contact: nil, terms_of_service_agreed: nil)
     assign_attributes(**update_account_email_or_service_terms(
-      contact: contact, 
+      contact: contact,
       terms_of_service_agreed: term_of_service
-      )
-    )
+    ))
     true
   end
 

@@ -11,7 +11,7 @@ class Acme::Client::Resources::Order
   def get_order
     @client.order(url: url).to_h
   end
-  
+
   def reload
     assign_attributes(**get_order)
     true
