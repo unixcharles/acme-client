@@ -17,7 +17,7 @@ class Acme::Client::Resources::Account
       contact: contact, terms_of_service_agreed: term_of_service
     ).to_h)
     true
-  end  
+  end
 
   def deactivate
     assign_attributes(**@client.account_deactivate.to_h)

@@ -11,7 +11,7 @@ class Acme::Client::Resources::Order
   def reload
     assign_attributes(**@client.order(url: url).to_h)
     true
-  end  
+  end
 
   def authorizations
     @authorization_urls.map do |authorization_url|
