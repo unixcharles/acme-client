@@ -8,14 +8,10 @@ class Acme::Client::Resources::Order
     assign_attributes(arguments)
   end
 
-  def get_order
-    @client.order(url: url).to_h
-  end
-
   def reload
-    assign_attributes(**get_order)
+    assign_attributes(**@client.order(url: url).to_h)
     true
-  end
+  end  
 
   def authorizations
     @authorization_urls.map do |authorization_url|

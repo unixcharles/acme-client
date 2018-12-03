@@ -12,19 +12,12 @@ class Acme::Client::Resources::Account
     url
   end
 
-  def update_account_email_or_service_terms(contact:, terms_of_service_agreed:)
-    @client.account_update(
-      contact: contact, terms_of_service_agreed: term_of_service
-    ).to_h
-  end
-
   def update(contact: nil, terms_of_service_agreed: nil)
-    assign_attributes(**update_account_email_or_service_terms(
-      contact: contact,
-      terms_of_service_agreed: term_of_service
-    ))
+    assign_attributes(**@client.account_update(
+      contact: contact, terms_of_service_agreed: term_of_service
+    ).to_h)
     true
-  end
+  end  
 
   def deactivate
     assign_attributes(**@client.account_deactivate.to_h)
