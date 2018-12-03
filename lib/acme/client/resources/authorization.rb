@@ -9,12 +9,12 @@ class Acme::Client::Resources::Authorization
   end
 
   def deactivate
-    assign_attributes **@client.deactivate_authorization(url: url).to_h
+    assign_attributes(**@client.deactivate_authorization(url: url).to_h)
     true
   end
 
   def reload
-    assign_attributes **@client.authorization(url: url).to_h
+    assign_attributes(**@client.authorization(url: url).to_h)
     true
   end
 

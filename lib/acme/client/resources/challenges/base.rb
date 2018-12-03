@@ -17,14 +17,22 @@ class Acme::Client::Resources::Challenges::Base
   end
 
   def reload
-    assign_attributes **@client.challenge(url: url).to_h
+    assign_attributes(**@client.challenge(url: url).to_h)
     true
   end
 
-  def request_validation
-    assign_attributes **@client.request_challenge_validation(
-      url: url, key_authorization: key_authorization
+  def send_challenge_vallidation(url:, key_authorization:)
+    @client.request_challenge_validation(
+      url: url,
+      key_authorization: key_authorization
     ).to_h
+  end
+
+  def request_validation
+    assign_attributes(**send_challenge_vallidation(
+      url: url,
+      key_authorization: key_authorization
+    ))
     true
   end
 
