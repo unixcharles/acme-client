@@ -178,7 +178,7 @@ class Acme::Client
 
   def get_nonce
     connection = new_connection(endpoint: endpoint_for(:new_nonce))
-    response = connection.head(nil, nil, 'User-Agent' => Acme::Client::USER_AGENT)
+    response = connection.head(nil, nil, 'User-Agent' => USER_AGENT)
     nonces << response.headers['replay-nonce']
     true
   end
@@ -278,9 +278,9 @@ class Acme::Client
     end
   end
 
-  def new_connection(endpoint:, &block)
+  def new_connection(endpoint:)
     Faraday.new(endpoint, **@connection_options) do |configuration|
-      yield(configuration) if block
+      yield(configuration) if block_given?
       configuration.adapter Faraday.default_adapter
     end
   end
