@@ -177,7 +177,8 @@ class Acme::Client
   end
 
   def get_nonce
-    response = Faraday.head(endpoint_for(:new_nonce), nil, 'User-Agent' => USER_AGENT)
+    connection = new_connection(endpoint: endpoint_for(:new_nonce))
+    response = connection.head(nil, nil, 'User-Agent' => USER_AGENT)
     nonces << response.headers['replay-nonce']
     true
   end
@@ -268,12 +269,18 @@ class Acme::Client
     endpoint = "#{uri.scheme}://#{uri.hostname}:#{uri.port}"
     @connections ||= {}
     @connections[mode] ||= {}
-    @connections[mode][endpoint] ||= new_connection(endpoint: endpoint, mode: mode)
+    @connections[mode][endpoint] ||= new_acme_connection(endpoint: endpoint, mode: mode)
   end
 
-  def new_connection(endpoint:, mode:)
-    Faraday.new(endpoint, **@connection_options) do |configuration|
+  def new_acme_connection(endpoint:, mode:)
+    new_connection(endpoint: endpoint) do |configuration|
       configuration.use Acme::Client::FaradayMiddleware, client: self, mode: mode
+    end
+  end
+
+  def new_connection(endpoint:)
+    Faraday.new(endpoint, **@connection_options) do |configuration|
+      yield(configuration) if block_given?
       configuration.adapter Faraday.default_adapter
     end
   end
