@@ -1,3 +1,14 @@
+## `2.0.2`
+
+* Fix constant lookup on InvalidDirectory
+* Forward connection options when fetching nonce
+* Fix splats without parenthesis warning
+
+
+## `2.0.1`
+
+* Properly require URI
+
 ## `2.0.0`
 
 * Release of the `ACMEv2` branch
