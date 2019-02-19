@@ -63,7 +63,8 @@ class Acme::Client::Resources::Directory
     end
     result
   rescue JSON::ParserError => exception
-    raise InvalidDirectory, "Invalid directory url\n#{@directory} did not return a valid directory\n#{exception.inspect}"
+    raise Acme::Client::Error::InvalidDirectory,
+      "Invalid directory url\n#{@directory} did not return a valid directory\n#{exception.inspect}"
   end
 
   def fetch_directory
