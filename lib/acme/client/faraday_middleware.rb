@@ -19,7 +19,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
     if @env.method != :get
       @env.body = client.jwk.jws(header: jws_header, payload: env.body)
     end
-    
+
     @app.call(env).on_complete { |response_env| on_complete(response_env) }
   rescue Faraday::TimeoutError, Faraday::ConnectionFailed
     raise Acme::Client::Error::Timeout
