@@ -1,9 +1,12 @@
+## `2.0.3`
+
+* Do not try to set the body on GET request
+
 ## `2.0.2`
 
 * Fix constant lookup on InvalidDirectory
 * Forward connection options when fetching nonce
 * Fix splats without parenthesis warning
-
 
 ## `2.0.1`
 
