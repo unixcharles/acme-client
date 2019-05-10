@@ -182,7 +182,10 @@ Certificate generation happens asynchronously. You may need to poll.
 ```ruby
 csr = Acme::Client::CertificateRequest.new(private_key: a_different_private_key, subject: { common_name: 'example.com' })
 order.finalize(csr: csr)
-sleep(1) while order.status == 'processing'
+while order.status == 'processing'
+  sleep(1)
+  challenge.reload
+end
 order.certificate # => PEM-formatted certificate
 ```
 
