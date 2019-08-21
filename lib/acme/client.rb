@@ -282,13 +282,13 @@ class Acme::Client
   def new_connection(endpoint:)
     Faraday.new(endpoint, **@connection_options) do |configuration|
       if @bad_nonce_retry > 0
-      configuration.request(:retry,
-        max: @bad_nonce_retry,
-        interval: 0.05,
-        interval_randomness: 0.5,
-        backoff_factor: 2,
-        methods: Faraday::Connection::METHODS,
-        exceptions: [Acme::Client::Error::BadNonce])
+        configuration.request(:retry,
+          max: @bad_nonce_retry,
+          interval: 0.05,
+          interval_randomness: 0.5,
+          backoff_factor: 2,
+          methods: Faraday::Connection::METHODS,
+          exceptions: [Acme::Client::Error::BadNonce])
       end
       yield(configuration) if block_given?
       configuration.adapter Faraday.default_adapter
