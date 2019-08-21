@@ -1,0 +1,134 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: "<DIRECTORY_URL>"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Replay-Nonce:
+      - a0rqsPSAYuRtC1CfMdllYQ
+      Date:
+      - Wed, 21 Aug 2019 20:35:25 GMT
+      Content-Length:
+      - '240'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+           "meta": {
+              "termsOfService": "data:text/plain,Do%20what%20thou%20wilt"
+           },
+           "newAccount": "https://0.0.0.0:14000/sign-me-up",
+           "newNonce": "https://0.0.0.0:14000/nonce-plz",
+           "newOrder": "https://0.0.0.0:14000/order-plz"
+        }
+    http_version: 
+  recorded_at: Wed, 21 Aug 2019 20:35:25 GMT
+- request:
+    method: post
+    uri: https://0.0.0.0:14000/sign-me-up
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIm5vbmNlIjoiaW52YWxpZF9ub25jZSIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiU1JkMzlfbWM4MXdYYjdUMndMai1xOENWWGlHTEp1ckdnWV92VDV6dG13YyIsInkiOiJvWE1PaDNSeGpNMEthME9vS0hLMk9nZkZMLUdpOTVWemRjM3I5ZWxvWWprIn19","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"bTMwZpXhTBp9pDeZ9ITZfxDEQ5dgFt5TjNj7MdQjWUGrbW825q9HZRmxFU1U3Wyusj8jf-PV81FQwEN00cS0gw"}'
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/problem+json; charset=utf-8
+      Replay-Nonce:
+      - 9WRko0gEgfAwziQfLvNKkA
+      Date:
+      - Wed, 21 Aug 2019 20:35:25 GMT
+      Content-Length:
+      - '138'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+           "type": "urn:ietf:params:acme:error:badNonce",
+           "detail": "JWS has an invalid anti-replay nonce: invalid_nonce",
+           "status": 400
+        }
+    http_version: 
+  recorded_at: Wed, 21 Aug 2019 20:35:25 GMT
+- request:
+    method: post
+    uri: https://0.0.0.0:14000/sign-me-up
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIm5vbmNlIjoiOVdSa28wZ0VnZkF3emlRZkx2TktrQSIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiU1JkMzlfbWM4MXdYYjdUMndMai1xOENWWGlHTEp1ckdnWV92VDV6dG13YyIsInkiOiJvWE1PaDNSeGpNMEthME9vS0hLMk9nZkZMLUdpOTVWemRjM3I5ZWxvWWprIn19","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"0DVfJW-4caXHGnNuo3888-yJGn201am4n1P8AEUl7_LIOiQLa3xLTWzHdNy0C07iIoWbTcdVrQXob7WW8eYTlQ"}'
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Location:
+      - https://0.0.0.0:14000/my-account/a3fcc1e2aab14b04f81be5d0b1136c46327c520f6e388760a05d8b8715e1fe17
+      Replay-Nonce:
+      - HU4EIYL3_NW67eUD8QLE3A
+      Date:
+      - Wed, 21 Aug 2019 20:35:25 GMT
+      Content-Length:
+      - '329'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+           "status": "valid",
+           "contact": [
+              "mailto:info@example.com"
+           ],
+           "key": {
+              "kty": "EC",
+              "crv": "P-256",
+              "x": "SRd39_mc81wXb7T2wLj-q8CVXiGLJurGgY_vT5ztmwc",
+              "y": "oXMOh3RxjM0Ka0OoKHK2OgfFL-Gi95Vzdc3r9eloYjk"
+           },
+           "ID": "a3fcc1e2aab14b04f81be5d0b1136c46327c520f6e388760a05d8b8715e1fe17"
+        }
+    http_version: 
+  recorded_at: Wed, 21 Aug 2019 20:35:25 GMT
+recorded_with: VCR 2.9.3
