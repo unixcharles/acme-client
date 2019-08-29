@@ -29,7 +29,7 @@ class Acme::Client
     pem: 'application/pem-certificate-chain'
   }
 
-  def initialize(jwk: nil, kid: nil, private_key: nil, directory: DEFAULT_DIRECTORY, connection_options: {})
+  def initialize(jwk: nil, kid: nil, private_key: nil, directory: DEFAULT_DIRECTORY, connection_options: {}, bad_nonce_retry: 0)
     if jwk.nil? && private_key.nil?
       raise ArgumentError, 'must specify jwk or private_key'
     end
@@ -41,6 +41,7 @@ class Acme::Client
     end
 
     @kid, @connection_options = kid, connection_options
+    @bad_nonce_retry = bad_nonce_retry
     @directory = Acme::Client::Resources::Directory.new(URI(directory), @connection_options)
     @nonces ||= []
   end
@@ -280,6 +281,12 @@ class Acme::Client
 
   def new_connection(endpoint:)
     Faraday.new(endpoint, **@connection_options) do |configuration|
+      if @bad_nonce_retry > 0
+        configuration.request(:retry,
+          max: @bad_nonce_retry,
+          methods: Faraday::Connection::METHODS,
+          exceptions: [Acme::Client::Error::BadNonce])
+      end
       yield(configuration) if block_given?
       configuration.adapter Faraday.default_adapter
     end

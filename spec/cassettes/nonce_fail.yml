@@ -1,0 +1,111 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: "<DIRECTORY_URL>"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Replay-Nonce:
+      - rN3cDiJ59zRKHiYirHs4YA
+      Date:
+      - Wed, 21 Aug 2019 19:40:04 GMT
+      Content-Length:
+      - '240'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+           "meta": {
+              "termsOfService": "data:text/plain,Do%20what%20thou%20wilt"
+           },
+           "newAccount": "https://0.0.0.0:14000/sign-me-up",
+           "newNonce": "https://0.0.0.0:14000/nonce-plz",
+           "newOrder": "https://0.0.0.0:14000/order-plz"
+        }
+    http_version: 
+  recorded_at: Wed, 21 Aug 2019 19:40:04 GMT
+- request:
+    method: head
+    uri: https://0.0.0.0:14000/nonce-plz
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Replay-Nonce:
+      - 063ziGbuwwDIznTSUpOaSQ
+      Date:
+      - Wed, 21 Aug 2019 19:40:04 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 21 Aug 2019 19:40:04 GMT
+- request:
+    method: post
+    uri: https://0.0.0.0:14000/sign-me-up
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiMDYzemlHYnV3d0RJem5UU1VwT2FTUSIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImUiOiJBUUFCIiwia3R5IjoiUlNBIiwibiI6IjR2dXpBbU9tc2toZ05oaWdVRGc1Y2dZbFM5U18xMFItNFdNOXRFZy1WdXAtUVlPQ2dDQ1ZmS1VMcUFNbDlzS1ZwTXhBNG5uVklFOTBtMXUyUXE3OTctWmVwbVZNQ1lLek1pcWtFZjVVSFE2MV9HSTBkZGlZVHJsRzV0bi11YTR2YW1EamZNS3doc3B5LUoxX1ZxUzJwM0tLMGp3bXFPWjBaTTUwMXg5OTM2YTkzZU1HQjlxcWcwbXM1ajA3UjllYkNDMnIwREoyNDhfakNoWVpfQ0FwRG9ZbzZmcWZLbEJBTTNHS3pqM2FfaVRMOGN1cl9KWVFMOTI1TS1JYnBYZElQMzlfN0dXa09tUUw5YmZ0ZTNlMDNUemtwb3g2dXNVZGcwTXhxcEhtVEdMOXZtN2YwbFVPVXRPZmJCRElmVmNYbVUtLXl2NDJVM3BaaWRhTUJIQzNLUSJ9fQ","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"icg9d6J8vWZtFJuaz4qo8Uf78urS7qaVoyoG04MlFgjIE9EKxSo8q8Tj20gsyCxiofW5B2Y2OPWwkdS6ayHE--sIC6OxIKpwdy0sKsgGF_w-MAuHUhXLRLzvD8aXCvNTJFQlU_I2rWwRwONFlCpkSMYhiQwCan089AOFlJzw-BiePgergnhXmivjRTyOdHfYr1-aksVamrtQkx2GL8_LYI2cq_WEK9EFC5f_Iat8BoSOHP0CzTp6JZwFQnyySuEmrMJl2AcCGsqarO8qWIV8rzD6l-SwrlkmPMNZqqiuMY2o5d7HjWEalaV0EYc_dc2nqQs_NSL2FwxKeRvjaSgRbg"}'
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/problem+json; charset=utf-8
+      Replay-Nonce:
+      - tT_wsTR6gifyYllilN-Eyg
+      Date:
+      - Wed, 21 Aug 2019 19:40:04 GMT
+      Content-Length:
+      - '147'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+           "type": "urn:ietf:params:acme:error:badNonce",
+           "detail": "JWS has an invalid anti-replay nonce: 063ziGbuwwDIznTSUpOaSQ",
+           "status": 400
+        }
+    http_version: 
+  recorded_at: Wed, 21 Aug 2019 19:40:04 GMT
+recorded_with: VCR 2.9.3
