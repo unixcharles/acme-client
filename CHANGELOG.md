@@ -1,3 +1,7 @@
+## `2.0.4`
+
+* Add an option to retry bad nonce errors
+
 ## `2.0.3`
 
 * Do not try to set the body on GET request
