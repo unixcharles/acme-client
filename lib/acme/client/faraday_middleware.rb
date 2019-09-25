@@ -38,7 +38,7 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   private
 
   def jws_header
-    # hack to include the port which boulder expects but URI::HTTPS#to_s omits
+    # HACK to include the port which boulder expects but URI::HTTPS#to_s omits
     url = "#{env.url.scheme}://#{env.url.hostname}:#{env.url.port}#{env.url.path}"
     headers = { nonce: pop_nonce, url: url }
     headers[:kid] = client.kid if @mode == :kid
