@@ -37,5 +37,10 @@ VCR.configure do |c|
   c.ignore_localhost = false
   c.default_cassette_options = { record: :once, match_requests_on: [:method, :path, :query] }
   c.allow_http_connections_when_no_cassette = false
-  c.filter_sensitive_data('<DIRECTORY_URL>') { DIRECTORY_URL }
+  c.filter_sensitive_data('<DIRECTORY_URL>') do
+    DIRECTORY_URL
+  end
+  c.filter_sensitive_data('<DIRECTORY_BASE_URL>') do
+    DIRECTORY_URL.gsub(%r[\/[^\/]+$], '')
+  end
 end

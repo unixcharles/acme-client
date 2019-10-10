@@ -14,7 +14,6 @@ describe Acme::Client::Resources::Directory do
   context 'meta', vcr: { cassette_name: 'directory_meta' } do
     it { expect(directory.meta).to be_a(Hash) }
     it { expect(directory.terms_of_service).to be_a(String) }
-    it { expect(directory.website).to be_a(String) }
     it { expect(directory.external_account_required).to be_nil }
   end
 end

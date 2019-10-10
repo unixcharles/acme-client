@@ -4,7 +4,7 @@ module HttpHelper
   def serve_once(body)
     return yield unless VCR.real_http_connections_allowed?
 
-    dev_null = Logger.new(StringIO.new)
+    dev_null = WEBrick::BasicLog.new(StringIO.new)
     server = WEBrick::HTTPServer.new(Port: 5002, Logger: dev_null, AccessLog: dev_null)
 
     begin

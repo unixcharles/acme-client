@@ -24,7 +24,7 @@ describe Acme::Client do
       }.from(true).to(false)
     end
 
-    it 'raise whem nonce fail', vcr: { cassette_name: 'nonce_fail' } do
+    it 'raise when nonce fail', vcr: { cassette_name: 'nonce_fail' } do
       expect {
         unregistered_client.new_account(contact: 'mailto:info@example.com')
       }.to raise_error(Acme::Client::Error::BadNonce)
@@ -40,7 +40,6 @@ describe Acme::Client do
   context 'meta', vcr: { cassette_name: 'client_meta' } do
     it { expect(client.meta).to be_a(Hash) }
     it { expect(client.terms_of_service).to be_a(String) }
-    it { expect(client.website).to be_a(String) }
     it { expect(client.external_account_required).to be_nil }
   end
 
@@ -54,7 +53,7 @@ describe Acme::Client do
       it 'refuse the terms of service', vcr: { cassette_name: 'new_account_refuse_terms' } do
         expect {
           unregistered_client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: false)
-        }.to raise_error(Acme::Client::Error::Malformed)
+        }.to raise_error(Acme::Client::Error, 'Provided account did not agree to the terms of service')
       end
     end
 
@@ -72,12 +71,14 @@ describe Acme::Client do
       end
 
       it 'load account from private key if the kid is unknown', vcr: { cassette_name: 'load_account_unkown_kid' } do
+        account = unregistered_client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
         client = Acme::Client.new(
           private_key: private_key,
           directory: DIRECTORY_URL
         )
 
         expect(client.account.status).to eq('valid')
+        expect(client.account.kid).to eq(account.kid)
       end
     end
 
@@ -130,7 +131,7 @@ describe Acme::Client do
       it 'fail to fetch order from an invalid url', vcr: { cassette_name: 'fail_fetch_order' } do
         expect {
           client.order(url: "#{order_url}err")
-        }.to raise_error(Acme::Client::Error::Malformed, 'Invalid order ID')
+        }.to raise_error(Acme::Client::Error::NotFound)
       end
     end
 

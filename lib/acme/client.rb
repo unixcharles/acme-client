@@ -90,7 +90,7 @@ class Acme::Client
       response.headers.fetch(:location)
     end
 
-    response = post(@kid)
+    response = post_as_get(@kid)
     arguments = attributes_from_account_response(response)
     Acme::Client::Resources::Account.new(self, url: @kid, **arguments)
   end
@@ -105,7 +105,7 @@ class Acme::Client
       identifiers
     else
       Array(identifiers).map do |identifier|
-        { type: 'dns', value: identifier }
+        identifier.is_a?(String) ? { type: 'dns', value: identifier } : identifier
       end
     end
     payload['notBefore'] = not_before if not_before
@@ -117,7 +117,7 @@ class Acme::Client
   end
 
   def order(url:)
-    response = get(url)
+    response = post_as_get(url)
     arguments = attributes_from_order_response(response)
     Acme::Client::Resources::Order.new(self, **arguments.merge(url: url))
   end
@@ -139,7 +139,7 @@ class Acme::Client
   end
 
   def authorization(url:)
-    response = get(url)
+    response = post_as_get(url)
     arguments = attributes_from_authorization_response(response)
     Acme::Client::Resources::Authorization.new(self, url: url, **arguments)
   end
@@ -151,13 +151,13 @@ class Acme::Client
   end
 
   def challenge(url:)
-    response = get(url)
+    response = post_as_get(url)
     arguments = attributes_from_challenge_response(response)
     Acme::Client::Resources::Challenges.new(self, **arguments)
   end
 
   def request_challenge_validation(url:, key_authorization:)
-    response = post(url, payload: { keyAuthorization: key_authorization })
+    response = post(url, payload: {})
     arguments = attributes_from_challenge_response(response)
     Acme::Client::Resources::Challenges.new(self, **arguments)
   end
@@ -252,14 +252,19 @@ class Acme::Client
     connection.post(url, payload)
   end
 
+  def post_as_get(url, mode: :kid)
+    connection = connection_for(url: url, mode: mode)
+    connection.post(url, nil)
+  end
+
   def get(url, mode: :kid)
     connection = connection_for(url: url, mode: mode)
     connection.get(url)
   end
 
   def download(url, format:)
-    connection = connection_for(url: url, mode: :download)
-    connection.get do |request|
+    connection = connection_for(url: url, mode: :kid)
+    connection.post do |request|
       request.url(url)
       request.headers['Accept'] = CONTENT_TYPES.fetch(format)
     end

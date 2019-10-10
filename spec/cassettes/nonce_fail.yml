@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -22,61 +22,63 @@ http_interactions:
       - public, max-age=0, no-cache
       Content-Type:
       - application/json; charset=utf-8
-      Replay-Nonce:
-      - rN3cDiJ59zRKHiYirHs4YA
       Date:
-      - Wed, 21 Aug 2019 19:40:04 GMT
+      - Thu, 10 Oct 2019 03:08:15 GMT
       Content-Length:
-      - '240'
+      - '386'
     body:
       encoding: UTF-8
       string: |-
         {
+           "keyChange": "<DIRECTORY_BASE_URL>/rollover-account-key",
            "meta": {
               "termsOfService": "data:text/plain,Do%20what%20thou%20wilt"
            },
-           "newAccount": "https://0.0.0.0:14000/sign-me-up",
-           "newNonce": "https://0.0.0.0:14000/nonce-plz",
-           "newOrder": "https://0.0.0.0:14000/order-plz"
+           "newAccount": "<DIRECTORY_BASE_URL>/sign-me-up",
+           "newNonce": "<DIRECTORY_BASE_URL>/nonce-plz",
+           "newOrder": "<DIRECTORY_BASE_URL>/order-plz",
+           "revokeCert": "<DIRECTORY_BASE_URL>/revoke-cert"
         }
     http_version: 
-  recorded_at: Wed, 21 Aug 2019 19:40:04 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: head
-    uri: https://0.0.0.0:14000/nonce-plz
+    uri: "<DIRECTORY_BASE_URL>/nonce-plz"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Accept:
       - "*/*"
   response:
     status:
-      code: 204
-      message: No Content
+      code: 200
+      message: OK
     headers:
       Cache-Control:
       - public, max-age=0, no-cache
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
       Replay-Nonce:
-      - 063ziGbuwwDIznTSUpOaSQ
+      - Nr5JbswLJWa8FwbDW5spdg
       Date:
-      - Wed, 21 Aug 2019 19:40:04 GMT
+      - Thu, 10 Oct 2019 03:08:15 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 21 Aug 2019 19:40:04 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: post
-    uri: https://0.0.0.0:14000/sign-me-up
+    uri: "<DIRECTORY_BASE_URL>/sign-me-up"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiMDYzemlHYnV3d0RJem5UU1VwT2FTUSIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImUiOiJBUUFCIiwia3R5IjoiUlNBIiwibiI6IjR2dXpBbU9tc2toZ05oaWdVRGc1Y2dZbFM5U18xMFItNFdNOXRFZy1WdXAtUVlPQ2dDQ1ZmS1VMcUFNbDlzS1ZwTXhBNG5uVklFOTBtMXUyUXE3OTctWmVwbVZNQ1lLek1pcWtFZjVVSFE2MV9HSTBkZGlZVHJsRzV0bi11YTR2YW1EamZNS3doc3B5LUoxX1ZxUzJwM0tLMGp3bXFPWjBaTTUwMXg5OTM2YTkzZU1HQjlxcWcwbXM1ajA3UjllYkNDMnIwREoyNDhfakNoWVpfQ0FwRG9ZbzZmcWZLbEJBTTNHS3pqM2FfaVRMOGN1cl9KWVFMOTI1TS1JYnBYZElQMzlfN0dXa09tUUw5YmZ0ZTNlMDNUemtwb3g2dXNVZGcwTXhxcEhtVEdMOXZtN2YwbFVPVXRPZmJCRElmVmNYbVUtLXl2NDJVM3BaaWRhTUJIQzNLUSJ9fQ","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"icg9d6J8vWZtFJuaz4qo8Uf78urS7qaVoyoG04MlFgjIE9EKxSo8q8Tj20gsyCxiofW5B2Y2OPWwkdS6ayHE--sIC6OxIKpwdy0sKsgGF_w-MAuHUhXLRLzvD8aXCvNTJFQlU_I2rWwRwONFlCpkSMYhiQwCan089AOFlJzw-BiePgergnhXmivjRTyOdHfYr1-aksVamrtQkx2GL8_LYI2cq_WEK9EFC5f_Iat8BoSOHP0CzTp6JZwFQnyySuEmrMJl2AcCGsqarO8qWIV8rzD6l-SwrlkmPMNZqqiuMY2o5d7HjWEalaV0EYc_dc2nqQs_NSL2FwxKeRvjaSgRbg"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIm5vbmNlIjoiTnI1SmJzd0xKV2E4RndiRFc1c3BkZyIsInVybCI6Imh0dHBzOi8vMTkyLjE2OC41Ni45MzoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiS0dhMzVHSFBuN1owWkgycjAyUE9ZcVBzVmVoLTlEaW5GSUZVZlNKeUFMRSIsInkiOiJYa2V1MmRXTGo0SmhJakhXMThWSnFIbnBuMjZiWE52SEJYT3FTOG5oTHhNIn19","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl19","signature":"Bpn4xFJAMVIplSaZw6b42B1WD1tieAGNeAqFA1kl9npDkPfUG1vqO86xelHQZsRxrA0T-yWYGRXz2bu3w1gYiw"}'
     headers:
       User-Agent:
-      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -85,19 +87,22 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 400
-      message: Bad Request
+      code: 403
+      message: Forbidden
     headers:
       Cache-Control:
       - public, max-age=0, no-cache
       Content-Type:
       - application/problem+json; charset=utf-8
+      Link:
+      - <data:text/plain,Do%20what%20thou%20wilt>;rel="terms-of-service"
+      - <<DIRECTORY_URL>>;rel="index"
       Replay-Nonce:
-      - tT_wsTR6gifyYllilN-Eyg
+      - nA9fzQ2E9Chs1lpyLoX-2Q
       Date:
-      - Wed, 21 Aug 2019 19:40:04 GMT
+      - Thu, 10 Oct 2019 03:08:15 GMT
       Content-Length:
-      - '147'
+      - '150'
     body:
       encoding: UTF-8
       string: |-
@@ -107,5 +112,5 @@ http_interactions:
            "status": 400
         }
     http_version: 
-  recorded_at: Wed, 21 Aug 2019 19:40:04 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 recorded_with: VCR 2.9.3

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -18,90 +18,67 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Server:
-      - nginx
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '602'
-      X-Frame-Options:
-      - DENY
-      Strict-Transport-Security:
-      - max-age=604800
-      Expires:
-      - Wed, 04 Apr 2018 15:48:28 GMT
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Pragma:
-      - no-cache
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
       Date:
-      - Wed, 04 Apr 2018 15:48:28 GMT
-      Connection:
-      - keep-alive
+      - Thu, 10 Oct 2019 03:08:15 GMT
+      Content-Length:
+      - '386'
     body:
       encoding: UTF-8
       string: |-
         {
-          "keyChange": "https://acme-staging-v02.api.letsencrypt.org/acme/key-change",
-          "meta": {
-            "termsOfService": "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf"
-          },
-          "newAccount": "https://acme-staging-v02.api.letsencrypt.org/acme/new-acct",
-          "newNonce": "https://acme-staging-v02.api.letsencrypt.org/acme/new-nonce",
-          "newOrder": "https://acme-staging-v02.api.letsencrypt.org/acme/new-order",
-          "q6I5ISxf3g0": "https://community.letsencrypt.org/t/adding-random-entries-to-the-directory/33417",
-          "revokeCert": "https://acme-staging-v02.api.letsencrypt.org/acme/revoke-cert"
+           "keyChange": "<DIRECTORY_BASE_URL>/rollover-account-key",
+           "meta": {
+              "termsOfService": "data:text/plain,Do%20what%20thou%20wilt"
+           },
+           "newAccount": "<DIRECTORY_BASE_URL>/sign-me-up",
+           "newNonce": "<DIRECTORY_BASE_URL>/nonce-plz",
+           "newOrder": "<DIRECTORY_BASE_URL>/order-plz",
+           "revokeCert": "<DIRECTORY_BASE_URL>/revoke-cert"
         }
     http_version: 
-  recorded_at: Wed, 04 Apr 2018 15:48:28 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: head
-    uri: https://acme-staging-v02.api.letsencrypt.org/acme/new-nonce
+    uri: "<DIRECTORY_BASE_URL>/nonce-plz"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Accept:
       - "*/*"
   response:
     status:
-      code: 204
-      message: No Content
+      code: 200
+      message: OK
     headers:
-      Server:
-      - nginx
-      Replay-Nonce:
-      - XhWXyt6IiPlCH0R8TNX-KsKL3CyF_PhcxRaWNqVL-S8
-      X-Frame-Options:
-      - DENY
-      Strict-Transport-Security:
-      - max-age=604800
-      Expires:
-      - Wed, 04 Apr 2018 15:48:28 GMT
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Pragma:
-      - no-cache
+      - public, max-age=0, no-cache
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Replay-Nonce:
+      - tfsLQc3pSF0yOdXVTfaS1Q
       Date:
-      - Wed, 04 Apr 2018 15:48:28 GMT
-      Connection:
-      - keep-alive
+      - Thu, 10 Oct 2019 03:08:15 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 04 Apr 2018 15:48:29 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: post
-    uri: https://acme-staging-v02.api.letsencrypt.org/acme/new-acct
+    uri: "<DIRECTORY_BASE_URL>/sign-me-up"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiWGhXWHl0NklpUGxDSDBSOFROWC1Lc0tMM0N5Rl9QaGN4UmFXTnFWTC1TOCIsInVybCI6Imh0dHBzOi8vYWNtZS1zdGFnaW5nLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvbmV3LWFjY3QiLCJqd2siOnsiZSI6IkFRQUIiLCJrdHkiOiJSU0EiLCJuIjoidUxDcTBzSVRMODdrT3ZEZktLbVlxQnJLLXhHM0x1WWxmM0tYQUl5Mm1pdjluZnlkVzR2YjJwWjhNMFF2UGN0TEZfR196YTFiVExYWnNuY1dLd040d25pejF6ZlJzRTJKcHBQT1VJc0E3RGpmUXFRZ3pNckRvUnJLZXVuMkRJQ3NjS0lwdjZPWGUzM1Z3bW1ORHh3Y3FfTjFKMjJnZkp0dFpCeEw3aF9DdmMyZC1lNWpJZ1hoSEhhVzNxdllfWC1zZDdXZV9ISFpPTV83WF92bzB0WW9kVGlJckxjZWJkZU9EVDdEMjFxU3B3RXhRMzFQTDlDNVUzTlk2bE1NUm9GN2hXeFk3eHNqbmlXMlFUSlc4c3RXUkhCZ3FGbmpja2RONWZWcFFIZmNQTllNcFMwVHRkWjZiZ2tjLTFRdmE1bDNmdzJkMEJxdGNpT3JQWXdJSUVYTEp3In19","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"Aej80PdDP8WXpEMRgUSvfFD8Oa_kX3AFk0fL8hG-BtJOxN5SuEirXLwDVzSFOlw3LKXDR31N8YUDriXS2S2UXdWvATi6xuGIzqpBCmjzT-IiZ9DTXIuJe-ZUGFVtw4LO8Bxijry602e4RQXXWa13h76qaZB7WiEwV5EeLEpd1IQIL2F8p0SCfi6an29KQscmoSGWK4VI3HOt0hDe5eKUC5fX8u3xvWrCLXo2NSn-MCpcdA14UQ3xhTUdpMr3RPqaK6KA_r2icZ6zgpeV2fPxJNO15eH5VGD6MEL2LQXg3y1ydJGP2T-WftNDk7MGAFCyYELDbqotmhNOiAvuiIkXMA"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIm5vbmNlIjoidGZzTFFjM3BTRjB5T2RYVlRmYVMxUSIsInVybCI6Imh0dHBzOi8vMTkyLjE2OC41Ni45MzoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiMGlkVnRWVGszQnRTcW12MDFKN2hmX3REWm5ENUJKWE5NZnc4N0tPSGd3IiwieSI6InVPa004b3dDNTJvOVFDVk9YZVpHUHZ4ZkIxdzZoS2xNSGRab2hwOVMwZmsifX0","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"8BdCmZvSdMohT2QgbeKgaYGv2sDRlOeF0YRE6NZjFGquI8Ar14AeobcqnIaVx9KHZiiNr8iS3FKj5p-kiJY7UA"}'
     headers:
       User-Agent:
-      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -113,62 +90,47 @@ http_interactions:
       code: 201
       message: Created
     headers:
-      Server:
-      - nginx
+      Cache-Control:
+      - public, max-age=0, no-cache
       Content-Type:
-      - application/json
-      Content-Length:
-      - '575'
-      Boulder-Requester:
-      - '5864876'
+      - application/json; charset=utf-8
       Link:
-      - <https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf>;rel="terms-of-service"
+      - <<DIRECTORY_URL>>;rel="index"
       Location:
-      - https://acme-staging-v02.api.letsencrypt.org/acme/acct/5864876
+      - "<DIRECTORY_BASE_URL>/my-account/58"
       Replay-Nonce:
-      - FGBwThYiwSRCjwFn4411SC5MDDAb78auZHhfjXg0bqI
-      X-Frame-Options:
-      - DENY
-      Strict-Transport-Security:
-      - max-age=604800
-      Expires:
-      - Wed, 04 Apr 2018 15:48:29 GMT
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Pragma:
-      - no-cache
+      - yhMJUW76mnLknZxuN3c5dw
       Date:
-      - Wed, 04 Apr 2018 15:48:29 GMT
-      Connection:
-      - keep-alive
+      - Thu, 10 Oct 2019 03:08:15 GMT
+      Content-Length:
+      - '311'
     body:
       encoding: UTF-8
       string: |-
         {
-          "id": 5864876,
-          "key": {
-            "kty": "RSA",
-            "n": "uLCq0sITL87kOvDfKKmYqBrK-xG3LuYlf3KXAIy2miv9nfydW4vb2pZ8M0QvPctLF_G_za1bTLXZsncWKwN4wniz1zfRsE2JppPOUIsA7DjfQqQgzMrDoRrKeun2DICscKIpv6OXe33VwmmNDxwcq_N1J22gfJttZBxL7h_Cvc2d-e5jIgXhHHaW3qvY_X-sd7We_HHZOM_7X_vo0tYodTiIrLcebdeODT7D21qSpwExQ31PL9C5U3NY6lMMRoF7hWxY7xsjniW2QTJW8stWRHBgqFnjckdN5fVpQHfcPNYMpS0TtdZ6bgkc-1Qva5l3fw2d0BqtciOrPYwIIEXLJw",
-            "e": "AQAB"
-          },
-          "contact": [
-            "mailto:info@example.com"
-          ],
-          "initialIp": "207.245.236.6",
-          "createdAt": "2018-04-04T15:48:29.30564081Z",
-          "status": "valid"
+           "status": "valid",
+           "contact": [
+              "mailto:info@example.com"
+           ],
+           "orders": "<DIRECTORY_BASE_URL>/list-orderz/58",
+           "key": {
+              "kty": "EC",
+              "crv": "P-256",
+              "x": "ANInVbVU5NwbUqpr9NSe4X_7Q2Zw-QSVzTH8POyjh4M",
+              "y": "uOkM8owC52o9QCVOXeZGPvxfB1w6hKlMHdZohp9S0fk"
+           }
         }
     http_version: 
-  recorded_at: Wed, 04 Apr 2018 15:48:29 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: post
-    uri: https://acme-staging-v02.api.letsencrypt.org/acme/acct/5864876
+    uri: "<DIRECTORY_BASE_URL>/my-account/58"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiRkdCd1RoWWl3U1JDandGbjQ0MTFTQzVNRERBYjc4YXVaSGhmalhnMGJxSSIsInVybCI6Imh0dHBzOi8vYWNtZS1zdGFnaW5nLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC81ODY0ODc2Iiwia2lkIjoiaHR0cHM6Ly9hY21lLXN0YWdpbmctdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9hY2N0LzU4NjQ4NzYifQ","payload":"e30","signature":"qKpZwPrIQhWtaz06j6nmcPYvas3_R6xoPtBX_tECUEeKfuwC0kO4WG3bFg8yVjYmGp1brMBKJLab9MWMPeQmXYD3fUCOGQ6vwvdun8K5TdjyiUhMuWOP_nxDNXnLIxHB45xEIaU8CnAltEzzksTv_gRBuGrk5xckGOz4GluX6fUlUbMoKCWipTDTrI11TZKqzL7HS8LzfNWTacJEtzxWvxXafCAqXuECmvWWgTylH-2KRZVFTw1ini1NfuRpfy7obMQMSknUUFtvbu4Jy6DUcKKIiKKAXd6Ftoy6weVye9FKFqd7k6si-AJ0QQzhC83K4OgWgk8hta_Nl2G8hsSlEw"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIm5vbmNlIjoieWhNSlVXNzZtbkxrblp4dU4zYzVkdyIsInVybCI6Imh0dHBzOi8vMTkyLjE2OC41Ni45MzoxNDAwMC9teS1hY2NvdW50LzU4Iiwia2lkIjoiaHR0cHM6Ly8xOTIuMTY4LjU2LjkzOjE0MDAwL215LWFjY291bnQvNTgifQ","payload":"","signature":"wmM8OfnkT5tqUtknF3_MnBMnfsOUBGa5rY6u2Z-g_cKyFT2kEjS6urTsbpUDC8jQ6_XXbpmSEk97nkrBlxSuPQ"}'
     headers:
       User-Agent:
-      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -180,60 +142,45 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Server:
-      - nginx
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '566'
-      Boulder-Requester:
-      - '5864876'
-      Link:
-      - <https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf>;rel="terms-of-service"
-      Replay-Nonce:
-      - oeNzpvZ4UOeJM0v4HhB8Ib3VJet7cc8ZsaRvHxcsZNc
-      X-Frame-Options:
-      - DENY
-      Strict-Transport-Security:
-      - max-age=604800
-      Expires:
-      - Wed, 04 Apr 2018 15:48:29 GMT
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Pragma:
-      - no-cache
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Replay-Nonce:
+      - XrlqznwiP_kTqx6CiDcCLA
       Date:
-      - Wed, 04 Apr 2018 15:48:29 GMT
-      Connection:
-      - keep-alive
+      - Thu, 10 Oct 2019 03:08:15 GMT
+      Content-Length:
+      - '311'
     body:
       encoding: UTF-8
       string: |-
         {
-          "id": 5864876,
-          "key": {
-            "kty": "RSA",
-            "n": "uLCq0sITL87kOvDfKKmYqBrK-xG3LuYlf3KXAIy2miv9nfydW4vb2pZ8M0QvPctLF_G_za1bTLXZsncWKwN4wniz1zfRsE2JppPOUIsA7DjfQqQgzMrDoRrKeun2DICscKIpv6OXe33VwmmNDxwcq_N1J22gfJttZBxL7h_Cvc2d-e5jIgXhHHaW3qvY_X-sd7We_HHZOM_7X_vo0tYodTiIrLcebdeODT7D21qSpwExQ31PL9C5U3NY6lMMRoF7hWxY7xsjniW2QTJW8stWRHBgqFnjckdN5fVpQHfcPNYMpS0TtdZ6bgkc-1Qva5l3fw2d0BqtciOrPYwIIEXLJw",
-            "e": "AQAB"
-          },
-          "contact": [
-            "mailto:info@example.com"
-          ],
-          "initialIp": "207.245.236.6",
-          "createdAt": "2018-04-04T15:48:29Z",
-          "status": "valid"
+           "status": "valid",
+           "contact": [
+              "mailto:info@example.com"
+           ],
+           "orders": "<DIRECTORY_BASE_URL>/list-orderz/58",
+           "key": {
+              "kty": "EC",
+              "crv": "P-256",
+              "x": "ANInVbVU5NwbUqpr9NSe4X_7Q2Zw-QSVzTH8POyjh4M",
+              "y": "uOkM8owC52o9QCVOXeZGPvxfB1w6hKlMHdZohp9S0fk"
+           }
         }
     http_version: 
-  recorded_at: Wed, 04 Apr 2018 15:48:29 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: post
-    uri: https://acme-staging-v02.api.letsencrypt.org/acme/acct/5864876
+    uri: "<DIRECTORY_BASE_URL>/my-account/58"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoib2VOenB2WjRVT2VKTTB2NEhoQjhJYjNWSmV0N2NjOFpzYVJ2SHhjc1pOYyIsInVybCI6Imh0dHBzOi8vYWNtZS1zdGFnaW5nLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC81ODY0ODc2Iiwia2lkIjoiaHR0cHM6Ly9hY21lLXN0YWdpbmctdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9hY2N0LzU4NjQ4NzYifQ","payload":"eyJjb250YWN0IjpbIm1haWx0bzp1cGRhdGVkQGV4YW1wbGUuY29tIl19","signature":"SNGqMgJOGdNWnb-BHnBSkuGHII0r_nHz6y3Ce37FwtiMpB0xCvT0vdb8nKmZZ_WhZ9iQTcW4WJSf4il2DkgRbhcHhMLHEAOfHpakNQS7puKYYQFXiviOCtvBS51U2Y96fGdBJAzz1rvC7bd9nCu0Stny_64DIlO7Uuhuv5MnHWyju5EAWOe54pcTTA9sCdzKbxE_Rbz803pPyW-Ue4CYj1lxhFJocQT_j60KY5o_DWw3vJgBkzmMFhPniEJZjjL11BUGJkw5PoQLW62Nd_pQgpSGrBDHt3IXGJ0a_Xvnq4Ouci7buNZnMuy_hXD1zurQ0R3ztfeAMfHIsHArxm6Y7A"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIm5vbmNlIjoiWHJscXpud2lQX2tUcXg2Q2lEY0NMQSIsInVybCI6Imh0dHBzOi8vMTkyLjE2OC41Ni45MzoxNDAwMC9teS1hY2NvdW50LzU4Iiwia2lkIjoiaHR0cHM6Ly8xOTIuMTY4LjU2LjkzOjE0MDAwL215LWFjY291bnQvNTgifQ","payload":"eyJjb250YWN0IjpbIm1haWx0bzp1cGRhdGVkQGV4YW1wbGUuY29tIl19","signature":"tUQS6ACDP6-QTkKZWMhEPdWXomEZliY4eB0LAN5-tkgz5gbXSAkYoLEdXIGi9uAAkWut8rtcSuTAEGod8NCwqw"}'
     headers:
       User-Agent:
-      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -245,60 +192,45 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Server:
-      - nginx
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '569'
-      Boulder-Requester:
-      - '5864876'
-      Link:
-      - <https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf>;rel="terms-of-service"
-      Replay-Nonce:
-      - BP9SN4P4saa5H06Cjin80T2H9xRatuiUDNfAe9aDUfY
-      X-Frame-Options:
-      - DENY
-      Strict-Transport-Security:
-      - max-age=604800
-      Expires:
-      - Wed, 04 Apr 2018 15:48:29 GMT
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Pragma:
-      - no-cache
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Replay-Nonce:
+      - lMvG4i9EsevYSWVw1j3dtA
       Date:
-      - Wed, 04 Apr 2018 15:48:29 GMT
-      Connection:
-      - keep-alive
+      - Thu, 10 Oct 2019 03:08:15 GMT
+      Content-Length:
+      - '314'
     body:
       encoding: UTF-8
       string: |-
         {
-          "id": 5864876,
-          "key": {
-            "kty": "RSA",
-            "n": "uLCq0sITL87kOvDfKKmYqBrK-xG3LuYlf3KXAIy2miv9nfydW4vb2pZ8M0QvPctLF_G_za1bTLXZsncWKwN4wniz1zfRsE2JppPOUIsA7DjfQqQgzMrDoRrKeun2DICscKIpv6OXe33VwmmNDxwcq_N1J22gfJttZBxL7h_Cvc2d-e5jIgXhHHaW3qvY_X-sd7We_HHZOM_7X_vo0tYodTiIrLcebdeODT7D21qSpwExQ31PL9C5U3NY6lMMRoF7hWxY7xsjniW2QTJW8stWRHBgqFnjckdN5fVpQHfcPNYMpS0TtdZ6bgkc-1Qva5l3fw2d0BqtciOrPYwIIEXLJw",
-            "e": "AQAB"
-          },
-          "contact": [
-            "mailto:updated@example.com"
-          ],
-          "initialIp": "207.245.236.6",
-          "createdAt": "2018-04-04T15:48:29Z",
-          "status": "valid"
+           "status": "valid",
+           "contact": [
+              "mailto:updated@example.com"
+           ],
+           "orders": "<DIRECTORY_BASE_URL>/list-orderz/58",
+           "key": {
+              "kty": "EC",
+              "crv": "P-256",
+              "x": "ANInVbVU5NwbUqpr9NSe4X_7Q2Zw-QSVzTH8POyjh4M",
+              "y": "uOkM8owC52o9QCVOXeZGPvxfB1w6hKlMHdZohp9S0fk"
+           }
         }
     http_version: 
-  recorded_at: Wed, 04 Apr 2018 15:48:29 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: post
-    uri: https://acme-staging-v02.api.letsencrypt.org/acme/acct/5864876
+    uri: "<DIRECTORY_BASE_URL>/my-account/58"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiQlA5U040UDRzYWE1SDA2Q2ppbjgwVDJIOXhSYXR1aVVETmZBZTlhRFVmWSIsInVybCI6Imh0dHBzOi8vYWNtZS1zdGFnaW5nLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC81ODY0ODc2Iiwia2lkIjoiaHR0cHM6Ly9hY21lLXN0YWdpbmctdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9hY2N0LzU4NjQ4NzYifQ","payload":"e30","signature":"Z_ipZ9cBl6zKlGHuZmZ_qQc2twsDh5Z4pQHWBM5QrHV_xANN1J3PxExTux5LNb5a5L9Dsl7SlrxbLAFwL8EM8SvPfGY0Mon0W9oRsGqPnlgjzYO0QhL2SwuaVCmFGirh_8SOuCY_xi9tHhZ3tMCbTYUi9Mp7r7BybNLm-nnvKymkgThFtZ8ucNLqbo0_inJh3j_EScYiwYQQsXZuaQh9ZClYcOyNejIY4TcbGlsTtrFXxIG1eQA_lhYqAAMzJfrRa2N3oUKgzYUD6Okgw91Lc6_X6WVVqhCb3EigGfZec9ag5H1Z239uEP0rCCXdQJcjKQMn53MCxv4Q2FgyMcm3-w"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIm5vbmNlIjoibE12RzRpOUVzZXZZU1dWdzFqM2R0QSIsInVybCI6Imh0dHBzOi8vMTkyLjE2OC41Ni45MzoxNDAwMC9teS1hY2NvdW50LzU4Iiwia2lkIjoiaHR0cHM6Ly8xOTIuMTY4LjU2LjkzOjE0MDAwL215LWFjY291bnQvNTgifQ","payload":"","signature":"rYKkrNnfG8xP_MAa-DLcSig7IbBIr9aI673bIhYIK5R-b1GzMQZLEL5Hd-ZlL_pBu1evCpmhjlrH-5FFYUgrMQ"}'
     headers:
       User-Agent:
-      - Acme::Client v0.6.2 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -310,49 +242,34 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Server:
-      - nginx
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '569'
-      Boulder-Requester:
-      - '5864876'
-      Link:
-      - <https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf>;rel="terms-of-service"
-      Replay-Nonce:
-      - If3LWNSbJJQvb3Q7yWILhj99D_qaxJhQYaOvG6dsiXQ
-      X-Frame-Options:
-      - DENY
-      Strict-Transport-Security:
-      - max-age=604800
-      Expires:
-      - Wed, 04 Apr 2018 15:48:29 GMT
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Pragma:
-      - no-cache
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Replay-Nonce:
+      - RmUdqOeXaL1MFxFGnpHClg
       Date:
-      - Wed, 04 Apr 2018 15:48:29 GMT
-      Connection:
-      - keep-alive
+      - Thu, 10 Oct 2019 03:08:15 GMT
+      Content-Length:
+      - '314'
     body:
       encoding: UTF-8
       string: |-
         {
-          "id": 5864876,
-          "key": {
-            "kty": "RSA",
-            "n": "uLCq0sITL87kOvDfKKmYqBrK-xG3LuYlf3KXAIy2miv9nfydW4vb2pZ8M0QvPctLF_G_za1bTLXZsncWKwN4wniz1zfRsE2JppPOUIsA7DjfQqQgzMrDoRrKeun2DICscKIpv6OXe33VwmmNDxwcq_N1J22gfJttZBxL7h_Cvc2d-e5jIgXhHHaW3qvY_X-sd7We_HHZOM_7X_vo0tYodTiIrLcebdeODT7D21qSpwExQ31PL9C5U3NY6lMMRoF7hWxY7xsjniW2QTJW8stWRHBgqFnjckdN5fVpQHfcPNYMpS0TtdZ6bgkc-1Qva5l3fw2d0BqtciOrPYwIIEXLJw",
-            "e": "AQAB"
-          },
-          "contact": [
-            "mailto:updated@example.com"
-          ],
-          "initialIp": "207.245.236.6",
-          "createdAt": "2018-04-04T15:48:29Z",
-          "status": "valid"
+           "status": "valid",
+           "contact": [
+              "mailto:updated@example.com"
+           ],
+           "orders": "<DIRECTORY_BASE_URL>/list-orderz/58",
+           "key": {
+              "kty": "EC",
+              "crv": "P-256",
+              "x": "ANInVbVU5NwbUqpr9NSe4X_7Q2Zw-QSVzTH8POyjh4M",
+              "y": "uOkM8owC52o9QCVOXeZGPvxfB1w6hKlMHdZohp9S0fk"
+           }
         }
     http_version: 
-  recorded_at: Wed, 04 Apr 2018 15:48:30 GMT
-recorded_with: VCR 3.0.3
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
+recorded_with: VCR 2.9.3
