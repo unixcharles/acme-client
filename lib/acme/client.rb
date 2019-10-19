@@ -101,13 +101,7 @@ class Acme::Client
 
   def new_order(identifiers:, not_before: nil, not_after: nil)
     payload = {}
-    payload['identifiers'] = if identifiers.is_a?(Hash)
-      identifiers
-    else
-      Array(identifiers).map do |identifier|
-        identifier.is_a?(String) ? { type: 'dns', value: identifier } : identifier
-      end
-    end
+    payload['identifiers'] = self.class.prepare_order_identifiers(identifiers)
     payload['notBefore'] = not_before if not_before
     payload['notAfter'] = not_after if not_after
 
@@ -309,5 +303,11 @@ class Acme::Client
 
   def endpoint_for(key)
     @directory.endpoint_for(key)
+  end
+
+  def self.prepare_order_identifiers(identifiers)
+    identifiers.is_a?(Hash) ? [identifiers] : Array(identifiers).map do |identifier|
+      identifier.is_a?(String) ? { type: 'dns', value: identifier } : identifier
+    end
   end
 end
