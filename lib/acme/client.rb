@@ -29,6 +29,18 @@ class Acme::Client
     pem: 'application/pem-certificate-chain'
   }
 
+  class << self
+    def prepare_order_identifiers(identifiers)
+      if identifiers.is_a?(Hash)
+        [identifiers]
+      else
+        Array(identifiers).map do |identifier|
+          identifier.is_a?(String) ? { type: 'dns', value: identifier } : identifier
+        end
+      end
+    end
+  end
+
   def initialize(jwk: nil, kid: nil, private_key: nil, directory: DEFAULT_DIRECTORY, connection_options: {}, bad_nonce_retry: 0)
     if jwk.nil? && private_key.nil?
       raise ArgumentError, 'must specify jwk or private_key'
@@ -303,11 +315,5 @@ class Acme::Client
 
   def endpoint_for(key)
     @directory.endpoint_for(key)
-  end
-
-  def self.prepare_order_identifiers(identifiers)
-    identifiers.is_a?(Hash) ? [identifiers] : Array(identifiers).map do |identifier|
-      identifier.is_a?(String) ? { type: 'dns', value: identifier } : identifier
-    end
   end
 end
