@@ -1,3 +1,8 @@
+## `2.0.5`
+
+* Use post-as-get
+* Remove deprecated keyAuthorization
+
 ## `2.0.4`
 
 * Add an option to retry bad nonce errors
