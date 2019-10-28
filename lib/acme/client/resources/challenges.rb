@@ -12,6 +12,6 @@ module Acme::Client::Resources::Challenges
   }
 
   def self.new(client, type:, **arguments)
-    (CHALLENGE_TYPES[type] || Unsupported).new(client, **arguments)
+    CHALLENGE_TYPES.fetch(type, Unsupported).new(client, **arguments)
   end
 end
