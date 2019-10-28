@@ -165,7 +165,7 @@ describe Acme::Client do
       it 'request verification from a url', vcr: { cassette_name: 'request_validation' } do
         authorization = client.authorization(url: order.authorization_urls.first)
         challenge = client.challenge(url: authorization.http01.url)
-        challenge = client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+        challenge = client.request_challenge_validation(url: challenge.url)
 
         expect(challenge).to be_kind_of(Acme::Client::Resources::Challenges::Base)
         expect(challenge.status).to eq('pending')
@@ -174,7 +174,7 @@ describe Acme::Client do
       it 'request verification from a url', vcr: { cassette_name: 'request_validation' } do
         authorization = client.authorization(url: order.authorization_urls.first)
         challenge = client.challenge(url: authorization.http01.url)
-        challenge = client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+        challenge = client.request_challenge_validation(url: challenge.url)
 
         expect(challenge).to be_kind_of(Acme::Client::Resources::Challenges::Base)
         expect(challenge.status).to eq('pending')
@@ -202,7 +202,7 @@ describe Acme::Client do
         challenge = authorization.http01
 
         serve_once(challenge.file_content) do
-          client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+          client.request_challenge_validation(url: challenge.url)
         end
 
         order = client.finalize(url: finalize_url, csr: csr)
@@ -219,7 +219,7 @@ describe Acme::Client do
 
       it 'download a certificate', vcr: { cassette_name: 'certificate_download' } do
         serve_once(challenge.file_content) do
-          client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+          client.request_challenge_validation(url: challenge.url)
         end
 
         order = client.finalize(url: finalize_url, csr: csr)
@@ -236,7 +236,7 @@ describe Acme::Client do
       let(:challenge) { authorization.http01 }
       let(:certificate) do
         serve_once(challenge.file_content) do
-          client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+          client.request_challenge_validation(url: challenge.url)
         end
 
         order = client.finalize(url: finalize_url, csr: csr)
@@ -247,7 +247,7 @@ describe Acme::Client do
       # TODO: find a way to record fixtures for this, unsupported by pebble at the moment.
       xit 'revoke a PEM string certificate', vcr: { cassette_name: 'revoke_pem_sucess' } do
         serve_once(challenge.file_content) do
-          client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+          client.request_challenge_validation(url: challenge.url)
         end
 
         order = client.finalize(url: finalize_url, csr: csr)
