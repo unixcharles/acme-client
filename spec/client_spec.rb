@@ -271,12 +271,13 @@ describe Acme::Client do
     end
 
     it 'accepts a single identifier hash' do
-      expect(unregistered_client.send(:prepare_order_identifiers, { type: 'ip', value: '192.168.1.1' }))
+      expect(unregistered_client.send(:prepare_order_identifiers, type: 'ip', value: '192.168.1.1'))
         .to eq([{ type: 'ip', value: '192.168.1.1' }])
     end
 
     it 'accepts an array of identifier hashes' do
-      expect(unregistered_client.send(:prepare_order_identifiers, [{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }]))
+      identifiers = [{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }]
+      expect(unregistered_client.send(:prepare_order_identifiers, identifiers))
         .to eq([{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }])
     end
 
