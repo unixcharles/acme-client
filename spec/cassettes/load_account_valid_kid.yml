@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -22,61 +22,63 @@ http_interactions:
       - public, max-age=0, no-cache
       Content-Type:
       - application/json; charset=utf-8
-      Replay-Nonce:
-      - gaDoBlIDHnE1ykX3mrvAKg
       Date:
-      - Wed, 21 Aug 2019 19:51:22 GMT
+      - Thu, 10 Oct 2019 03:08:15 GMT
       Content-Length:
-      - '240'
+      - '386'
     body:
       encoding: UTF-8
       string: |-
         {
+           "keyChange": "<DIRECTORY_BASE_URL>/rollover-account-key",
            "meta": {
               "termsOfService": "data:text/plain,Do%20what%20thou%20wilt"
            },
-           "newAccount": "https://0.0.0.0:14000/sign-me-up",
-           "newNonce": "https://0.0.0.0:14000/nonce-plz",
-           "newOrder": "https://0.0.0.0:14000/order-plz"
+           "newAccount": "<DIRECTORY_BASE_URL>/sign-me-up",
+           "newNonce": "<DIRECTORY_BASE_URL>/nonce-plz",
+           "newOrder": "<DIRECTORY_BASE_URL>/order-plz",
+           "revokeCert": "<DIRECTORY_BASE_URL>/revoke-cert"
         }
     http_version: 
-  recorded_at: Wed, 21 Aug 2019 19:51:22 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: head
-    uri: https://0.0.0.0:14000/nonce-plz
+    uri: "<DIRECTORY_BASE_URL>/nonce-plz"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Accept:
       - "*/*"
   response:
     status:
-      code: 204
-      message: No Content
+      code: 200
+      message: OK
     headers:
       Cache-Control:
       - public, max-age=0, no-cache
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
       Replay-Nonce:
-      - yPTvDJYDSkiJqqjwDwXfRg
+      - CW3g31Wdrs6FPgvGtFB8Ag
       Date:
-      - Wed, 21 Aug 2019 19:51:22 GMT
+      - Thu, 10 Oct 2019 03:08:15 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 21 Aug 2019 19:51:22 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: post
-    uri: https://0.0.0.0:14000/sign-me-up
+    uri: "<DIRECTORY_BASE_URL>/sign-me-up"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoieVBUdkRKWURTa2lKcXFqd0R3WGZSZyIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImUiOiJBUUFCIiwia3R5IjoiUlNBIiwibiI6IjNfTHJRVFgxMzk2aGtPTU02bFFic29CbTVjR1BuYjN0RWpjeWd1dldCdXFSYlFudDJtMDJhMW40VlA5TzhIcS1aMkhsY3ZRVEF3bk5jYmcycUpPYlBOSFF4QmxydVdxalNfYWFCaUFUa05YVDd6b2dCZVNJODRSNUtRd0ZSUGZIbnlpOC1GNUl5MHRVYWs5U0IwWUFlRTBwcGQzR3YtNEE4YlVtTTNnbEVtY3hrbFN2ZFVXTUYxN2ZYR2NTVlhPZXJiSG5UNDZ5UTljcmx1emp1YXBVRTdVWk9pVGpKblRQd3NRMExHNFB2d3ctckRaSE9aeGFtOURIMF9nUEY0ZnhBV1kyLTBLTGE3OHpZNUlaRVhGZUxMZncteUFwNlpsTTByb0JhcEpnLWNlenhiWUNPUkRzR3hvUWpXN1dLS09lWHBPYU15TFI0anJZS2VhaUVUY2pNdyJ9fQ","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"AX8n87clZBaN4ZVk5bSnqM0AhdWnXRdg1ipHj-_d5q-RkW9KBOfX5un2GSN8yv-U8Oa2RrKQAT6TejG8M9ceEQ_AH6QXtg2Y4h1hiDj-RcvWEQeMeVXkTZ5hH9TH62XRMYVgAg_DROtPJhqZqHB6QTt0RzNeP0Ys1uyqnYrkf-UweOpz3uVsh1nIRvnb_Y05HUmtKwnFaz4m5F9ZV5JdrphnOc52vZBQxAf4ycJ3jVuMdqNiIJ5BZ_48Xy9O4QvEcAKcHrrjmappMmufEJQjpgpqgZeM44OZCkkj3JVeQb9hNhY9lSEq5hTaSwrR12RjwJjFu2W_s7yCzMI62zuiAQ"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzM4NCIsIm5vbmNlIjoiQ1czZzMxV2RyczZGUGd2R3RGQjhBZyIsInVybCI6Imh0dHBzOi8vMTkyLjE2OC41Ni45MzoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImNydiI6IlAtMzg0Iiwia3R5IjoiRUMiLCJ4Ijoid093WVBBUjc5c2plVldYc1kwaExFQmVZdkRhbTJVbmRrN1pGOGtQMy10VWE1eS1aSlJqaG54NmpYZi13eEhwSSIsInkiOiJfSl9WMW84blREcnJjZUI2U2VWand0SFl5azl4VTF4MjdCeGVhU3BDU0JtdkpkZ3k2M1I3d1VOcGhzd2gtZm93In19","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"nT_BdozJyFM3mphoiJgR0aptn2nYjyhNUtNNyNGCIJCWYI8L54zmo31LM_N31trdZzMKcIUzis_pXBz8yStPRXcQqJWpU6xkK-Jv0VT2whlHbApCLxSGzhwhWcVFux-w"}'
     headers:
       User-Agent:
-      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -92,14 +94,16 @@ http_interactions:
       - public, max-age=0, no-cache
       Content-Type:
       - application/json; charset=utf-8
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
       Location:
-      - https://0.0.0.0:14000/my-account/c200ad40521e13aa0f122b0c1e3477726a94caf367f929a0b13e3f48fa6c48a8
+      - "<DIRECTORY_BASE_URL>/my-account/60"
       Replay-Nonce:
-      - GivmdtsF4ghvvlWOYyCH2g
+      - zCX0kliAkU080IxqGv0beA
       Date:
-      - Wed, 21 Aug 2019 19:51:22 GMT
+      - Thu, 10 Oct 2019 03:08:15 GMT
       Content-Length:
-      - '568'
+      - '353'
     body:
       encoding: UTF-8
       string: |-
@@ -108,15 +112,16 @@ http_interactions:
            "contact": [
               "mailto:info@example.com"
            ],
+           "orders": "<DIRECTORY_BASE_URL>/list-orderz/60",
            "key": {
-              "kty": "RSA",
-              "n": "3_LrQTX1396hkOMM6lQbsoBm5cGPnb3tEjcyguvWBuqRbQnt2m02a1n4VP9O8Hq-Z2HlcvQTAwnNcbg2qJObPNHQxBlruWqjS_aaBiATkNXT7zogBeSI84R5KQwFRPfHnyi8-F5Iy0tUak9SB0YAeE0ppd3Gv-4A8bUmM3glEmcxklSvdUWMF17fXGcSVXOerbHnT46yQ9crluzjuapUE7UZOiTjJnTPwsQ0LG4Pvww-rDZHOZxam9DH0_gPF4fxAWY2-0KLa78zY5IZEXFeLLfw-yAp6ZlM0roBapJg-cezxbYCORDsGxoQjW7WKKOeXpOaMyLR4jrYKeaiETcjMw",
-              "e": "AQAB"
-           },
-           "ID": "c200ad40521e13aa0f122b0c1e3477726a94caf367f929a0b13e3f48fa6c48a8"
+              "kty": "EC",
+              "crv": "P-384",
+              "x": "wOwYPAR79sjeVWXsY0hLEBeYvDam2Undk7ZF8kP3-tUa5y-ZJRjhnx6jXf-wxHpI",
+              "y": "_J_V1o8nTDrrceB6SeVjwtHYyk9xU1x27BxeaSpCSBmvJdgy63R7wUNphswh-fow"
+           }
         }
     http_version: 
-  recorded_at: Wed, 21 Aug 2019 19:51:22 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: get
     uri: "<DIRECTORY_URL>"
@@ -125,7 +130,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -139,61 +144,63 @@ http_interactions:
       - public, max-age=0, no-cache
       Content-Type:
       - application/json; charset=utf-8
-      Replay-Nonce:
-      - HBBsMYo-49WDp2_xoW8-kg
       Date:
-      - Wed, 21 Aug 2019 19:51:23 GMT
+      - Thu, 10 Oct 2019 03:08:15 GMT
       Content-Length:
-      - '240'
+      - '386'
     body:
       encoding: UTF-8
       string: |-
         {
+           "keyChange": "<DIRECTORY_BASE_URL>/rollover-account-key",
            "meta": {
               "termsOfService": "data:text/plain,Do%20what%20thou%20wilt"
            },
-           "newAccount": "https://0.0.0.0:14000/sign-me-up",
-           "newNonce": "https://0.0.0.0:14000/nonce-plz",
-           "newOrder": "https://0.0.0.0:14000/order-plz"
+           "newAccount": "<DIRECTORY_BASE_URL>/sign-me-up",
+           "newNonce": "<DIRECTORY_BASE_URL>/nonce-plz",
+           "newOrder": "<DIRECTORY_BASE_URL>/order-plz",
+           "revokeCert": "<DIRECTORY_BASE_URL>/revoke-cert"
         }
     http_version: 
-  recorded_at: Wed, 21 Aug 2019 19:51:23 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: head
-    uri: https://0.0.0.0:14000/nonce-plz
+    uri: "<DIRECTORY_BASE_URL>/nonce-plz"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Accept:
       - "*/*"
   response:
     status:
-      code: 204
-      message: No Content
+      code: 200
+      message: OK
     headers:
       Cache-Control:
       - public, max-age=0, no-cache
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
       Replay-Nonce:
-      - 6CQESgYBRNxWQzdlBxGPPQ
+      - xZU2IbAoSub6VCYLIpNiGg
       Date:
-      - Wed, 21 Aug 2019 19:51:23 GMT
+      - Thu, 10 Oct 2019 03:08:15 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 21 Aug 2019 19:51:23 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 - request:
     method: post
-    uri: https://0.0.0.0:14000/my-account/c200ad40521e13aa0f122b0c1e3477726a94caf367f929a0b13e3f48fa6c48a8
+    uri: "<DIRECTORY_BASE_URL>/my-account/60"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiNkNRRVNnWUJSTnhXUXpkbEJ4R1BQUSIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9teS1hY2NvdW50L2MyMDBhZDQwNTIxZTEzYWEwZjEyMmIwYzFlMzQ3NzcyNmE5NGNhZjM2N2Y5MjlhMGIxM2UzZjQ4ZmE2YzQ4YTgiLCJraWQiOiJodHRwczovLzAuMC4wLjA6MTQwMDAvbXktYWNjb3VudC9jMjAwYWQ0MDUyMWUxM2FhMGYxMjJiMGMxZTM0Nzc3MjZhOTRjYWYzNjdmOTI5YTBiMTNlM2Y0OGZhNmM0OGE4In0","payload":"e30","signature":"Fnkd_SkSeymrKwsl0MkTUB-sT6FsrehYovo6EFmzHzz5Ihe-mc4gUhygRBIujGONEF80-2xSMDCbygX09C76kgcyXJ1TupsLUzgDd5zyYK0T94dPmeIW9MHmBuL77MA7hxizZCQuY8c9O9D9SCJIPLsjcJIeHsEicHbCn-ztJMNCb4eFhXywElk8M3t1gdcVqApANOJQs06aw0ukpUPlG8-N-r-XXLeqmzGi0DVjhmtFwZMylFN4B-cA3esU4SLXJcp1SHHZRx8m8LkXGLucSS6non27Zq31V1BjpF-uHgCVMikLu0aQp2rajs1dsTaupPj1c6SxfWuGWg5snc_dVg"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzM4NCIsIm5vbmNlIjoieFpVMkliQW9TdWI2VkNZTElwTmlHZyIsInVybCI6Imh0dHBzOi8vMTkyLjE2OC41Ni45MzoxNDAwMC9teS1hY2NvdW50LzYwIiwia2lkIjoiaHR0cHM6Ly8xOTIuMTY4LjU2LjkzOjE0MDAwL215LWFjY291bnQvNjAifQ","payload":"","signature":"aW_inVRhJIr5nLM9jIZ6kRNhPuMGa-UFm9tslXNSBvQNLX9PYQYdzFYUUiJaibmhkSvAY9K-UPO8BLW3fUcSu_bH6uXJcz8xU_H78gCCA8Jt5S_GCGI3SRxM7tk6Npa5"}'
     headers:
       User-Agent:
-      - Acme::Client v2.0.3 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -209,12 +216,14 @@ http_interactions:
       - public, max-age=0, no-cache
       Content-Type:
       - application/json; charset=utf-8
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
       Replay-Nonce:
-      - akOBEZ_YTmEkTB5RtPC9lg
+      - 7E9OXm-F9tEelxKaca2cyQ
       Date:
-      - Wed, 21 Aug 2019 19:51:23 GMT
+      - Thu, 10 Oct 2019 03:08:15 GMT
       Content-Length:
-      - '568'
+      - '353'
     body:
       encoding: UTF-8
       string: |-
@@ -223,13 +232,14 @@ http_interactions:
            "contact": [
               "mailto:info@example.com"
            ],
+           "orders": "<DIRECTORY_BASE_URL>/list-orderz/60",
            "key": {
-              "kty": "RSA",
-              "n": "3_LrQTX1396hkOMM6lQbsoBm5cGPnb3tEjcyguvWBuqRbQnt2m02a1n4VP9O8Hq-Z2HlcvQTAwnNcbg2qJObPNHQxBlruWqjS_aaBiATkNXT7zogBeSI84R5KQwFRPfHnyi8-F5Iy0tUak9SB0YAeE0ppd3Gv-4A8bUmM3glEmcxklSvdUWMF17fXGcSVXOerbHnT46yQ9crluzjuapUE7UZOiTjJnTPwsQ0LG4Pvww-rDZHOZxam9DH0_gPF4fxAWY2-0KLa78zY5IZEXFeLLfw-yAp6ZlM0roBapJg-cezxbYCORDsGxoQjW7WKKOeXpOaMyLR4jrYKeaiETcjMw",
-              "e": "AQAB"
-           },
-           "ID": "c200ad40521e13aa0f122b0c1e3477726a94caf367f929a0b13e3f48fa6c48a8"
+              "kty": "EC",
+              "crv": "P-384",
+              "x": "wOwYPAR79sjeVWXsY0hLEBeYvDam2Undk7ZF8kP3-tUa5y-ZJRjhnx6jXf-wxHpI",
+              "y": "_J_V1o8nTDrrceB6SeVjwtHYyk9xU1x27BxeaSpCSBmvJdgy63R7wUNphswh-fow"
+           }
         }
     http_version: 
-  recorded_at: Wed, 21 Aug 2019 19:51:23 GMT
+  recorded_at: Thu, 10 Oct 2019 03:08:15 GMT
 recorded_with: VCR 2.9.3

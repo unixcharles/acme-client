@@ -14,10 +14,10 @@ class Acme::Client::JWK::Base
   # payload - A Hash of payload data.
   #
   # Returns a JSON String.
-  def jws(header: {}, payload: {})
+  def jws(header: {}, payload:)
     header = jws_header(header)
     encoded_header = Acme::Client::Util.urlsafe_base64(header.to_json)
-    encoded_payload = Acme::Client::Util.urlsafe_base64(payload.to_json)
+    encoded_payload = Acme::Client::Util.urlsafe_base64(payload.nil? ? '' : payload.to_json)
 
     signature_data = "#{encoded_header}.#{encoded_payload}"
     signature = sign(signature_data)

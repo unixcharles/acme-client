@@ -24,7 +24,7 @@ describe Acme::Client do
       }.from(true).to(false)
     end
 
-    it 'raise whem nonce fail', vcr: { cassette_name: 'nonce_fail' } do
+    it 'raise when nonce fail', vcr: { cassette_name: 'nonce_fail' } do
       expect {
         unregistered_client.new_account(contact: 'mailto:info@example.com')
       }.to raise_error(Acme::Client::Error::BadNonce)
@@ -40,7 +40,6 @@ describe Acme::Client do
   context 'meta', vcr: { cassette_name: 'client_meta' } do
     it { expect(client.meta).to be_a(Hash) }
     it { expect(client.terms_of_service).to be_a(String) }
-    it { expect(client.website).to be_a(String) }
     it { expect(client.external_account_required).to be_nil }
   end
 
@@ -54,7 +53,7 @@ describe Acme::Client do
       it 'refuse the terms of service', vcr: { cassette_name: 'new_account_refuse_terms' } do
         expect {
           unregistered_client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: false)
-        }.to raise_error(Acme::Client::Error::Malformed)
+        }.to raise_error(Acme::Client::Error, 'Provided account did not agree to the terms of service')
       end
     end
 
@@ -72,12 +71,14 @@ describe Acme::Client do
       end
 
       it 'load account from private key if the kid is unknown', vcr: { cassette_name: 'load_account_unkown_kid' } do
+        account = unregistered_client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
         client = Acme::Client.new(
           private_key: private_key,
           directory: DIRECTORY_URL
         )
 
         expect(client.account.status).to eq('valid')
+        expect(client.account.kid).to eq(account.kid)
       end
     end
 
@@ -130,7 +131,7 @@ describe Acme::Client do
       it 'fail to fetch order from an invalid url', vcr: { cassette_name: 'fail_fetch_order' } do
         expect {
           client.order(url: "#{order_url}err")
-        }.to raise_error(Acme::Client::Error::Malformed, 'Invalid order ID')
+        }.to raise_error(Acme::Client::Error::NotFound)
       end
     end
 
@@ -164,7 +165,7 @@ describe Acme::Client do
       it 'request verification from a url', vcr: { cassette_name: 'request_validation' } do
         authorization = client.authorization(url: order.authorization_urls.first)
         challenge = client.challenge(url: authorization.http01.url)
-        challenge = client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+        challenge = client.request_challenge_validation(url: challenge.url)
 
         expect(challenge).to be_kind_of(Acme::Client::Resources::Challenges::Base)
         expect(challenge.status).to eq('pending')
@@ -173,7 +174,7 @@ describe Acme::Client do
       it 'request verification from a url', vcr: { cassette_name: 'request_validation' } do
         authorization = client.authorization(url: order.authorization_urls.first)
         challenge = client.challenge(url: authorization.http01.url)
-        challenge = client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+        challenge = client.request_challenge_validation(url: challenge.url)
 
         expect(challenge).to be_kind_of(Acme::Client::Resources::Challenges::Base)
         expect(challenge.status).to eq('pending')
@@ -201,7 +202,7 @@ describe Acme::Client do
         challenge = authorization.http01
 
         serve_once(challenge.file_content) do
-          client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+          client.request_challenge_validation(url: challenge.url)
         end
 
         order = client.finalize(url: finalize_url, csr: csr)
@@ -218,7 +219,7 @@ describe Acme::Client do
 
       it 'download a certificate', vcr: { cassette_name: 'certificate_download' } do
         serve_once(challenge.file_content) do
-          client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+          client.request_challenge_validation(url: challenge.url)
         end
 
         order = client.finalize(url: finalize_url, csr: csr)
@@ -235,7 +236,7 @@ describe Acme::Client do
       let(:challenge) { authorization.http01 }
       let(:certificate) do
         serve_once(challenge.file_content) do
-          client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+          client.request_challenge_validation(url: challenge.url)
         end
 
         order = client.finalize(url: finalize_url, csr: csr)
@@ -246,7 +247,7 @@ describe Acme::Client do
       # TODO: find a way to record fixtures for this, unsupported by pebble at the moment.
       xit 'revoke a PEM string certificate', vcr: { cassette_name: 'revoke_pem_sucess' } do
         serve_once(challenge.file_content) do
-          client.request_challenge_validation(url: challenge.url, key_authorization: challenge.key_authorization)
+          client.request_challenge_validation(url: challenge.url)
         end
 
         order = client.finalize(url: finalize_url, csr: csr)
@@ -255,6 +256,34 @@ describe Acme::Client do
 
         client.revoke(certificate: certificate)
       end
+    end
+  end
+
+  context 'prepare_order_identifiers' do
+    it 'accepts a single dns string' do
+      expect(unregistered_client.send(:prepare_order_identifiers, 'example.com'))
+        .to eq([{ type: 'dns', value: 'example.com' }])
+    end
+
+    it 'accepts an array of dns strings' do
+      expect(unregistered_client.send(:prepare_order_identifiers, %w(example.com foo.example.com)))
+        .to eq([{ type: 'dns', value: 'example.com' }, { type: 'dns', value: 'foo.example.com' }])
+    end
+
+    it 'accepts a single identifier hash' do
+      expect(unregistered_client.send(:prepare_order_identifiers, type: 'ip', value: '192.168.1.1'))
+        .to eq([{ type: 'ip', value: '192.168.1.1' }])
+    end
+
+    it 'accepts an array of identifier hashes' do
+      identifiers = [{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }]
+      expect(unregistered_client.send(:prepare_order_identifiers, identifiers))
+        .to eq([{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }])
+    end
+
+    it 'accepts a combination of dns strings and identifier hashes' do
+      expect(unregistered_client.send(:prepare_order_identifiers, [{ type: 'ip', value: '192.168.1.1' }, 'example.com']))
+        .to eq([{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }])
     end
   end
 end
