@@ -261,27 +261,27 @@ describe Acme::Client do
 
   context 'prepare_order_identifiers' do
     it 'accepts a single dns string' do
-      expect(Acme::Client.prepare_order_identifiers('example.com'))
+      expect(unregistered_client.send(:prepare_order_identifiers, 'example.com'))
         .to eq([{ type: 'dns', value: 'example.com' }])
     end
 
     it 'accepts an array of dns strings' do
-      expect(Acme::Client.prepare_order_identifiers(%w(example.com foo.example.com)))
+      expect(unregistered_client.send(:prepare_order_identifiers, %w(example.com foo.example.com)))
         .to eq([{ type: 'dns', value: 'example.com' }, { type: 'dns', value: 'foo.example.com' }])
     end
 
     it 'accepts a single identifier hash' do
-      expect(Acme::Client.prepare_order_identifiers(type: 'ip', value: '192.168.1.1'))
+      expect(unregistered_client.send(:prepare_order_identifiers, { type: 'ip', value: '192.168.1.1' }))
         .to eq([{ type: 'ip', value: '192.168.1.1' }])
     end
 
     it 'accepts an array of identifier hashes' do
-      expect(Acme::Client.prepare_order_identifiers([{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }]))
+      expect(unregistered_client.send(:prepare_order_identifiers, [{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }]))
         .to eq([{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }])
     end
 
     it 'accepts a combination of dns strings and identifier hashes' do
-      expect(Acme::Client.prepare_order_identifiers([{ type: 'ip', value: '192.168.1.1' }, 'example.com']))
+      expect(unregistered_client.send(:prepare_order_identifiers, [{ type: 'ip', value: '192.168.1.1' }, 'example.com']))
         .to eq([{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }])
     end
   end

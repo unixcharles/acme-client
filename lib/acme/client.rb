@@ -29,18 +29,6 @@ class Acme::Client
     pem: 'application/pem-certificate-chain'
   }
 
-  class << self
-    def prepare_order_identifiers(identifiers)
-      if identifiers.is_a?(Hash)
-        [identifiers]
-      else
-        Array(identifiers).map do |identifier|
-          identifier.is_a?(String) ? { type: 'dns', value: identifier } : identifier
-        end
-      end
-    end
-  end
-
   def initialize(jwk: nil, kid: nil, private_key: nil, directory: DEFAULT_DIRECTORY, connection_options: {}, bad_nonce_retry: 0)
     if jwk.nil? && private_key.nil?
       raise ArgumentError, 'must specify jwk or private_key'
@@ -113,7 +101,7 @@ class Acme::Client
 
   def new_order(identifiers:, not_before: nil, not_after: nil)
     payload = {}
-    payload['identifiers'] = self.class.prepare_order_identifiers(identifiers)
+    payload['identifiers'] = prepare_order_identifiers(identifiers)
     payload['notBefore'] = not_before if not_before
     payload['notAfter'] = not_after if not_after
 
@@ -211,6 +199,20 @@ class Acme::Client
   end
 
   private
+
+  def prepare_order_identifiers(identifiers)
+    if identifiers.is_a?(Hash)
+      [identifiers]
+    else
+      Array(identifiers).map do |identifier|
+        if identifier.is_a?(String)
+          { type: 'dns', value: identifier }
+        else
+          identifier
+        end
+      end
+    end
+  end
 
   def attributes_from_account_response(response)
     extract_attributes(
