@@ -201,7 +201,7 @@ client.revoke(certificate: certificate)
 
 ### Certificate renewal
 
-The is no renewal process, just create a new order.
+There is no renewal process, just create a new order.
 
 
 ## Not implemented
