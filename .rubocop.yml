@@ -81,9 +81,6 @@ Style/TrivialAccessors:
 Lint/UnusedMethodArgument:
   AllowUnusedKeywordArguments: true
 
-Metrics/MethodLength:
-  Max: 15
-
 Style/DoubleNegation:
   Enabled: false
 
@@ -109,6 +106,7 @@ Lint/AmbiguousOperator:
   Enabled: false
 
 Metrics/MethodLength:
+  Max: 15
   Enabled: false
 
 Metrics/PerceivedComplexity:
