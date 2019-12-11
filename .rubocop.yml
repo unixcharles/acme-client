@@ -129,9 +129,6 @@ Style/MutableConstant:
 Style/GlobalVars:
   Enabled: false
 
-Style/ExpandPathArguments:
-  Enabled: false
-
 Security/JSONLoad:
   Enabled: false
 
