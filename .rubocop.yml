@@ -7,124 +7,60 @@ AllCops:
 Rails:
   Enabled: false
 
-Style/FileName:
-  Exclude:
-    - 'lib/acme-client.rb'
-
-Lint/AssignmentInCondition:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Layout/MultilineOperationIndentation:
-  Enabled: false
-
-Style/SignalException:
-  EnforcedStyle: only_raise
-
 Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
 Layout/ElseAlignment:
   Enabled: false
 
-Style/MultipleComparison:
-  Enabled: false
+Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
 
 Layout/IndentationWidth:
   Enabled: false
 
-Style/SymbolArray:
-  Enabled: false
-
-Layout/FirstParameterIndentation:
-  EnforcedStyle: consistent
-
-Style/TrailingCommaInArguments:
-  Enabled: false
-
-Style/PercentLiteralDelimiters:
-  Enabled: false
-
-Metrics/BlockLength:
+Layout/MultilineOperationIndentation:
   Enabled: false
 
 Layout/SpaceInsideBlockBraces:
   Enabled: false
 
-Style/StringLiterals:
-  Enabled: single_quotes
+Lint/AmbiguousOperator:
+  Enabled: false
 
-Metrics/LineLength:
-  Max: 140
-
-Metrics/ParameterLists:
-  Max: 5
-  CountKeywordArgs: false
+Lint/AssignmentInCondition:
+  Enabled: false
 
 Lint/EndAlignment:
   Enabled: false
 
-Style/ParallelAssignment:
-  Enabled: false
-
-Style/ModuleFunction:
-  Enabled: false
-
-Style/TrivialAccessors:
-  AllowPredicates: true
-
 Lint/UnusedMethodArgument:
   AllowUnusedKeywordArguments: true
 
-Style/DoubleNegation:
-  Enabled: false
-
-Style/IfUnlessModifier:
-  Enabled: false
-
-Style/MultilineBlockChain:
-  Enabled: false
-
-Style/BlockDelimiters:
-  EnforcedStyle: semantic
-
-Style/Lambda:
-  Enabled: false
-
-Style/GuardClause:
-  Enabled: false
-
-Style/Alias:
-  Enabled: false
-
-Lint/AmbiguousOperator:
-  Enabled: false
-
-Metrics/MethodLength:
-  Max: 15
-  Enabled: false
-
-Metrics/PerceivedComplexity:
-  Enabled: false
-
-Metrics/CyclomaticComplexity:
-  Enabled: false
-
 Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
   Enabled: false
 
 Metrics/ClassLength:
   Enabled: false
 
-Style/MutableConstant:
+Metrics/CyclomaticComplexity:
   Enabled: false
 
-Style/GlobalVars:
+Metrics/LineLength:
+  Max: 140
+
+Metrics/MethodLength:
+  Max: 15
+  Enabled: false
+
+Metrics/ParameterLists:
+  Max: 5
+  CountKeywordArgs: false
+
+Metrics/PerceivedComplexity:
   Enabled: false
 
 Security/JSONLoad:
@@ -132,3 +68,67 @@ Security/JSONLoad:
 
 Style/AccessorMethodName:
   Enabled: false
+
+Style/Alias:
+  Enabled: false
+
+Style/BlockDelimiters:
+  EnforcedStyle: semantic
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/FileName:
+  Exclude:
+    - 'lib/acme-client.rb'
+
+Style/GlobalVars:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/MultipleComparison:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: single_quotes
+
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+Style/TrivialAccessors:
+  AllowPredicates: true
