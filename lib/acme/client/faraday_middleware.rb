@@ -13,7 +13,6 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
 
   def call(env)
     @env = env
-    @env[:request_headers]['User-Agent'] = Acme::Client::USER_AGENT
     @env[:request_headers]['Content-Type'] = CONTENT_TYPE
 
     if @env.method != :get
