@@ -13,10 +13,10 @@ module Acme; end
 class Acme::Client; end
 
 require 'acme/client/version'
+require 'acme/client/http_client'
 require 'acme/client/certificate_request'
 require 'acme/client/self_sign_certificate'
 require 'acme/client/resources'
-require 'acme/client/faraday_middleware'
 require 'acme/client/jwk'
 require 'acme/client/error'
 require 'acme/client/util'
@@ -288,7 +288,8 @@ class Acme::Client
 
   def new_acme_connection(endpoint:, mode:)
     new_connection(endpoint: endpoint) do |configuration|
-      configuration.use Acme::Client::FaradayMiddleware, client: self, mode: mode
+      configuration.use Acme::Client::HTTPClient::AcmeMiddleware, client: self, mode: mode
+      configuration.use Acme::Client::HTTPClient::ErrorMiddleware
     end
   end
 
