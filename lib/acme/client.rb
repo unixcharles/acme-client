@@ -172,8 +172,8 @@ class Acme::Client
   end
 
   def get_nonce
-    connection = new_connection(endpoint: endpoint_for(:new_nonce))
-    response = connection.head(nil, nil)
+    http_client = Acme::Client::HTTPClient.new_connection(url: endpoint_for(:new_nonce))
+    response = http_client.head(nil, nil)
     nonces << response.headers['replay-nonce']
     true
   end
@@ -281,32 +281,12 @@ class Acme::Client
   def connection_for(url:, mode:)
     uri = URI(url)
     endpoint = "#{uri.scheme}://#{uri.hostname}:#{uri.port}"
+
     @connections ||= {}
     @connections[mode] ||= {}
-    @connections[mode][endpoint] ||= new_acme_connection(endpoint: endpoint, mode: mode)
-  end
-
-  def new_acme_connection(endpoint:, mode:)
-    new_connection(endpoint: endpoint) do |configuration|
-      configuration.use Acme::Client::HTTPClient::AcmeMiddleware, client: self, mode: mode
-      configuration.use Acme::Client::HTTPClient::ErrorMiddleware
-    end
-  end
-
-  def new_connection(endpoint:)
-    Faraday.new(endpoint, **@connection_options) do |configuration|
-      if @bad_nonce_retry > 0
-        configuration.request(:retry,
-          max: @bad_nonce_retry,
-          methods: Faraday::Connection::METHODS,
-          exceptions: [Acme::Client::Error::BadNonce])
-      end
-
-      yield(configuration) if block_given?
-
-      configuration.headers[:user_agent] = Acme::Client::USER_AGENT
-      configuration.adapter Faraday.default_adapter
-    end
+    @connections[mode][endpoint] ||= Acme::Client::HTTPClient.new_acme_connection(
+      endpoint: URI(endpoint), mode: mode, client: self, options: @connection_options, bad_nonce_retry: @bad_nonce_retry
+    )
   end
 
   def fetch_chain(response, limit = 10)

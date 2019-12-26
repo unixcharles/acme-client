@@ -2,6 +2,46 @@
 
 module Acme::Client::HTTPClient
 
+  # Creates and returns a new HTTP client, with default settings.
+  #
+  # @param  url [URI:HTTPS]
+  # @param  options [Hash]
+  # @return [Faraday::Connection]
+  def self.new_connection(url:, options: {})
+    Faraday.new(url, options) do |configuration|
+      configuration.use Acme::Client::HTTPClient::ErrorMiddleware
+
+      yield(configuration) if block_given?
+
+      configuration.headers[:user_agent] = Acme::Client::USER_AGENT
+      configuration.adapter Faraday.default_adapter
+    end
+  end
+
+  # Creates and returns a new HTTP client designed for the Acme-protocol, with default settings.
+  #
+  # @param  endpoint [URI:HTTPS]
+  # @param  client [Acme::Client]
+  # @param  mode [Symbol]
+  # @param  options [Hash]
+  # @param  bad_nonce_retry [Integer]
+  # @return [Faraday::Connection]
+  def self.new_acme_connection(endpoint:, client:, mode:, options: {}, bad_nonce_retry: 0)
+    new_connection(url: endpoint, options: options) do |configuration|
+      configuration.use Acme::Client::HTTPClient::AcmeMiddleware, client: client, mode: mode
+
+      if bad_nonce_retry > 0
+        configuration.request(:retry,
+          max: bad_nonce_retry,
+          methods: Faraday::Connection::METHODS,
+          exceptions: [Acme::Client::Error::BadNonce])
+      end
+
+      yield(configuration) if block_given?
+    end
+  end
+
+
   # ErrorMiddleware ensures the HTTP Client would not raise exceptions outside the Acme namespace.
   #
   # Exceptions are rescued and re-packaged as Acme exceptions.
