@@ -17,7 +17,11 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.1.0'
 
   spec.add_development_dependency 'bundler', '>= 1.17.3'
-  spec.add_development_dependency 'rake', '~> 13.0'
+  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.2')
+    spec.add_development_dependency 'rake', '>= 12.0'
+  else
+    spec.add_development_dependency 'rake', '~> 13.0'
+  end
   spec.add_development_dependency 'rspec', '~> 3.9'
   spec.add_development_dependency 'vcr', '~> 2.9'
   spec.add_development_dependency 'webmock', '~> 3.8'
