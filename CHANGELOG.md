@@ -1,3 +1,7 @@
+## `2.0.6`
+
+* Allow Faraday up to `< 2.0`
+
 ## `2.0.5`
 
 * Use post-as-get
