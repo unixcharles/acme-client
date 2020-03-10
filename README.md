@@ -184,7 +184,7 @@ csr = Acme::Client::CertificateRequest.new(private_key: a_different_private_key,
 order.finalize(csr: csr)
 while order.status == 'processing'
   sleep(1)
-  challenge.reload
+  order.reload
 end
 order.certificate # => PEM-formatted certificate
 ```
