@@ -43,10 +43,11 @@ class Acme::Client
     @kid, @connection_options = kid, connection_options
     @bad_nonce_retry = bad_nonce_retry
     @directory = Acme::Client::Resources::Directory.new(URI(directory), @connection_options)
+    @alternative_certificates ||= []
     @nonces ||= []
   end
 
-  attr_reader :jwk, :nonces
+  attr_reader :jwk, :nonces, :alternative_certificates
 
   def new_account(contact:, terms_of_service_agreed: nil)
     payload = {
@@ -127,8 +128,15 @@ class Acme::Client
     Acme::Client::Resources::Order.new(self, **arguments)
   end
 
-  def certificate(url:)
+  def certificate(url:, fetch_alternative_chains: false)
     response = download(url, format: :pem)
+    if fetch_alternative_chains
+      alt_chains_urls = fetch_alternative_links(response)
+      alt_chains_urls.each do |alt_chains_url|
+        response = download(alt_chains_url, format: :pem)
+        @alternative_certificates.append response.body
+      end
+    end
     response.body
   end
 
@@ -313,6 +321,18 @@ class Acme::Client
       issuer = get(links['up'])
       [OpenSSL::X509::Certificate.new(issuer.body), *fetch_chain(issuer, limit - 1)]
     end
+  end
+
+  def fetch_alternative_links(response)
+    get_links(response, 'alternate')
+  end
+
+  # Attributes in the "Link" header such as `rel` are not unique (RFC8555).
+  # Therefore, it is possible that more than one alternative may be provided in the future.
+  # Currently the Link attribute is a single hash by Faraday::Middleware,
+  # but it will be returned as an Array to accommodate future changes.
+  def get_links(response, relation_type)
+    response.headers['link'].select {|k,v| k == relation_type}.values.uniq
   end
 
   def endpoint_for(key)

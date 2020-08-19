@@ -24,12 +24,16 @@ class Acme::Client::Resources::Order
     true
   end
 
-  def certificate
+  def certificate(fetch_alternative_chains: false)
     if certificate_url
-      @client.certificate(url: certificate_url)
+      @client.certificate(url: certificate_url, fetch_alternative_chains: fetch_alternative_chains)
     else
       raise Acme::Client::Error::CertificateNotReady, 'No certificate_url to collect the order'
     end
+  end
+
+  def alternative_certificates
+    @client.alternative_certificates
   end
 
   def to_h
