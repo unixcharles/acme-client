@@ -135,7 +135,7 @@ class Acme::Client
       alt_chains_urls = fetch_alternative_links(response)
       alt_chains_urls.each do |alt_chains_url|
         response = download(alt_chains_url, format: :pem)
-        @alternative_certificates.append response.body
+        @alternative_certificates.push response.body
       end
     end
     response.body
