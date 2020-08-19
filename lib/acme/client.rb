@@ -131,6 +131,7 @@ class Acme::Client
   def certificate(url:, fetch_alternative_chains: false)
     response = download(url, format: :pem)
     if fetch_alternative_chains
+      @alternative_certificates = []
       alt_chains_urls = fetch_alternative_links(response)
       alt_chains_urls.each do |alt_chains_url|
         response = download(alt_chains_url, format: :pem)
