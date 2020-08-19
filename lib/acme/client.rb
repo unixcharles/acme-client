@@ -333,7 +333,7 @@ class Acme::Client
   # Currently the Link attribute is a single hash by Faraday::Middleware,
   # but it will be returned as an Array to accommodate future changes.
   def get_links(response, relation_type)
-    response.headers['link'].select {|k,v| k == relation_type}.values.uniq
+    response.headers['link'].select {|k, _v| k == relation_type}.values.uniq
   end
 
   def endpoint_for(key)
