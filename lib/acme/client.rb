@@ -43,11 +43,11 @@ class Acme::Client
     @kid, @connection_options = kid, connection_options
     @bad_nonce_retry = bad_nonce_retry
     @directory = Acme::Client::Resources::Directory.new(URI(directory), @connection_options)
-    @alternative_certificates ||= []
+    @alternate_links ||= []
     @nonces ||= []
   end
 
-  attr_reader :jwk, :nonces, :alternative_certificates
+  attr_reader :jwk, :nonces, :alternate_links
 
   def new_account(contact:, terms_of_service_agreed: nil)
     payload = {
@@ -130,13 +130,8 @@ class Acme::Client
 
   def certificate(url:, fetch_alternative_chains: false)
     response = download(url, format: :pem)
-    if fetch_alternative_chains
-      @alternative_certificates = []
-      alt_chains_urls = fetch_alternative_links(response)
-      alt_chains_urls.each do |alt_chains_url|
-        response = download(alt_chains_url, format: :pem)
-        @alternative_certificates.push response.body
-      end
+    if fetch_alternative_chains && @alternate_links.empty?
+      @alternate_links = fetch_alternative_links(response) if @alternate_links.empty?
     end
     response.body
   end
@@ -205,6 +200,13 @@ class Acme::Client
 
   def external_account_required
     @directory.external_account_required
+  end
+
+  def alternative_certificates
+    @alternate_links.map do |alt_chains_url|
+      response = download(alt_chains_url, format: :pem)
+      response.body
+    end
   end
 
   private
