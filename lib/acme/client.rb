@@ -47,7 +47,7 @@ class Acme::Client
     @nonces ||= []
   end
 
-  attr_reader :jwk, :nonces, :alternate_links
+  attr_reader :jwk, :nonces
 
   def new_account(contact:, terms_of_service_agreed: nil)
     payload = {
@@ -327,7 +327,7 @@ class Acme::Client
   end
 
   def fetch_alternative_links(response)
-    get_links(response, 'alternate')
+    get_links(response, 'alternate').uniq.sort
   end
 
   # Attributes in the "Link" header such as `rel` are not unique (RFC8555).
