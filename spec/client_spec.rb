@@ -228,19 +228,6 @@ describe Acme::Client do
 
         expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
       end
-
-      # it 'download alternate certificates', vcr: { cassette_name: 'certificate_download_with_alt' } do
-      #   serve_once(challenge.file_content) do
-      #     client.request_challenge_validation(url: challenge.url)
-      #   end
-
-      #   order = client.finalize(url: finalize_url, csr: csr)
-      #   finalized_order = client.order(url: order.url)
-      #   client.certificate(url: finalized_order.certificate_url)
-      #   alternative_certificates = client.alternative_certificates
-
-      #   expect { OpenSSL::X509::Certificate.new(alternative_certificates.first) }.not_to raise_error
-      # end
     end
 
     context 'revoke' do
