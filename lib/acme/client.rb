@@ -128,12 +128,11 @@ class Acme::Client
     Acme::Client::Resources::Order.new(self, **arguments)
   end
 
-  def certificate(url:, fetch_alternative_chains: false)
+  def certificate(url:)
+    alternate_links = []
     response = download(url, format: :pem)
-    if fetch_alternative_chains && @alternate_links.empty?
-      @alternate_links = fetch_alternative_links(response) if @alternate_links.empty?
-    end
-    response.body
+    alternate_links = fetch_alternative_links(response)
+    [response.body, alternate_links]
   end
 
   def authorization(url:)
@@ -202,8 +201,8 @@ class Acme::Client
     @directory.external_account_required
   end
 
-  def alternative_certificates
-    @alternate_links.map do |alt_chains_url|
+  def alternative_certificates(alternate_links)
+    alternate_links.map do |alt_chains_url|
       response = download(alt_chains_url, format: :pem)
       response.body
     end

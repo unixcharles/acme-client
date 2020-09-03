@@ -58,6 +58,9 @@ describe Acme::Client::Resources::Order do
       certificate = order.certificate
 
       expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
+
+      alternative_certificates = order.alternative_certificates
+      expect { OpenSSL::X509::Certificate.new(alternative_certificates.first) }.not_to raise_error
     end
 
     it 'call client certificate fail', vcr: { cassette_name: 'order_certificate_download_fail' } do

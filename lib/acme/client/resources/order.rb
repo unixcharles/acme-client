@@ -5,6 +5,7 @@ class Acme::Client::Resources::Order
 
   def initialize(client, **arguments)
     @client = client
+    @alternate_links = []
     assign_attributes(**arguments)
   end
 
@@ -24,16 +25,17 @@ class Acme::Client::Resources::Order
     true
   end
 
-  def certificate(fetch_alternative_chains: false)
+  def certificate
     if certificate_url
-      @client.certificate(url: certificate_url, fetch_alternative_chains: fetch_alternative_chains)
+      certificate, @alternate_links = @client.certificate(url: certificate_url)
+      certificate
     else
       raise Acme::Client::Error::CertificateNotReady, 'No certificate_url to collect the order'
     end
   end
 
   def alternative_certificates
-    @client.alternative_certificates
+    @client.alternative_certificates(@alternate_links)
   end
 
   def to_h

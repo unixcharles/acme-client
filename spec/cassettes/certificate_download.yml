@@ -39,7 +39,7 @@ http_interactions:
            "newOrder": "<DIRECTORY_BASE_URL>/order-plz",
            "revokeCert": "<DIRECTORY_BASE_URL>/revoke-cert"
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:16 GMT
 - request:
     method: head
@@ -68,7 +68,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: ''
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:16 GMT
 - request:
     method: post
@@ -119,7 +119,7 @@ http_interactions:
               "e": "AQAB"
            }
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:16 GMT
 - request:
     method: post
@@ -172,7 +172,7 @@ http_interactions:
               "<DIRECTORY_BASE_URL>/authZ/kDkxDA3h7IwJZN6H_zbj2Z7csGk_HDJ4NcftQP6Q-oc"
            ]
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:16 GMT
 - request:
     method: post
@@ -237,7 +237,7 @@ http_interactions:
            ],
            "expires": "2019-10-10T04:08:16Z"
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:16 GMT
 - request:
     method: post
@@ -281,7 +281,7 @@ http_interactions:
            "token": "cJKXCm4d960dASmMBvtNSjhKclTSacjPzlJeAzDcdpI",
            "status": "pending"
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:16 GMT
 - request:
     method: post
@@ -334,7 +334,7 @@ http_interactions:
               "<DIRECTORY_BASE_URL>/authZ/kDkxDA3h7IwJZN6H_zbj2Z7csGk_HDJ4NcftQP6Q-oc"
            ]
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:17 GMT
 - request:
     method: post
@@ -386,7 +386,7 @@ http_interactions:
            ],
            "certificate": "<DIRECTORY_BASE_URL>/certZ/5626b60eb68e2dbe"
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:17 GMT
 - request:
     method: post

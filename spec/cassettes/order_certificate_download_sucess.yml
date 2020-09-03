@@ -39,7 +39,7 @@ http_interactions:
            "newOrder": "<DIRECTORY_BASE_URL>/order-plz",
            "revokeCert": "<DIRECTORY_BASE_URL>/revoke-cert"
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:10 GMT
 - request:
     method: head
@@ -68,7 +68,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: ''
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:10 GMT
 - request:
     method: post
@@ -119,7 +119,7 @@ http_interactions:
               "e": "AQAB"
            }
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:10 GMT
 - request:
     method: post
@@ -172,7 +172,7 @@ http_interactions:
               "<DIRECTORY_BASE_URL>/authZ/XWK5M15onI-oajDO7l4U4y8kTfCnfCyLfqjqQ2IT6ds"
            ]
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:10 GMT
 - request:
     method: post
@@ -237,7 +237,7 @@ http_interactions:
            ],
            "expires": "2019-10-10T04:08:10Z"
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:10 GMT
 - request:
     method: post
@@ -281,7 +281,7 @@ http_interactions:
            "token": "U04vI7bbzKyECL3sHOT8VWg44op-nk2g1AIjz9YkfXw",
            "status": "pending"
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:10 GMT
 - request:
     method: post
@@ -334,7 +334,7 @@ http_interactions:
               "<DIRECTORY_BASE_URL>/authZ/XWK5M15onI-oajDO7l4U4y8kTfCnfCyLfqjqQ2IT6ds"
            ]
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:11 GMT
 - request:
     method: post
@@ -386,7 +386,7 @@ http_interactions:
            ],
            "certificate": "<DIRECTORY_BASE_URL>/certZ/6b612c23b90317c9"
         }
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:11 GMT
 - request:
     method: post
@@ -413,6 +413,7 @@ http_interactions:
       Content-Type:
       - application/pem-certificate-chain; charset=utf-8
       Link:
+      - <<DIRECTORY_BASE_URL>/certZ/6b612c23b90317c9/1>;rel="alternate"
       - <<DIRECTORY_URL>>;rel="index"
       Replay-Nonce:
       - 5PtZN80mx9l6RhYY1SFP2A
@@ -463,6 +464,90 @@ http_interactions:
         6RebdTn4monMOHvmbaVR7+klY05dMjatBF5gV7sf8mPJwUZP5NnEcTLe6zgb+dh4
         kDc7qJ6UvkuoDJmbHeSd27GdCJfK+nwc49UG/Fmd8+Zeyg==
         -----END CERTIFICATE-----
-    http_version: 
+    http_version:
   recorded_at: Thu, 10 Oct 2019 03:08:11 GMT
+- request:
+    method: post
+    uri: "<DIRECTORY_BASE_URL>/certZ/6b612c23b90317c9/1"
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiWGpkaGhvcVVDOHlzNzc1YU1vYUYzZyIsInVybCI6Imh0dHBzOi8vMTkyLjE2OC41Ni45MzoxNDAwMC9jZXJ0Wi81NjI2YjYwZWI2OGUyZGJlIiwia2lkIjoiaHR0cHM6Ly8xOTIuMTY4LjU2LjkzOjE0MDAwL215LWFjY291bnQvNjIifQ","payload":"","signature":"pMfijDLa3LhK-IJ8dGVVjEwnVH3d3QGFwjlVzH6WEyzFv-tYLTQIVqORAQi-03Bgb2MW8Bi1t-AOBtFQ7o5V9fMPLV5mu7YRFfBJQWsvezKdwxEsjuDD2CP8yQZY1U-fHpr6k8WSB-rTvDlQjU3FTrQkww-9WRNaKmTRUK3cPKob-UNg3BUCPgsz8dY486oG9tJLmzhoKXwYqoazk0quLBZ19_qxNoqo1MbXEhIIcqdngZjmaAQ29iaiiImebs4729m2f1eUdQHcs2N0cdsrtXfwy8diQrOV1-K279vunF85zwl1ZxGodHJo0PPvkAJtAIahg0tD1EodXmolvwpFvA"}'
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
+      Accept:
+      - application/pem-certificate-chain
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/pem-certificate-chain; charset=utf-8
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Replay-Nonce:
+      - pygfaVI3gzzBT9Za9u2hvw
+      Date:
+      - Thu, 10 Oct 2019 03:08:17 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        -----BEGIN CERTIFICATE-----
+        MIIDWTCCAkGgAwIBAgIIVia2DraOLb4wDQYJKoZIhvcNAQELBQAwKDEmMCQGA1UE
+        AxMdUGViYmxlIEludGVybWVkaWF0ZSBDQSA2Nzk0NDAwHhcNMTkxMDEwMDMwODE3
+        WhcNMjQxMDEwMDMwODE3WjAWMRQwEgYDVQQDEwtleGFtcGxlLmNvbTCCASIwDQYJ
+        KoZIhvcNAQEBBQADggEPADCCAQoCggEBAMQnGd3rDYbyvTJeZl60O0sxMdMna/Qk
+        sta7yliFdFughb5/9jDFuBDc8P49pOHKYbUbXOgyQ854V+fnSdVjGmwr1YW7VZHH
+        v0ZxF6n2zAafs5RF6I9YGaqJ9wnOhwp2e1x1dz9pS6Ten6ZC/abkCaeI1Dxocuar
+        2STFa5tm3XUCM06lRUnN3grxGGxF6AHfsL/I+EoduPh6vuNqXR/i8azJtk4i87in
+        uLS1WsZ12ro0oO1GVuctgOORyj1GQtiHJ2CSfq36KATC0sUuxSfqXvgyMw5+iHoz
+        j4LZzAmOrrK+z5L43KKT8uXxO+qku1LiThX43G8dF8ciNGVIWmME49cCAwEAAaOB
+        mDCBlTAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUF
+        BwMCMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFAfAEkQ6UAGSjyzqImsir2+KylQa
+        MB8GA1UdIwQYMBaAFIiN1hLypsnm8KWVi3ItK0Unjae0MBYGA1UdEQQPMA2CC2V4
+        YW1wbGUuY29tMA0GCSqGSIb3DQEBCwUAA4IBAQBeF+1gIU76rjruiiefWLU8bdhd
+        VYzAoGI0/o3J+R5Q5IRkZxx3lEn/mUCkXed7iqfm5fq6Xd3ZcL0x29lsR7ppZo0J
+        x76XwOq2mePLpQJaQ4V7pD9ahVHILHhOxhetp6l40VE8KuHg2Qlwn8S+ZTOp+6f0
+        LnXvxPT0zcnwsmqIELVv3y5NNetFj87AaLOtYCPRKRV7ACXVMHj6Jcfupi/Zsk37
+        rGEIp580kx3KgsEm4pUOYNx1oEOcp1dsNoIiw1ZOTdt3Q/ZxqgXNlDVQyk5QCXcB
+        iPbXJtPdDZja/DeM+22K8wEoUSrcSdPNOYzV8gdrVYhVJskL7uZeWBkov+iH
+        -----END CERTIFICATE-----
+        -----BEGIN CERTIFICATE-----
+        MIIEqzCCApOgAwIBAgIRAIvhKg5ZRO08VGQx8JdhT+UwDQYJKoZIhvcNAQELBQAw
+        GjEYMBYGA1UEAwwPRmFrZSBMRSBSb290IFgxMB4XDTE2MDUyMzIyMDc1OVoXDTM2
+        MDUyMzIyMDc1OVowIjEgMB4GA1UEAwwXRmFrZSBMRSBJbnRlcm1lZGlhdGUgWDEw
+        ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDtWKySDn7rWZc5ggjz3ZB0
+        8jO4xti3uzINfD5sQ7Lj7hzetUT+wQob+iXSZkhnvx+IvdbXF5/yt8aWPpUKnPym
+        oLxsYiI5gQBLxNDzIec0OIaflWqAr29m7J8+NNtApEN8nZFnf3bhehZW7AxmS1m0
+        ZnSsdHw0Fw+bgixPg2MQ9k9oefFeqa+7Kqdlz5bbrUYV2volxhDFtnI4Mh8BiWCN
+        xDH1Hizq+GKCcHsinDZWurCqder/afJBnQs+SBSL6MVApHt+d35zjBD92fO2Je56
+        dhMfzCgOKXeJ340WhW3TjD1zqLZXeaCyUNRnfOmWZV8nEhtHOFbUCU7r/KkjMZO9
+        AgMBAAGjgeMwgeAwDgYDVR0PAQH/BAQDAgGGMBIGA1UdEwEB/wQIMAYBAf8CAQAw
+        HQYDVR0OBBYEFMDMA0a5WCDMXHJw8+EuyyCm9Wg6MHoGCCsGAQUFBwEBBG4wbDA0
+        BggrBgEFBQcwAYYoaHR0cDovL29jc3Auc3RnLXJvb3QteDEubGV0c2VuY3J5cHQu
+        b3JnLzA0BggrBgEFBQcwAoYoaHR0cDovL2NlcnQuc3RnLXJvb3QteDEubGV0c2Vu
+        Y3J5cHQub3JnLzAfBgNVHSMEGDAWgBTBJnSkikSg5vogKNhcI5pFiBh54DANBgkq
+        hkiG9w0BAQsFAAOCAgEABYSu4Il+fI0MYU42OTmEj+1HqQ5DvyAeyCA6sGuZdwjF
+        UGeVOv3NnLyfofuUOjEbY5irFCDtnv+0ckukUZN9lz4Q2YjWGUpW4TTu3ieTsaC9
+        AFvCSgNHJyWSVtWvB5XDxsqawl1KzHzzwr132bF2rtGtazSqVqK9E07sGHMCf+zp
+        DQVDVVGtqZPHwX3KqUtefE621b8RI6VCl4oD30Olf8pjuzG4JKBFRFclzLRjo/h7
+        IkkfjZ8wDa7faOjVXx6n+eUQ29cIMCzr8/rNWHS9pYGGQKJiY2xmVC9h12H99Xyf
+        zWE9vb5zKP3MVG6neX1hSdo7PEAb9fqRhHkqVsqUvJlIRmvXvVKTwNCP3eCjRCCI
+        PTAvjV+4ni786iXwwFYNz8l3PmPLCyQXWGohnJ8iBm+5nk7O2ynaPVW0U2W+pt2w
+        SVuvdDM5zGv2f9ltNWUiYZHJ1mmO97jSY/6YfdOUH66iRtQtDkHBRdkNBsMbD+Em
+        2TgBldtHNSJBfB3pm9FblgOcJ0FSWcUDWJ7vO0+NTXlgrRofRT6pVywzxVo6dND0
+        WzYlTWeUVsO40xJqhgUQRER9YLOLxJ0O6C8i0xFxAMKOtSdodMB3RIwt7RFQ0uyt
+        n5Z5MqkYhlMI3J1tPRTp1nEt9fyGspBOO05gi148Qasp+3N+svqKomoQglNoAxU=
+        -----END CERTIFICATE-----
+    http_version:
+  recorded_at: Thu, 10 Oct 2019 03:08:17 GMT
 recorded_with: VCR 2.9.3
