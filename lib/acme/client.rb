@@ -129,7 +129,6 @@ class Acme::Client
   end
 
   def certificate(url:)
-    alternate_links = []
     response = download(url, format: :pem)
     alternate_links = fetch_alternative_links(response)
     [response.body, alternate_links]

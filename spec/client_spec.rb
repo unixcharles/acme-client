@@ -224,7 +224,7 @@ describe Acme::Client do
 
         order = client.finalize(url: finalize_url, csr: csr)
         finalized_order = client.order(url: order.url)
-        certificate, _ = client.certificate(url: finalized_order.certificate_url)
+        certificate, = client.certificate(url: finalized_order.certificate_url)
 
         expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
       end
