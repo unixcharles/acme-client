@@ -201,13 +201,6 @@ class Acme::Client
     @directory.external_account_required
   end
 
-  def alternative_certificates(alternate_links)
-    alternate_links.map do |alt_chains_url|
-      response = download(alt_chains_url, format: :pem)
-      response.body
-    end
-  end
-
   private
 
   def prepare_order_identifiers(identifiers)

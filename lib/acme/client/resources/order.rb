@@ -35,7 +35,10 @@ class Acme::Client::Resources::Order
   end
 
   def alternative_certificates
-    @client.alternative_certificates(@alternate_links)
+    @alternate_links.map do |certificate_url|
+      certificate, _ = @client.certificate(url: certificate_url)
+      certificate
+    end
   end
 
   def to_h
