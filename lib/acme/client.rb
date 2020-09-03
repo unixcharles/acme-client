@@ -43,7 +43,6 @@ class Acme::Client
     @kid, @connection_options = kid, connection_options
     @bad_nonce_retry = bad_nonce_retry
     @directory = Acme::Client::Resources::Directory.new(URI(directory), @connection_options)
-    @alternate_links ||= []
     @nonces ||= []
   end
 
