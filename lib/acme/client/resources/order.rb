@@ -63,7 +63,6 @@ class Acme::Client::Resources::Order
     @identifiers = identifiers
     @certificate_url = certificate_url
   end
-end
 
   def pickup_preferred_chain(certificates, preferred_chain)
     certificates.find do |cert|
@@ -80,5 +79,6 @@ end
 
   def split_certificates(certificates)
     delimiter = "\n-----END CERTIFICATE-----\n"
-    certificates.split(delimiter).map{|c| c + delimiter}
+    certificates.split(delimiter).map{ |c| c + delimiter }
   end
+end
