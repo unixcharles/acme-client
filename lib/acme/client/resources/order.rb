@@ -79,6 +79,6 @@ class Acme::Client::Resources::Order
 
   def split_certificates(certificates)
     delimiter = "\n-----END CERTIFICATE-----\n"
-    certificates.split(delimiter).map{ |c| c + delimiter }
+    certificates.split(delimiter).map { |c| c + delimiter }
   end
 end
