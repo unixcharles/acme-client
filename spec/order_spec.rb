@@ -58,9 +58,31 @@ describe Acme::Client::Resources::Order do
       certificate = order.certificate
 
       expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
+    end
 
-      alternative_certificates = order.alternative_certificates
-      expect { OpenSSL::X509::Certificate.new(alternative_certificates.first) }.not_to raise_error
+    it 'call client certificate with preferred_chain sucess', vcr: { cassette_name: 'order_certificate_download_sucess' } do
+      serve_once(challenge.file_content) do
+        challenge.request_validation
+      end
+
+      csr = Acme::Client::CertificateRequest.new(names: %w[example.com])
+      order.finalize(csr: csr)
+      order.reload
+      certificate = order.certificate(preferred_chain: 'DST Root CA X3')
+
+      expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
+    end
+
+    it 'call client certificate with not available preferred_chain fail', vcr: { cassette_name: 'order_certificate_download_sucess' } do
+      serve_once(challenge.file_content) do
+        challenge.request_validation
+      end
+
+      csr = Acme::Client::CertificateRequest.new(names: %w[example.com])
+      order.finalize(csr: csr)
+      order.reload
+
+      expect { order.certificate(preferred_chain: 'not available CA') }.to raise_error(Acme::Client::Error::NotFound)
     end
 
     it 'call client certificate fail', vcr: { cassette_name: 'order_certificate_download_fail' } do
