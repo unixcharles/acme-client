@@ -104,14 +104,14 @@ module SSLHelper
   # priv - An OpenSSL::PKey::EC or OpenSSL::PKey::RSA instance.
   #
   # Returns a String.
-  def public_key_to_der(priv)
+  def public_key_to_pem(priv)
     case priv
     when OpenSSL::PKey::EC
       dup = OpenSSL::PKey::EC.new(priv.to_der)
       dup.private_key = nil
-      dup.to_der
+      dup.to_pem
     when OpenSSL::PKey::RSA
-      priv.public_key.to_der
+      priv.public_key.to_pem
     else
       raise ArgumentError, 'priv must be EC or RSA'
     end
