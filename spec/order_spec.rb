@@ -80,7 +80,6 @@ describe Acme::Client::Resources::Order do
         finalized_order.certificate(preferred_chain: preferred_chain_name)
       }.to raise_error(Acme::Client::Error::PreferredChainNotMatched)
     end
-
   end
 
   context 'reload' do

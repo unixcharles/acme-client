@@ -17,9 +17,7 @@ class Acme::Client
     end
 
     def x509_certificates
-      @x509_certificates ||= splitted_pem_certificates.map do |pem|
-        OpenSSL::X509::Certificate.new(pem)
-      end
+      @x509_certificates ||= splitted_pem_certificates.map { |pem| OpenSSL::X509::Certificate.new(pem) }
     end
 
     def splitted_pem_certificates

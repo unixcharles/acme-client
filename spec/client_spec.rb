@@ -281,7 +281,7 @@ describe Acme::Client do
             }.to raise_error(Acme::Client::Error::PreferredChainNotMatched)
           end
         end
-       end
+      end
     end
 
     context 'revoke' do

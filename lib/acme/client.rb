@@ -136,8 +136,7 @@ class Acme::Client
     return pem if preferred_chain.nil?
 
     return pem if identifier_class.new(pem).match_name?(preferred_chain)
-    # TODO:
-    #   Remove Array() after decode_link_headers fix
+    # TODO: Remove Array() after decode_link_headers fix
     #
     #   FaradayMiddleware#decode_link_headers a single entry
     #   per rel= but nothing prevent it in the spec.
