@@ -24,9 +24,9 @@ class Acme::Client::Resources::Order
     true
   end
 
-  def certificate
+  def certificate(preferred_chain: nil)
     if certificate_url
-      @client.certificate(url: certificate_url)
+      @client.certificate(url: certificate_url, preferred_chain: preferred_chain)
     else
       raise Acme::Client::Error::CertificateNotReady, 'No certificate_url to collect the order'
     end
