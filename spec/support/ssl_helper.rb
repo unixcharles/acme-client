@@ -105,7 +105,7 @@ module SSLHelper
   #
   # Returns a String.
   def public_key_to_pem(private_key)
-    case priv
+    case private_key
     when OpenSSL::PKey::EC
       dup = OpenSSL::PKey::EC.new(private_key.to_der)
       dup.private_key = nil
