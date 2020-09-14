@@ -143,7 +143,8 @@ class Acme::Client
     alternative_urls = Array(response.headers['link']['alternate'])
     alternative_urls.each do |alternate_url|
       response = download(alternate_url, format: :pem)
-      if identifier_class.new(response.body).match_name?(preferred_chain)
+      pem = response.body
+      if identifier_class.new(pem).match_name?(preferred_chain)
         return pem
       end
     end

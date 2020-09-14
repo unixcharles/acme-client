@@ -267,6 +267,7 @@ describe Acme::Client do
             certificate = client.certificate(url: finalized_order.certificate_url, preferred_chain: 'Pebble Root CA 769220')
 
             expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
+            expect(OpenSSL::X509::Certificate.new(certificate).issuer.to_s).to eq('/CN=Pebble Intermediate CA 7c13ed')
           end
 
           it 'download a certificate and fail preferred match', vcr: { cassette_name: 'certificate_download_with_alternative' } do
