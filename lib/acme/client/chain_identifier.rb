@@ -21,17 +21,7 @@ class Acme::Client
     end
 
     def splitted_pem_certificates
-      certificates = []
-      certificate_lines = []
-      @pem_certificate_chain.each_line do |line|
-        certificate_lines << line
-        if line.include?('END CERTIFICATE')
-          certificates << certificate_lines.join
-          certificate_lines = []
-        end
-      end
-
-      certificates
+      @pem_certificate_chain.each_line.slice_after(/END CERTIFICATE/).map(&:join)
     end
   end
 end
