@@ -23,17 +23,26 @@ gem 'acme-client'
 ```
 
 ## Usage
-* [Setting up a client](#setting-up-a-client)
-* [Account management](#account-management)
-* [Obtaining a certificate](#obtaining-a-certificate)
-  * [Ordering a certificate](#ordering-a-certificate)
-  * [Completing an HTTP challenge](#preparing-for-http-challenge)
-  * [Completing an DNS challenge](#preparing-for-dns-challenge)
-  * [Requesting a challenge verification](#requesting-a-challenge-verification)
-  * [Downloading a certificate](#downloading-a-certificate)
-* [Extra](#extra)
-  * [Certificate revokation](#certificate-revokation)
-  * [Certificate renewal](#certificate-renewal)
+- [Acme::Client](#acmeclient)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Setting up a client](#setting-up-a-client)
+  - [Account management](#account-management)
+  - [Obtaining a certificate](#obtaining-a-certificate)
+    - [Ordering a certificate](#ordering-a-certificate)
+    - [Preparing for HTTP challenge](#preparing-for-http-challenge)
+    - [Preparing for DNS challenge](#preparing-for-dns-challenge)
+    - [Requesting a challenge verification](#requesting-a-challenge-verification)
+    - [Downloading a certificate](#downloading-a-certificate)
+    - [Ordering an alternative certificate](#ordering-an-alternative-certificate)
+  - [Extra](#extra)
+    - [Certificate revokation](#certificate-revokation)
+    - [Certificate renewal](#certificate-renewal)
+  - [Not implemented](#not-implemented)
+  - [Requirements](#requirements)
+  - [Development](#development)
+  - [Pull request?](#pull-request)
+  - [License](#license)
 
 ## Setting up a client
 
@@ -188,6 +197,19 @@ while order.status == 'processing'
 end
 order.certificate # => PEM-formatted certificate
 ```
+
+### Ordering an alternative certificate
+
+Let's Encrypt is transitioning to use a new, self-signed intermediate certificate. Starting September 29, 2020 new certificates will be signed by their own intermediate. To ease the transition on clients Let's Encrypt will continue signing an alternative version of the certificate using the old, cross-signed intermediate until September 29, 2021. In order to utilize an alternative certificate the `Order#certificate` method accepts a `preferred_chain` keyword argument. 
+For example, to download the cross-signed certificate after September 29, 2020, call `Order#certificate` as follows:
+ 
+```ruby
+order.certificate(preferred_chain: 'IdenTrust') || order.certificate
+``` 
+
+Note: if the specified peferred chain doesn't match an existing alternative certificate it will return `nil`.
+
+Learn more about the original Github issue for this client [here](https://github.com/unixcharles/acme-client/issues/186) and information from Let's Encrypt [here](https://letsencrypt.org/2019/04/15/transitioning-to-isrg-root.html).
 
 ## Extra
 
