@@ -204,10 +204,14 @@ Let's Encrypt is transitioning to use a new, self-signed intermediate certificat
 For example, to download the cross-signed certificate after September 29, 2020, call `Order#certificate` as follows:
  
 ```ruby
-order.certificate(preferred_chain: 'IdenTrust') || order.certificate
+begin
+  order.certificate(preferred_chain: 'IdenTrust')
+rescue Acme::Client::Error::PreferredChainNotMatched
+  order.certificate
+end
 ``` 
 
-Note: if the specified preferred chain doesn't match an existing alternative certificate it will return `nil`.
+Note: if the specified preferred chain doesn't match an existing alternative certificate the method will raise an `Acme::Client::Error::PreferredChainNotMatched` error.
 
 Learn more about the original Github issue for this client [here](https://github.com/unixcharles/acme-client/issues/186) and information from Let's Encrypt [here](https://letsencrypt.org/2019/04/15/transitioning-to-isrg-root.html).
 
