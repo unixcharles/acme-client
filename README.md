@@ -207,7 +207,7 @@ For example, to download the cross-signed certificate after September 29, 2020, 
 order.certificate(preferred_chain: 'IdenTrust') || order.certificate
 ``` 
 
-Note: if the specified peferred chain doesn't match an existing alternative certificate it will return `nil`.
+Note: if the specified preferred chain doesn't match an existing alternative certificate it will return `nil`.
 
 Learn more about the original Github issue for this client [here](https://github.com/unixcharles/acme-client/issues/186) and information from Let's Encrypt [here](https://letsencrypt.org/2019/04/15/transitioning-to-isrg-root.html).
 
@@ -249,4 +249,3 @@ Yes.
 ## License
 
 [MIT License](http://opensource.org/licenses/MIT)
-
