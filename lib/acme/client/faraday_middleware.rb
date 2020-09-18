@@ -82,18 +82,10 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
     end
   end
 
-  LINK_MATCH = /<(.*?)>;rel="([\w-]+)"/
-
   def decode_link_headers
     return unless env.response_headers.key?('Link')
     link_header = env.response_headers['Link']
-
-    links = link_header.split(', ').map { |entry|
-      _, link, name = *entry.match(LINK_MATCH)
-      [name, link]
-    }
-
-    Hash[*links.flatten]
+    Acme::Client::Util.decode_link_headers(link_header)
   end
 
   def store_nonce
