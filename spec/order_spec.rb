@@ -46,8 +46,7 @@ describe Acme::Client::Resources::Order do
   context 'certificate' do
     let(:authorization) { order.authorizations.first }
     let(:challenge) { authorization.http01 }
-
-    it 'call client certificate sucess', vcr: { cassette_name: 'order_certificate_download_sucess' } do
+    let(:finalized_order) do
       serve_once(challenge.file_content) do
         challenge.request_validation
       end
@@ -55,13 +54,31 @@ describe Acme::Client::Resources::Order do
       csr = Acme::Client::CertificateRequest.new(names: %w[example.com])
       order.finalize(csr: csr)
       order.reload
-      certificate = order.certificate
+      order
+    end
+
+    it 'call client certificate sucess', vcr: { cassette_name: 'order_certificate_download_sucess' } do
+      certificate = finalized_order.certificate
 
       expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
     end
 
     it 'call client certificate fail', vcr: { cassette_name: 'order_certificate_download_fail' } do
       expect { order.certificate }.to raise_error(Acme::Client::Error::CertificateNotReady)
+    end
+
+    it 'call client certificate with a force_chain', vcr: { cassette_name: 'order_certificate_download_preferred_chain' } do
+      force_chain_name = 'Pebble Root CA 769220'
+
+      expect { finalized_order.certificate(force_chain: force_chain_name) }.not_to raise_error
+    end
+
+    it 'call client certificate with an unmatched force_chain', vcr: { cassette_name: 'order_certificate_download_preferred_chain' } do
+      force_chain_name = 'Fail Test CA'
+
+      expect {
+        finalized_order.certificate(force_chain: force_chain_name)
+      }.to raise_error(Acme::Client::Error::ForcedChainNotFound)
     end
   end
 

@@ -20,6 +20,7 @@ require 'acme/client/faraday_middleware'
 require 'acme/client/jwk'
 require 'acme/client/error'
 require 'acme/client/util'
+require 'acme/client/chain_identifier'
 
 class Acme::Client
   DEFAULT_DIRECTORY = 'http://127.0.0.1:4000/directory'.freeze
@@ -127,9 +128,27 @@ class Acme::Client
     Acme::Client::Resources::Order.new(self, **arguments)
   end
 
-  def certificate(url:)
+  def certificate(url:, force_chain: nil)
     response = download(url, format: :pem)
-    response.body
+    pem = response.body
+
+    return pem if force_chain.nil?
+
+    return pem if ChainIdentifier.new(pem).match_name?(force_chain)
+    # TODO: Remove Array() after decode_link_headers fix
+    #
+    #   FaradayMiddleware#decode_link_headers a single entry
+    #   per rel= but nothing prevent it in the spec.
+    alternative_urls = Array(response.headers.dig('link', 'alternate'))
+    alternative_urls.each do |alternate_url|
+      response = download(alternate_url, format: :pem)
+      pem = response.body
+      if ChainIdentifier.new(pem).match_name?(force_chain)
+        return pem
+      end
+    end
+
+    raise Acme::Client::Error::ForcedChainNotFound, "Could not find any matching chain for `#{force_chain}`"
   end
 
   def authorization(url:)
