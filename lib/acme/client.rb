@@ -135,10 +135,7 @@ class Acme::Client
     return pem if force_chain.nil?
 
     return pem if ChainIdentifier.new(pem).match_name?(force_chain)
-    # TODO: Remove Array() after decode_link_headers fix
-    #
-    #   FaradayMiddleware#decode_link_headers a single entry
-    #   per rel= but nothing prevent it in the spec.
+
     alternative_urls = Array(response.headers.dig('link', 'alternate'))
     alternative_urls.each do |alternate_url|
       response = download(alternate_url, format: :pem)
