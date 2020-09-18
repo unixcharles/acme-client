@@ -139,7 +139,7 @@ class Acme::Client
     #
     #   FaradayMiddleware#decode_link_headers a single entry
     #   per rel= but nothing prevent it in the spec.
-    alternative_urls = Array(response.headers['link']['alternate'])
+    alternative_urls = Array(response.headers.dig('link', 'alternate'))
     alternative_urls.each do |alternate_url|
       response = download(alternate_url, format: :pem)
       pem = response.body
