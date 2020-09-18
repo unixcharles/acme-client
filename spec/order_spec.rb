@@ -67,18 +67,18 @@ describe Acme::Client::Resources::Order do
       expect { order.certificate }.to raise_error(Acme::Client::Error::CertificateNotReady)
     end
 
-    it 'call client certificate with a preferred_chain', vcr: { cassette_name: 'order_certificate_download_preferred_chain' } do
-      preferred_chain_name = 'Pebble Root CA 769220'
+    it 'call client certificate with a force_chain', vcr: { cassette_name: 'order_certificate_download_preferred_chain' } do
+      force_chain_name = 'Pebble Root CA 769220'
 
-      expect { finalized_order.certificate(preferred_chain: preferred_chain_name) }.not_to raise_error
+      expect { finalized_order.certificate(force_chain: force_chain_name) }.not_to raise_error
     end
 
-    it 'call client certificate with an unmatched preferred_chain', vcr: { cassette_name: 'order_certificate_download_preferred_chain' } do
-      preferred_chain_name = 'Fail Test CA'
+    it 'call client certificate with an unmatched force_chain', vcr: { cassette_name: 'order_certificate_download_preferred_chain' } do
+      force_chain_name = 'Fail Test CA'
 
       expect {
-        finalized_order.certificate(preferred_chain: preferred_chain_name)
-      }.to raise_error(Acme::Client::Error::PreferredChainNotMatched)
+        finalized_order.certificate(force_chain: force_chain_name)
+      }.to raise_error(Acme::Client::Error::ForcedChainNotFound)
     end
   end
 

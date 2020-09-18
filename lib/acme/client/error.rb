@@ -7,7 +7,7 @@ class Acme::Client::Error < StandardError
   class UnsupportedChallengeType < ClientError; end
   class NotFound < ClientError; end
   class CertificateNotReady < ClientError; end
-  class PreferredChainNotMatched < ClientError; end
+  class ForcedChainNotFound < ClientError; end
 
   class ServerError < Acme::Client::Error; end
   class BadCSR < ServerError; end

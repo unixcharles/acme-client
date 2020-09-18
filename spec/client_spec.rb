@@ -238,7 +238,7 @@ describe Acme::Client do
 
             order = client.finalize(url: finalize_url, csr: csr)
             finalized_order = client.order(url: order.url)
-            certificate = client.certificate(url: finalized_order.certificate_url, preferred_chain: 'Pebble Root CA')
+            certificate = client.certificate(url: finalized_order.certificate_url, force_chain: 'Pebble Root CA')
 
             expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
           end
@@ -251,8 +251,8 @@ describe Acme::Client do
             order = client.finalize(url: finalize_url, csr: csr)
             finalized_order = client.order(url: order.url)
             expect {
-              client.certificate(url: finalized_order.certificate_url, preferred_chain: 'foobar')
-            }.to raise_error(Acme::Client::Error::PreferredChainNotMatched)
+              client.certificate(url: finalized_order.certificate_url, force_chain: 'foobar')
+            }.to raise_error(Acme::Client::Error::ForcedChainNotFound)
           end
         end
 
@@ -264,7 +264,7 @@ describe Acme::Client do
 
             order = client.finalize(url: finalize_url, csr: csr)
             finalized_order = client.order(url: order.url)
-            certificate = client.certificate(url: finalized_order.certificate_url, preferred_chain: 'Pebble Root CA 769220')
+            certificate = client.certificate(url: finalized_order.certificate_url, force_chain: 'Pebble Root CA 769220')
 
             expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
             expect(OpenSSL::X509::Certificate.new(certificate).issuer.to_s).to eq('/CN=Pebble Intermediate CA 7c13ed')
@@ -278,8 +278,8 @@ describe Acme::Client do
             order = client.finalize(url: finalize_url, csr: csr)
             finalized_order = client.order(url: order.url)
             expect {
-              client.certificate(url: finalized_order.certificate_url, preferred_chain: 'foobar')
-            }.to raise_error(Acme::Client::Error::PreferredChainNotMatched)
+              client.certificate(url: finalized_order.certificate_url, force_chain: 'foobar')
+            }.to raise_error(Acme::Client::Error::ForcedChainNotFound)
           end
         end
       end

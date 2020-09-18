@@ -128,13 +128,13 @@ class Acme::Client
     Acme::Client::Resources::Order.new(self, **arguments)
   end
 
-  def certificate(url:, preferred_chain: nil)
+  def certificate(url:, force_chain: nil)
     response = download(url, format: :pem)
     pem = response.body
 
-    return pem if preferred_chain.nil?
+    return pem if force_chain.nil?
 
-    return pem if ChainIdentifier.new(pem).match_name?(preferred_chain)
+    return pem if ChainIdentifier.new(pem).match_name?(force_chain)
     # TODO: Remove Array() after decode_link_headers fix
     #
     #   FaradayMiddleware#decode_link_headers a single entry
@@ -143,12 +143,12 @@ class Acme::Client
     alternative_urls.each do |alternate_url|
       response = download(alternate_url, format: :pem)
       pem = response.body
-      if ChainIdentifier.new(pem).match_name?(preferred_chain)
+      if ChainIdentifier.new(pem).match_name?(force_chain)
         return pem
       end
     end
 
-    raise Acme::Client::Error::PreferredChainNotMatched, "Could not find any matching chain for `#{preferred_chain}`"
+    raise Acme::Client::Error::ForcedChainNotFound, "Could not find any matching chain for `#{force_chain}`"
   end
 
   def authorization(url:)
