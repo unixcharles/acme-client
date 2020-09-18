@@ -200,18 +200,18 @@ order.certificate # => PEM-formatted certificate
 
 ### Ordering an alternative certificate
 
-Let's Encrypt is transitioning to use a new, self-signed intermediate certificate. Starting September 29, 2020 new certificates will be signed by their own intermediate. To ease the transition on clients Let's Encrypt will continue signing an alternative version of the certificate using the old, cross-signed intermediate until September 29, 2021. In order to utilize an alternative certificate the `Order#certificate` method accepts a `preferred_chain` keyword argument. 
+Let's Encrypt is transitioning to use a new, self-signed intermediate certificate. Starting September 29, 2020 new certificates will be signed by their own intermediate. To ease the transition on clients Let's Encrypt will continue signing an alternative version of the certificate using the old, cross-signed intermediate until September 29, 2021. In order to utilize an alternative certificate the `Order#certificate` method accepts a `force_chain` keyword argument. 
 For example, to download the cross-signed certificate after September 29, 2020, call `Order#certificate` as follows:
  
 ```ruby
 begin
-  order.certificate(preferred_chain: 'IdenTrust')
-rescue Acme::Client::Error::PreferredChainNotMatched
+  order.certificate(force_chain: 'IdenTrust')
+rescue Acme::Client::Error::ForcedChainNotFound
   order.certificate
 end
 ``` 
 
-Note: if the specified preferred chain doesn't match an existing alternative certificate the method will raise an `Acme::Client::Error::PreferredChainNotMatched` error.
+Note: if the specified forced chain doesn't match an existing alternative certificate the method will raise an `Acme::Client::Error::ForcedChainNotFound` error.
 
 Learn more about the original Github issue for this client [here](https://github.com/unixcharles/acme-client/issues/186) and information from Let's Encrypt [here](https://letsencrypt.org/2019/04/15/transitioning-to-isrg-root.html).
 
