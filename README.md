@@ -200,8 +200,8 @@ order.certificate # => PEM-formatted certificate
 
 ### Ordering an alternative certificate
 
-Let's Encrypt is transitioning to use a new, self-signed intermediate certificate. Starting September 29, 2020 new certificates will be signed by their own intermediate. To ease the transition on clients Let's Encrypt will continue signing an alternative version of the certificate using the old, cross-signed intermediate until September 29, 2021. In order to utilize an alternative certificate the `Order#certificate` method accepts a `force_chain` keyword argument. 
-For example, to download the cross-signed certificate after September 29, 2020, call `Order#certificate` as follows:
+Let's Encrypt is transitioning to use a new, self-signed intermediate certificate. Starting January 11, 2021 new certificates will be signed by their own intermediate. To ease the transition on clients Let's Encrypt will continue signing an alternative version of the certificate using the old, cross-signed intermediate until September 29, 2021. In order to utilize an alternative certificate the `Order#certificate` method accepts a `force_chain` keyword argument.
+For example, to download the cross-signed certificate after January 11, 2021, call `Order#certificate` as follows:
  
 ```ruby
 begin
