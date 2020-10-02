@@ -200,20 +200,20 @@ order.certificate # => PEM-formatted certificate
 
 ### Ordering an alternative certificate
 
-Let's Encrypt is [transitioning](https://letsencrypt.org/2019/04/15/transitioning-to-isrg-root.html) to use a new, self-signed intermediate certificate. Starting January 11, 2021 new certificates will be signed by their own intermediate. To ease the transition on clients Let's Encrypt will continue signing an alternative version of the certificate using the old, cross-signed intermediate until September 29, 2021. In order to utilize an alternative certificate the `Order#certificate` method accepts a `force_chain` keyword argument.
+Let's Encrypt is [transitioning](https://letsencrypt.org/2019/04/15/transitioning-to-isrg-root.html) to use a new, self-signed intermediate certificate. Starting January 11, 2021 new certificates will be signed by their own intermediate. To ease the transition on clients Let's Encrypt will continue signing an alternative version of the certificate using the old, cross-signed intermediate until September 29, 2021. In order to utilize an alternative certificate the `Order#certificate` method accepts a `force_chain` keyword argument, which takse the issuer name of the intermediate certificate.
 For example, to download the cross-signed certificate after January 11, 2021, call `Order#certificate` as follows:
- 
+
 ```ruby
 begin
-  order.certificate(force_chain: 'IdenTrust')
+  order.certificate(force_chain: 'DST Root CA X3')
 rescue Acme::Client::Error::ForcedChainNotFound
   order.certificate
 end
-``` 
+```
 
 Note: if the specified forced chain doesn't match an existing alternative certificate the method will raise an `Acme::Client::Error::ForcedChainNotFound` error.
 
-Learn more about the original Github issue for this client [here](https://github.com/unixcharles/acme-client/issues/186) and information from Let's Encrypt [here](https://letsencrypt.org/2019/04/15/transitioning-to-isrg-root.html).
+Learn more about the original Github issue for this client [here](https://github.com/unixcharles/acme-client/issues/186), information from Let's Encrypt [here](https://letsencrypt.org/2019/04/15/transitioning-to-isrg-root.html), and cross-signing [here](https://letsencrypt.org/certificates/#cross-signing).
 
 ## Extra
 
