@@ -100,7 +100,7 @@ account.kid # => <kid string>
 
 If you already have an existing account (for example one created in ACME v1) please note that unless the `kid` is provided at initialization, the client will lazy load the `kid` by doing a `POST` to `newAccount` whenever the `kid` is required. Therefore, you can easily get your `kid` for an existing account and (if needed) store it for reuse:
 
-```
+```ruby
 client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory')
 
 # kid is not set, therefore a call to newAccount is made to lazy-initialize the kid
