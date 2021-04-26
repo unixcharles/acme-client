@@ -73,8 +73,10 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
     # BigNumbers
     bns = ints.map(&:value)
 
+    byte_size = (@private_key.group.degree + 7) / 8
+
     # Binary R/S values
-    r, s = bns.map { |bn| [bn.to_s(16)].pack('H*') }
+    r, s = bns.map { |bn| bn.to_s(2).rjust(byte_size, "\x00") }
 
     # JWS wants raw R/S concatenated.
     [r, s].join
