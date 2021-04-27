@@ -85,6 +85,28 @@ class Acme::Client
     Acme::Client::Resources::Account.new(self, url: kid, **arguments)
   end
 
+  def account_key_change(new_private_key: nil, new_jwk: nil)
+    if new_private_key.nil? && new_jwk.nil?
+      raise ArgumentError, 'must specify new_jwk or new_private_key'
+    end
+    old_jwk = jwk
+    new_jwk ||= Acme::Client::JWK.from_private_key(new_private_key)
+
+    inner_payload_header = {
+      url: endpoint_for(:key_change)
+    }
+    inner_payload = {
+      account: kid,
+      oldKey: old_jwk.to_h
+    }
+    payload = JSON.parse(new_jwk.jws(header: inner_payload_header, payload: inner_payload))
+
+    response = post(endpoint_for(:key_change), payload: payload, mode: :kid)
+    arguments = attributes_from_account_response(response)
+    @jwk = new_jwk
+    Acme::Client::Resources::Account.new(self, url: kid, **arguments)
+  end
+
   def account
     @kid ||= begin
       response = post(endpoint_for(:new_account), payload: { onlyReturnExisting: true }, mode: :jwk)

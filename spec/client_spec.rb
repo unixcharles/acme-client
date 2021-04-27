@@ -104,6 +104,14 @@ describe Acme::Client do
         ).to eq('deactivated')
       end
     end
+
+    context 'account key change' do
+      it 'changes the key', vcr: { cassette_name: 'account_key_change' } do
+        client.account_key_change(new_private_key: generate_private_key)
+
+        expect(client.account.status).to eq('valid')
+      end
+    end
   end
 
   context 'order operation' do

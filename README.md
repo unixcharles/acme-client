@@ -230,9 +230,15 @@ client.revoke(certificate: certificate)
 There is no renewal process, just create a new order.
 
 
-## Not implemented
+### Account Key Roll-over
 
-- Account Key Roll-over.
+To change the key used for an account you can call `#account_key_change` with the new private key or jwk.
+
+```ruby
+require 'openssl'
+new_private_key = OpenSSL::PKey::RSA.new(4096)
+client.account_key_change(private_key: new_private_key)
+```
 
 ## Requirements
 
