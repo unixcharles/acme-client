@@ -1,3 +1,10 @@
+## `2.0.8`
+
+* Add support for the keyChange endpoint
+
+https://tools.ietf.org/html/rfc8555#section-7.3.5
+
+
 ## `2.0.7`
 
 * Add support for alternate certificate chain
