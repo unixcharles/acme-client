@@ -1,0 +1,273 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: "<DIRECTORY_URL>"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.7 (https://github.com/unixcharles/acme-client)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 27 Apr 2021 18:33:17 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '724'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - public, max-age=0, no-cache
+      X-Frame-Options:
+      - DENY
+      Strict-Transport-Security:
+      - max-age=604800
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "-bvtCFDCWdA": "https://community.letsencrypt.org/t/adding-random-entries-to-the-directory/33417",
+          "keyChange": "<DIRECTORY_BASE_URL>/acme/key-change",
+          "meta": {
+            "caaIdentities": [
+              "letsencrypt.org"
+            ],
+            "termsOfService": "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf",
+            "website": "https://letsencrypt.org/docs/staging-environment/"
+          },
+          "newAccount": "<DIRECTORY_BASE_URL>/acme/new-acct",
+          "newNonce": "<DIRECTORY_BASE_URL>/acme/new-nonce",
+          "newOrder": "<DIRECTORY_BASE_URL>/acme/new-order",
+          "revokeCert": "<DIRECTORY_BASE_URL>/acme/revoke-cert"
+        }
+  recorded_at: Tue, 27 Apr 2021 18:33:17 GMT
+- request:
+    method: head
+    uri: "<DIRECTORY_BASE_URL>/acme/new-nonce"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.7 (https://github.com/unixcharles/acme-client)
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 27 Apr 2021 18:33:17 GMT
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Replay-Nonce:
+      - 0004Q6FwstesFU9hs8aYuiUHBE2SaO6bVslbl_D909Bt2GI
+      X-Frame-Options:
+      - DENY
+      Strict-Transport-Security:
+      - max-age=604800
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Tue, 27 Apr 2021 18:33:17 GMT
+- request:
+    method: post
+    uri: "<DIRECTORY_BASE_URL>/acme/new-acct"
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiMDAwNFE2RndzdGVzRlU5aHM4YVl1aVVIQkUyU2FPNmJWc2xibF9EOTA5QnQyR0kiLCJ1cmwiOiJodHRwczovL2FjbWUtc3RhZ2luZy12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL25ldy1hY2N0IiwiandrIjp7ImUiOiJBUUFCIiwia3R5IjoiUlNBIiwibiI6Im51RzlTckF0aDczelphM3FIS25iZWRndTEtXzd5cGdHSGNFY3FlV2R1a3ZaLUZmbm9DNDZfRm5SaV9kQ0FqcUNMWVpoWDhPZTZ3X1ZXcy1rdXNDbkFwdXNVakNaMWNRNzl0MTdfNEc5ZUdlaG54eEF6eTljNGxnUmlORjB6WEowNU1uZGo4TlJoYnZ1SGpURWNvZERmQzNnMUxOMVdCMlE1WWxnVmZLcUp1M1kzbHlXNDhOc3BsXzZpeFdWU2QzV1I4UEJYTFo1dE4yMlJmWnk3RF8xejdmcVJuSXlMYXNVTEIzanNfR3VZMzh1VWZrRDhGTnhZeGtyc2dvdUR6ZkI4NUxFeGNmYnVGZFFZRWF2eEFpZmlYUG5wNkdOMGROYVd5WFpJcndrNlkzSkxHempxQ1FxMGVqQ0FHVWZkekdIc2trNmdremdhV0hiRDdnS3FfRGh2USJ9fQ","payload":"eyJjb250YWN0IjpbIm1haWx0bzpkYXZpZC5zY2h3YXJ0eitjaGFuZ2VtZUBzaG9waWZ5LmNvbSJdLCJ0ZXJtc09mU2VydmljZUFncmVlZCI6dHJ1ZX0","signature":"OefcAaAKnn3uOSM0XiH06DTC-u5p6EI2dSU3HXISmA7e0rXGfHZ6iW1a_lic50cAf1NE5hkiIQgDAZy_WSmpFuTaesLYmSU2S2evHy8BtdsC8MGps8HiBCC5yz3H7nxMkTj54y6MiSh03taQtgSnT_-V6SIAUhKiQsx3-1qHDHqBDcpmQIklOvfANNSrXudNCDaP5zQYRSKdM0Uoofuxy-c5-IXS7BkPhlDL_T-kP6B8vteoIhDw_QKIbRyLIa1IQujwDKA-Q9hc_7MSEOjfhC6WzqKKLCS4ExyrV6gzsnJkXGP6QaoeXifIH-GW8W0m3W5A3cngb2GWLTTC0sSXSw"}'
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.7 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 27 Apr 2021 18:33:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '578'
+      Connection:
+      - keep-alive
+      Boulder-Requester:
+      - '19272981'
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      - <https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf>;rel="terms-of-service"
+      Location:
+      - "<DIRECTORY_BASE_URL>/acme/acct/19272981"
+      Replay-Nonce:
+      - 00037TRwTW3IwosljzcjwY_JihDoDIBfC56ue3-_0OzC2fQ
+      X-Frame-Options:
+      - DENY
+      Strict-Transport-Security:
+      - max-age=604800
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "key": {
+            "kty": "RSA",
+            "n": "nuG9SrAth73zZa3qHKnbedgu1-_7ypgGHcEcqeWdukvZ-FfnoC46_FnRi_dCAjqCLYZhX8Oe6w_VWs-kusCnApusUjCZ1cQ79t17_4G9eGehnxxAzy9c4lgRiNF0zXJ05Mndj8NRhbvuHjTEcodDfC3g1LN1WB2Q5YlgVfKqJu3Y3lyW48Nspl_6ixWVSd3WR8PBXLZ5tN22RfZy7D_1z7fqRnIyLasULB3js_GuY38uUfkD8FNxYxkrsgouDzfB85LExcfbuFdQYEavxAifiXPnp6GN0dNaWyXZIrwk6Y3JLGzjqCQq0ejCAGUfdzGHskk6gkzgaWHbD7gKq_DhvQ",
+            "e": "AQAB"
+          },
+          "contact": [
+            "mailto:info@example.com"
+          ],
+          "initialIp": "1.2.3.4",
+          "createdAt": "2021-04-27T18:33:17.999045924Z",
+          "status": "valid"
+        }
+  recorded_at: Tue, 27 Apr 2021 18:33:18 GMT
+- request:
+    method: post
+    uri: "<DIRECTORY_BASE_URL>/acme/key-change"
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiMDAwMzdUUndUVzNJd29zbGp6Y2p3WV9KaWhEb0RJQmZDNTZ1ZTMtXzBPekMyZlEiLCJ1cmwiOiJodHRwczovL2FjbWUtc3RhZ2luZy12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2tleS1jaGFuZ2UiLCJraWQiOiJodHRwczovL2FjbWUtc3RhZ2luZy12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMTkyNzI5ODEifQ","payload":"eyJwcm90ZWN0ZWQiOiJleUowZVhBaU9pSktWMVFpTENKaGJHY2lPaUpTVXpJMU5pSXNJblZ5YkNJNkltaDBkSEJ6T2k4dllXTnRaUzF6ZEdGbmFXNW5MWFl3TWk1aGNHa3ViR1YwYzJWdVkzSjVjSFF1YjNKbkwyRmpiV1V2YTJWNUxXTm9ZVzVuWlNJc0ltcDNheUk2ZXlKbElqb2lRVkZCUWlJc0ltdDBlU0k2SWxKVFFTSXNJbTRpT2lKelFVZFpjV28zUnpCZmJHWkxMVWx6ZDBWdVRrWnVaa1V0VnpsWE1GUnJRa04yVG5WRU5VUnVVR2g0T1RGUmFXSXlUblo0UzNSdlNUZzNSSFowZGxaM1ZUaFlkREpJWnpsVFF6ZHdUMWhsVFZFd1VqRTVkSFJzY2twMWRtOUhla3RFYkRRNU1WbDJjVTFNTUZOUExWSlJaRzE2Y1ZaUmRsUXRSbU5yTFc5ak1WbG9WMFJ6TW1aSWVWWmpRVUZPVW10c1ZXRmlialZUV0VZME5qUjFOa2REVWxwdWVsVlpUMWRmWWxoQlEwOVJMV3B0ZHpNNVREZDRhemRUZUdwU01VNUNiazVIYnpKYU9VTmZiV00wVDFwRU4wMDJRWG96UkVaUFMyNVhRbG8xYkZGVk1HUlFVblEzUjJ4cE5HOWFZbU4zVWtadFEweG5WRmRVWDI5bk5sWnRRVEZRUm1aTk5XRnRaMFJWTkRWU1JtWXlSa1ZXUVZBNVFrcERUR2d0YWpKT01YTnNUSFJTVTBOYWIyZzVRMVZoT1dNdFIwNWtSVlZQZFRRMldFeFpaRmxCUjB0UldUTkJlR1ZUVWpWV2VGaGZZbFZ4YTFFaWZYMCIsInBheWxvYWQiOiJleUpoWTJOdmRXNTBJam9pYUhSMGNITTZMeTloWTIxbExYTjBZV2RwYm1jdGRqQXlMbUZ3YVM1c1pYUnpaVzVqY25sd2RDNXZjbWN2WVdOdFpTOWhZMk4wTHpFNU1qY3lPVGd4SWl3aWIyeGtTMlY1SWpwN0ltVWlPaUpCVVVGQ0lpd2lhM1I1SWpvaVVsTkJJaXdpYmlJNkltNTFSemxUY2tGMGFEY3plbHBoTTNGSVMyNWlaV1JuZFRFdFh6ZDVjR2RIU0dORlkzRmxWMlIxYTNaYUxVWm1ibTlETkRaZlJtNVNhVjlrUTBGcWNVTk1XVnBvV0RoUFpUWjNYMVpYY3kxcmRYTkRia0Z3ZFhOVmFrTmFNV05STnpsME1UZGZORWM1WlVkbGFHNTRlRUY2ZVRsak5HeG5VbWxPUmpCNldFb3dOVTF1WkdvNFRsSm9ZbloxU0dwVVJXTnZaRVJtUXpObk1VeE9NVmRDTWxFMVdXeG5WbVpMY1VwMU0xa3piSGxYTkRoT2MzQnNYelpwZUZkV1UyUXpWMUk0VUVKWVRGbzFkRTR5TWxKbVduazNSRjh4ZWpkbWNWSnVTWGxNWVhOVlRFSXphbk5mUjNWWk16aDFWV1pyUkRoR1RuaFplR3R5YzJkdmRVUjZaa0k0TlV4RmVHTm1ZblZHWkZGWlJXRjJlRUZwWm1sWVVHNXdOa2RPTUdST1lWZDVXRnBKY25kck5sa3pTa3hIZW1weFExRnhNR1ZxUTBGSFZXWmtla2RJYzJ0ck5tZHJlbWRoVjBoaVJEZG5TM0ZmUkdoMlVTSjlmUSIsInNpZ25hdHVyZSI6IlJqT21WRG1ZbUl5a3VjSXVlaGxOV1NRaGdqRmUtLWxkZFE3cXV2NGpaSm4wckhuZUJqeUFaLW5kOVBVbVNwQldjeThLOU5fTGU2LTNsY3pvUFU5eWZVVFR3WFl3ejNWTWdkbWFGaFQ5YVhzOWp2XzdqaUh0Q3llSVBXZW11QlZ4ZkFWaW9JT2RYVW9zcGs1b3J4REFQb1V1X0RHYWUxcXhLZ2JCbkw4TjhMU1pjbXQzOHhSLTNidER2UDdIS2xqaFU1RWlFWlNMYlVFT2xBWGRBZVlXRVRXWk5Cbmo3anljdnBvNnZDRm50U2hfazFzemhPZ1hFUlhFWmZ6S25XNmxzQjNpOGZ5M09DaE00bFU1V1VEQlA1UDBoeHk4QVNLVGZ2cTlra0YzMXJuS3kyZGtya0NpWURZVjJDWUZDMGk5RldUeUFsaFhLdzVZc0ZsSXNKTGowZyJ9","signature":"i0TegkaCxZOCbIEq6yaRYCo6CeIh559nKJSt1lVWlMjXbC_9x_GVOJ-yQkUW0tddmZ-q5iC3qWfAZw9__y93ScA3WHRDp-dbBVMlHJo_Vl8cgsuT646tT_4foxIj9eI_AbotJ8kPi9-aunGXsZKCFhPB4rzIXFi6iYvY6UkyNgdwu4srJeWTIINs89puh8Kjxy_PkuhqdTupYQ-n2zYMAU4YXep_3ibR1mHfiblqXa6EwbMtvQ6eElNh8DWzNQq0IkIDijsCdgHIrQQyo77zEzUrIjhlyyHgeJg_MIU-zFrIjgNyvWE1JjRPKTQbpjN3jLSytKHVvCFiOtLMfs1XKQ"}'
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.7 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 27 Apr 2021 18:33:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '568'
+      Connection:
+      - keep-alive
+      Boulder-Requester:
+      - '19272981'
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Replay-Nonce:
+      - 0004Y2NzcP1FjrzOm4Tzkro_O0xeDytdiY7LXOS7-lyT57I
+      X-Frame-Options:
+      - DENY
+      Strict-Transport-Security:
+      - max-age=604800
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "key": {
+            "kty": "RSA",
+            "n": "sAGYqj7G0_lfK-IswEnNFnfE-W9W0TkBCvNuD5DnPhx91Qib2NvxKtoI87DvtvVwU8Xt2Hg9SC7pOXeMQ0R19ttlrJuvoGzKDl491YvqML0SO-RQdmzqVQvT-Fck-oc1YhWDs2fHyVcAANRklUabn5SXF464u6GCRZnzUYOW_bXACOQ-jmw39L7xk7SxjR1NBnNGo2Z9C_mc4OZD7M6Az3DFOKnWBZ5lQU0dPRt7Gli4oZbcwRFmCLgTWT_og6VmA1PFfM5amgDU45RFf2FEVAP9BJCLh-j2N1slLtRSCZoh9CUa9c-GNdEUOu46XLYdYAGKQY3AxeSR5VxX_bUqkQ",
+            "e": "AQAB"
+          },
+          "contact": [
+            "mailto:info@example.com"
+          ],
+          "initialIp": "1.2.3.4",
+          "createdAt": "2021-04-27T18:33:17Z",
+          "status": "valid"
+        }
+  recorded_at: Tue, 27 Apr 2021 18:33:18 GMT
+- request:
+    method: post
+    uri: "<DIRECTORY_BASE_URL>/acme/acct/19272981"
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiMDAwNFkyTnpjUDFGanJ6T200VHprcm9fTzB4ZUR5dGRpWTdMWE9TNy1seVQ1N0kiLCJ1cmwiOiJodHRwczovL2FjbWUtc3RhZ2luZy12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMTkyNzI5ODEiLCJraWQiOiJodHRwczovL2FjbWUtc3RhZ2luZy12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMTkyNzI5ODEifQ","payload":"","signature":"cFJ0c3g5lo0DuNHOnjxxg9QY5kiwL4pYuTSpUvaFLTDZWdLv_iVWbXMsloIJdlCI_PqQ6XcQhSt9IDJa_20F8Rd9QStkFwUaZ1WH20gzj_b-kBnERiKJjwScKSivEBvwalf-gTa7yIWGrvPLNOnOWgCY4Pjpx6UJKhflThYEwVO7vbmllZRLtbnjE4t6jAmTNpte3PXo7gtv8wET-pjNwK8Rr3ApxJhjk2YZIebzi6tXMN7iYauQqz38voRAulJb2YBvp-b2sOCVX1N56Pe5C7p2pTeEy5Afk8wMucG3ewiAKTr2c6EQHl6SujyX2AyOyNaSH-OylZrIBv8MXGtHvw"}'
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.7 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 27 Apr 2021 18:33:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '568'
+      Connection:
+      - keep-alive
+      Boulder-Requester:
+      - '19272981'
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      - <https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf>;rel="terms-of-service"
+      Replay-Nonce:
+      - 0004d6lAjIoQxB52FMX3Fyogi4TedA-wTO7EjEXZWqbVtuM
+      X-Frame-Options:
+      - DENY
+      Strict-Transport-Security:
+      - max-age=604800
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "key": {
+            "kty": "RSA",
+            "n": "sAGYqj7G0_lfK-IswEnNFnfE-W9W0TkBCvNuD5DnPhx91Qib2NvxKtoI87DvtvVwU8Xt2Hg9SC7pOXeMQ0R19ttlrJuvoGzKDl491YvqML0SO-RQdmzqVQvT-Fck-oc1YhWDs2fHyVcAANRklUabn5SXF464u6GCRZnzUYOW_bXACOQ-jmw39L7xk7SxjR1NBnNGo2Z9C_mc4OZD7M6Az3DFOKnWBZ5lQU0dPRt7Gli4oZbcwRFmCLgTWT_og6VmA1PFfM5amgDU45RFf2FEVAP9BJCLh-j2N1slLtRSCZoh9CUa9c-GNdEUOu46XLYdYAGKQY3AxeSR5VxX_bUqkQ",
+            "e": "AQAB"
+          },
+          "contact": [
+            "mailto:info@example.com"
+          ],
+          "initialIp": "1.2.3.4",
+          "createdAt": "2021-04-27T18:33:17Z",
+          "status": "valid"
+        }
+  recorded_at: Tue, 27 Apr 2021 18:33:18 GMT
+recorded_with: VCR 6.0.0
