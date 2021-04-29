@@ -28,7 +28,7 @@ module Acme::Client::Resources::Eab
   end
 
   def raise_error_validation_missing_field!(field)
-    raise Acme::Client::Resources::Eab::Error, "no #{field} supplied, the eab should be hash eab: { kid: string, hmac_key: string }"
+    raise Acme::Client::Resources::Eab::Error, "no #{field} supplied to eab"
   end
 
   def protected
