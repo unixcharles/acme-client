@@ -49,13 +49,17 @@ class Acme::Client
 
   attr_reader :jwk, :nonces
 
-  def new_account(contact:, terms_of_service_agreed: nil)
+  def new_account(contact:, terms_of_service_agreed: nil, eab: nil)
     payload = {
       contact: Array(contact)
     }
 
     if terms_of_service_agreed
       payload[:termsOfServiceAgreed] = terms_of_service_agreed
+    end
+
+    if eab
+      payload[:externalAccountBinding] = Acme::Client::Resources::Eab.new(eab, endpoint: endpoint_for(:new_account)).build_external_account_binding
     end
 
     response = post(endpoint_for(:new_account), payload: payload, mode: :jws)
