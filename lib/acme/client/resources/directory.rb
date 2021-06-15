@@ -68,9 +68,11 @@ class Acme::Client::Resources::Directory
   end
 
   def fetch_directory
-    connection = Faraday.new(url: @directory, **@connection_options)
+    connection = Faraday.new(url: @directory, **@connection_options) do |configuration|
+      configuration.use Acme::Client::FaradayMiddleware, client: nil, mode: nil
+    end
     connection.headers[:user_agent] = Acme::Client::USER_AGENT
     response = connection.get(@url)
-    JSON.parse(response.body)
+    response.body
   end
 end
