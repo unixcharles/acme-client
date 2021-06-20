@@ -61,24 +61,40 @@ require 'openssl'
 private_key = OpenSSL::PKey::RSA.new(4096)
 ```
 
-Or load one from a PEM file
+Load one from a PEM file
 
 ```ruby
 require 'openssl'
-OpenSSL::PKey::RSA.new(File.read('/path/to/private_key.pem'))
+private_key = OpenSSL::PKey::RSA.new(File.read('/path/to/private_key.pem'))
 ```
-
 See [RSA](https://ruby.github.io/openssl/OpenSSL/PKey/RSA.html) and [EC](https://ruby.github.io/openssl/OpenSSL/PKey/EC.html) for documentation.
-
 
 ```ruby
 client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory')
 ```
 
-If your account is already registered, you can save some API calls by passing your key ID directly. This will avoid an unnecessary API call to retrieve it from your private key.
+Load a `jwk` (JSON Web Key)
+This will require `JOSE` (`gem install jose`) but this makes loading your JWK much easier.
 
 ```ruby
-client = Acme::Client.new(private_key: private_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory', kid: 'https://example.com/acme/acct/1')
+jwk = JOSE::JWK.from(JSON.load(File.read('/path/to/private_key.json')))
+```
+Using the variable, you can translate the jwk to a raw key.
+```ruby
+client = Acme::Client.new(private_key: jwk.to_key, directory: 'https://acme-staging-v02.api.letsencrypt.org/directory')
+```
+
+Passing your Key ID
+
+If your account is already registered, you can save some API calls by passing your key ID directly. This will avoid an unnecessary API call to retrieve it from your private key.
+
+<!-- Indented for readability and not having to scroll -->
+```ruby
+client = Acme::Client.new(
+    private_key: private_key,
+    directory: 'https://acme-staging-v02.api.letsencrypt.org/directory',
+    kid: 'https://example.com/acme/acct/1'
+)
 ```
 
 ## Account management
