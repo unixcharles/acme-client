@@ -5,10 +5,10 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
 
   CONTENT_TYPE = 'application/jose+json'
 
-  def initialize(app, client:, mode:)
+  def initialize(app, options)
     super(app)
-    @client = client
-    @mode = mode
+    @client = options.fetch(:client)
+    @mode = options.fetch(:mode)
   end
 
   def call(env)
