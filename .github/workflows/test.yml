@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['2.6', '2.7', '3.0']
+        faraday-version: ['~> 0.17.3', '~> 1.7']
+    env:
+      FARADAY_VERSION: ${{ matrix.faraday-version }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Run tests
+      run: bundle exec rake spec
