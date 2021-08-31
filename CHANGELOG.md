@@ -1,3 +1,8 @@
+## `2.0.9`
+
+* Support for Ruby 3.0 and Faraday 0.17.x
+* Raise when directory is rate limited
+
 ## `2.0.8`
 
 * Add support for the keyChange endpoint
