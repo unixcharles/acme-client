@@ -102,10 +102,10 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def get_nonce
-    client.get_nonce
+    client.get_nonce if client
   end
 
   def nonces
-    client.nonces
+    client ? client.nonces: []
   end
 end
