@@ -106,6 +106,6 @@ class Acme::Client::FaradayMiddleware < Faraday::Middleware
   end
 
   def nonces
-    client ? client.nonces: []
+    client ? client.nonces : []
   end
 end
