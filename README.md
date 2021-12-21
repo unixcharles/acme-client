@@ -115,6 +115,7 @@ You can use ZeroSSL SSL.com by providing a eab `kid` and `hmac_key`
 ```ruby
 client = Acme::Client.new(private_key: private_key, directory: 'https://acme.zerossl.com/v2/DV90')
 account = client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true, eab: { kid: "your kid", hmac_key: "your hmac key"})
+order = client.new_order(identifiers: [domain], not_before: nil, not_after: nil, eab: { kid: "your kid", hmac_key: "your hmac key"})
 ```
 
 ## Obtaining a certificate
