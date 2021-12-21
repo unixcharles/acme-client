@@ -126,12 +126,14 @@ class Acme::Client
     @kid ||= account.kid
   end
 
-  def new_order(identifiers:, not_before: nil, not_after: nil)
+  def new_order(identifiers:, not_before: nil, not_after: nil, eab: nil)
     payload = {}
     payload['identifiers'] = prepare_order_identifiers(identifiers)
     payload['notBefore'] = not_before if not_before
     payload['notAfter'] = not_after if not_after
-
+    if eab
+      payload[:externalAccountBinding] = Acme::Client::Resources::Eab.new(eab, endpoint: endpoint_for(:new_order), jwk: @jwk).build_external_account_binding
+    end
     response = post(endpoint_for(:new_order), payload: payload)
     arguments = attributes_from_order_response(response)
     Acme::Client::Resources::Order.new(self, **arguments)
