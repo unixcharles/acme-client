@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         ruby-version: ['2.6', '2.7', '3.0', truffleruby-head]
-        faraday-version: ['~> 0.17.3', '~> 1.7']
+        faraday-version: ['~> 1.7', '~> 2.0']
     env:
       FARADAY_VERSION: ${{ matrix.faraday-version }}
     steps:
