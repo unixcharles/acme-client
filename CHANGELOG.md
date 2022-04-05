@@ -1,3 +1,7 @@
+## `2.0.10`
+
+* Support for Faraday 1.0 / 2.0
+
 ## `2.0.9`
 
 * Support for Ruby 3.0 and Faraday 0.17.x
