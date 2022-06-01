@@ -1,3 +1,7 @@
+## `2.0.11`
+
+* Add support for error code `AlreadyRevoked` and `BadPublicKey`
+
 ## `2.0.10`
 
 * Support for Faraday 1.0 / 2.0
