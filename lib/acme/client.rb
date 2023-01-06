@@ -62,7 +62,7 @@ class Acme::Client
 
     if eab_kid && eab_hmac_key
       hmac = Acme::Client::JWK::HMAC.new(Base64.decode64(eab_hmac_key))
-      eab_payload_json = hmac.jws(header: { kid: eab_kid, url: new_account_endpoint }, payload: @jwk.to_json)
+      eab_payload_json = hmac.jws(header: { kid: eab_kid, url: new_account_endpoint }, payload: @jwk)
 
       payload[:externalAccountBinding] = JSON.parse(eab_payload_json)
       puts payload.inspect
