@@ -19,3 +19,4 @@ end
 require 'acme/client/jwk/base'
 require 'acme/client/jwk/rsa'
 require 'acme/client/jwk/ecdsa'
+require 'acme/client/jwk/hmac'
