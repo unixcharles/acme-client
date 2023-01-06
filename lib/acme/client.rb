@@ -65,7 +65,6 @@ class Acme::Client
       eab_payload_json = hmac.jws(header: { kid: eab_kid, url: new_account_endpoint }, payload: @jwk)
 
       payload[:externalAccountBinding] = JSON.parse(eab_payload_json)
-      puts payload.inspect
     end
 
     response = post(new_account_endpoint, payload: payload, mode: :jws)
