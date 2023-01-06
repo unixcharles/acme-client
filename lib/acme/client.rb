@@ -119,7 +119,7 @@ class Acme::Client
 
   def account
     @kid ||= begin
-      response = post(endpoint_for(:new_account), payload: { onlyReturnExisting: true }, mode: :@c)
+      response = post(endpoint_for(:new_account), payload: { onlyReturnExisting: true }, mode: :jwk)
       response.headers.fetch(:location)
     end
 
