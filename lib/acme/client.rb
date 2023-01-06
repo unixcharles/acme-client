@@ -50,7 +50,8 @@ class Acme::Client
 
   attr_reader :jwk, :nonces
 
-  def new_account(contact:, terms_of_service_agreed: nil)
+  def new_account(contact:, terms_of_service_agreed: nil, eab_kid: nil, eab_hmac_key: nil)
+    new_account_endpoint = endpoint_for(:new_account)
     payload = {
       contact: Array(contact)
     }
@@ -59,7 +60,15 @@ class Acme::Client
       payload[:termsOfServiceAgreed] = terms_of_service_agreed
     end
 
-    response = post(endpoint_for(:new_account), payload: payload, mode: :jws)
+    if eab_kid && eab_hmac_key
+      hmac = Acme::Client::JWK::HMAC.new(eab_hmac_key)
+      eab_payload_json = hmac.jws(header: { kid: eab_kid, url: new_account_endpoint }, payload: @jwk.to_json)
+
+      payload[:externalAccountBinding] = JSON.parse(eab_payload_json)
+      puts payload.inspect
+    end
+
+    response = post(new_account_endpoint, payload: payload, mode: :jws)
     @kid = response.headers.fetch(:location)
 
     if response.body.nil? || response.body.empty?
@@ -110,7 +119,7 @@ class Acme::Client
 
   def account
     @kid ||= begin
-      response = post(endpoint_for(:new_account), payload: { onlyReturnExisting: true }, mode: :jwk)
+      response = post(endpoint_for(:new_account), payload: { onlyReturnExisting: true }, mode: :@c)
       response.headers.fetch(:location)
     end
 
