@@ -50,11 +50,19 @@ class Acme::Client
 
   attr_reader :jwk, :nonces
 
-  def new_account(contact:, terms_of_service_agreed: nil, eab_kid: nil, eab_hmac_key: nil)
+  def new_account(contact: nil,
+                  register_unsafely_without_email: false,
+                  terms_of_service_agreed: nil,
+                  eab_kid: nil,
+                  eab_hmac_key: nil)
     new_account_endpoint = endpoint_for(:new_account)
-    payload = {
-      contact: Array(contact)
-    }
+    payload = {}
+
+    if !contact && !register_unsafely_without_email
+      raise ArgumentError, "contact must be present if register_unsafely_without_email is false"
+    elsif contact
+      payload[:contact] = Array(contact)
+    end
 
     if terms_of_service_agreed
       payload[:termsOfServiceAgreed] = terms_of_service_agreed
