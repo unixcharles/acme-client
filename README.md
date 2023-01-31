@@ -1,7 +1,5 @@
 # Acme::Client
 
-[![Build Status](https://travis-ci.org/unixcharles/acme-client.svg?branch=master)](https://travis-ci.org/unixcharles/acme-client)
-
 `acme-client` is a client implementation of the ACMEv2 / [RFC 8555](https://tools.ietf.org/html/rfc8555) protocol in Ruby.
 
 You can find the ACME reference implementations of the [server](https://github.com/letsencrypt/boulder) in Go and the [client](https://github.com/certbot/certbot) in Python.
