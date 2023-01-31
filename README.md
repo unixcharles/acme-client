@@ -106,6 +106,15 @@ client.kid
 => "https://acme-staging-v02.api.letsencrypt.org/acme/acct/000000"
 ```
 
+## External Account Binding support
+
+You can use External Account Binding by providing a `external_account_binding` with a `kid` and `hmac_key`.
+
+```ruby
+client = Acme::Client.new(private_key: private_key, directory: 'https://acme.zerossl.com/v2/DV90')
+account = client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true, external_account_binding: { kid: "your kid", hmac_key: "your hmac key"})
+```
+
 ## Obtaining a certificate
 ### Ordering a certificate
 

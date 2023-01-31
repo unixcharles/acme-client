@@ -50,7 +50,7 @@ class Acme::Client
 
   attr_reader :jwk, :nonces
 
-  def new_account(contact:, terms_of_service_agreed: nil, eab_kid: nil, eab_hmac_key: nil)
+  def new_account(contact:, terms_of_service_agreed: nil, eab: nil, external_account_binding: nil)
     new_account_endpoint = endpoint_for(:new_account)
     payload = {
       contact: Array(contact)
@@ -60,11 +60,16 @@ class Acme::Client
       payload[:termsOfServiceAgreed] = terms_of_service_agreed
     end
 
-    if eab_kid && eab_hmac_key
-      hmac = Acme::Client::JWK::HMAC.new(Base64.decode64(eab_hmac_key))
-      eab_payload_json = hmac.jws(header: { kid: eab_kid, url: new_account_endpoint }, payload: @jwk)
+    external_account_binding = eab || external_account_binding
+    if external_account_binding
+      kid, hmac_key = external_account_binding.values_at(:kid, :hmac_key)
+      if kid.nil? || hmac_key.nil?
+        raise ArgumentError, 'must specify kid or hmac_key key for external_account_binding'
+      end
 
-      payload[:externalAccountBinding] = JSON.parse(eab_payload_json)
+      hmac = Acme::Client::JWK::HMAC.new(Base64.urlsafe_decode64(hmac_key))
+      external_account_payload = hmac.jws(header: { kid: kid, url: new_account_endpoint }, payload: @jwk)
+      payload[:externalAccountBinding] = JSON.parse(external_account_payload)
     end
 
     response = post(new_account_endpoint, payload: payload, mode: :jws)
@@ -131,7 +136,7 @@ class Acme::Client
     @kid ||= account.kid
   end
 
-  def new_order(identifiers:, not_before: nil, not_after: nil)
+  def new_order(identifiers:, not_before: nil, not_after: nil, eab: nil)
     payload = {}
     payload['identifiers'] = prepare_order_identifiers(identifiers)
     payload['notBefore'] = not_before if not_before
