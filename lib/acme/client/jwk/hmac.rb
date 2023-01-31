@@ -16,7 +16,7 @@ class Acme::Client::JWK::HMAC < Acme::Client::JWK::Base
   #
   # Returns a String signature.
   def sign(message)
-    OpenSSL::HMAC.digest("SHA256", @key, message)
+    OpenSSL::HMAC.digest('SHA256', @key, message)
   end
 
   # The name of the algorithm as needed for the `alg` member of a JWS object.
