@@ -60,7 +60,7 @@ describe Acme::Client do
       let(:kid) { 'sl61UO7lKgS0VOSO2BnQ9A' }
       it 'use an invalid external account binding', vcr: { cassette_name: 'new_account_invalid_external_binding' } do
         expect {
-          account = unregistered_client.new_account(
+          unregistered_client.new_account(
             contact: 'mailto:info@example.com',
             terms_of_service_agreed: true,
             external_account_binding: { kid: kid, hmac_key: hmac_key }
@@ -76,6 +76,7 @@ describe Acme::Client do
           terms_of_service_agreed: true,
           external_account_binding: { kid: kid, hmac_key: hmac_key }
         )
+        expect(account.status).to eq('valid')
       end
     end
 
