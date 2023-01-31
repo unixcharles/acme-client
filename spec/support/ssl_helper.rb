@@ -33,8 +33,7 @@ module SSLHelper
     end
 
     def generate_ecdsa_key(curve)
-      k = OpenSSL::PKey::EC.new(curve)
-      k.generate_key
+      k = OpenSSL::PKey::EC.generate(curve)
       Acme::Client::CertificateRequest::ECKeyPatch.new(k)
     end
 
@@ -107,9 +106,14 @@ module SSLHelper
   def public_key_to_pem(private_key)
     case private_key
     when OpenSSL::PKey::EC
-      dup = OpenSSL::PKey::EC.new(private_key.to_der)
-      dup.private_key = nil
-      dup.to_pem
+      # TODO: Ruby 2.7 shenanigans
+      if OpenSSL::PKey::EC.method_defined?(:to_pem)
+        private_key.to_pem
+      else
+        dup = OpenSSL::PKey::EC.new(private_key.to_der)
+        dup.private_key = nil
+        dup.to_pem
+      end
     when OpenSSL::PKey::RSA
       private_key.public_key.to_pem
     else

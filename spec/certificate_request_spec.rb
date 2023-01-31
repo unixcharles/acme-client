@@ -139,8 +139,7 @@ describe Acme::Client::CertificateRequest do
   end
 
   it 'supports ECDSA keys' do
-    ec_key = OpenSSL::PKey::EC.new('secp384r1')
-    ec_key.generate_key
+    ec_key = OpenSSL::PKey::EC.generate('secp384r1')
     request = Acme::Client::CertificateRequest.new(common_name: 'example.org',
                                                    private_key: ec_key)
 
