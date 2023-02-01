@@ -64,7 +64,7 @@ class Acme::Client
     if external_account_binding
       kid, hmac_key = external_account_binding.values_at(:kid, :hmac_key)
       if kid.nil? || hmac_key.nil?
-        raise ArgumentError, 'must specify kid or hmac_key key for external_account_binding'
+        raise ArgumentError, 'must specify kid and hmac_key key for external_account_binding'
       end
 
       hmac = Acme::Client::JWK::HMAC.new(Base64.urlsafe_decode64(hmac_key))
