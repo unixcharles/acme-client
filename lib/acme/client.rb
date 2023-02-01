@@ -50,7 +50,7 @@ class Acme::Client
 
   attr_reader :jwk, :nonces
 
-  def new_account(contact:, terms_of_service_agreed: nil, eab: nil, external_account_binding: nil)
+  def new_account(contact:, terms_of_service_agreed: nil, external_account_binding: nil)
     new_account_endpoint = endpoint_for(:new_account)
     payload = {
       contact: Array(contact)
@@ -60,7 +60,6 @@ class Acme::Client
       payload[:termsOfServiceAgreed] = terms_of_service_agreed
     end
 
-    external_account_binding = eab || external_account_binding
     if external_account_binding
       kid, hmac_key = external_account_binding.values_at(:kid, :hmac_key)
       if kid.nil? || hmac_key.nil?
@@ -136,7 +135,7 @@ class Acme::Client
     @kid ||= account.kid
   end
 
-  def new_order(identifiers:, not_before: nil, not_after: nil, eab: nil)
+  def new_order(identifiers:, not_before: nil, not_after: nil)
     payload = {}
     payload['identifiers'] = prepare_order_identifiers(identifiers)
     payload['notBefore'] = not_before if not_before
