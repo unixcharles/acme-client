@@ -50,7 +50,8 @@ class Acme::Client
 
   attr_reader :jwk, :nonces
 
-  def new_account(contact:, terms_of_service_agreed: nil)
+  def new_account(contact:, terms_of_service_agreed: nil, external_account_binding: nil)
+    new_account_endpoint = endpoint_for(:new_account)
     payload = {
       contact: Array(contact)
     }
@@ -59,7 +60,18 @@ class Acme::Client
       payload[:termsOfServiceAgreed] = terms_of_service_agreed
     end
 
-    response = post(endpoint_for(:new_account), payload: payload, mode: :jws)
+    if external_account_binding
+      kid, hmac_key = external_account_binding.values_at(:kid, :hmac_key)
+      if kid.nil? || hmac_key.nil?
+        raise ArgumentError, 'must specify kid and hmac_key key for external_account_binding'
+      end
+
+      hmac = Acme::Client::JWK::HMAC.new(Base64.urlsafe_decode64(hmac_key))
+      external_account_payload = hmac.jws(header: { kid: kid, url: new_account_endpoint }, payload: @jwk)
+      payload[:externalAccountBinding] = JSON.parse(external_account_payload)
+    end
+
+    response = post(new_account_endpoint, payload: payload, mode: :jws)
     @kid = response.headers.fetch(:location)
 
     if response.body.nil? || response.body.empty?

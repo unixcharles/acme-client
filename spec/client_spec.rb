@@ -55,6 +55,29 @@ describe Acme::Client do
           unregistered_client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: false)
         }.to raise_error(Acme::Client::Error, 'Provided account did not agree to the terms of service')
       end
+
+      let(:hmac_key) { 'ZzAJzgctYHnssCwf5swk1z1gC-bplzulO2fF3uwYUvyPsfug7OvSmp-xmZTy7uPqM1qP54gwj_CJM8sjpDJhfw' }
+      let(:kid) { 'sl61UO7lKgS0VOSO2BnQ9A' }
+      it 'use an invalid external account binding', vcr: { cassette_name: 'new_account_invalid_external_binding' } do
+        expect {
+          unregistered_client.new_account(
+            contact: 'mailto:info@example.com',
+            terms_of_service_agreed: true,
+            external_account_binding: { kid: kid, hmac_key: hmac_key }
+          )
+        }.to raise_error(Acme::Client::Error)
+      end
+
+      let(:hmac_key) { 'FEkpgzzQZUQ7qgBp3Ewa7VodVjFJMkX1l0aVXK2J_o3cQFZhuoDatKIymXJCl8v06Q0Wc56BASDtof2MZPT3gg' }
+      let(:kid) { 'AfAr-z9i9WvdIz5hgdtKBA' }
+      it 'use an valid external account binding', vcr: { cassette_name: 'new_account_valid_external_binding' } do
+        account = unregistered_client.new_account(
+          contact: 'mailto:info@example.com',
+          terms_of_service_agreed: true,
+          external_account_binding: { kid: kid, hmac_key: hmac_key }
+        )
+        expect(account.status).to eq('valid')
+      end
     end
 
     context 'account' do

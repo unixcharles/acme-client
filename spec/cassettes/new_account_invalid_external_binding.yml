@@ -1,0 +1,142 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: "<DIRECTORY_URL>"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.12 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 31 Jan 2023 22:10:06 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '645'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "newNonce": "<DIRECTORY_URL>/newNonce",
+          "newAccount": "<DIRECTORY_URL>/newAccount",
+          "newOrder": "<DIRECTORY_URL>/newOrder",
+          "revokeCert": "<DIRECTORY_URL>/revokeCert",
+          "keyChange": "<DIRECTORY_URL>/keyChange",
+          "meta": {
+            "termsOfService": "https://secure.trust-provider.com/repository/docs/Legacy/20221001_Certificate_Subscriber_Agreement_v_2_5_click.pdf",
+            "website": "https://zerossl.com",
+            "caaIdentities": ["sectigo.com", "trust-provider.com", "usertrust.com", "comodoca.com", "comodo.com"],
+            "externalAccountRequired": true
+          }
+        }
+    http_version:
+  recorded_at: Tue, 31 Jan 2023 22:10:06 GMT
+- request:
+    method: head
+    uri: "<DIRECTORY_URL>/newNonce"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.12 (https://github.com/unixcharles/acme-client)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 31 Jan 2023 22:10:08 GMT
+      Content-Type:
+      - application/octet-stream
+      Connection:
+      - keep-alive
+      Replay-Nonce:
+      - PaUv7Esm7LPHzke0mDzpw3xD0x4NFYVXEtJws7fNolI
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Access-Control-Allow-Origin:
+      - "*"
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Tue, 31 Jan 2023 22:10:08 GMT
+- request:
+    method: post
+    uri: "<DIRECTORY_URL>/newAccount"
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiUGFVdjdFc203TFBIemtlMG1EenB3M3hEMHg0TkZZVlhFdEp3czdmTm9sSSIsInVybCI6Imh0dHBzOi8vYWNtZS56ZXJvc3NsLmNvbS92Mi9EVjkwL25ld0FjY291bnQiLCJqd2siOnsiZSI6IkFRQUIiLCJrdHkiOiJSU0EiLCJuIjoiM1lILUFIZWw2OFRZZkhwSk9NWHQ5UDh6NjVGVGhQZVh0cWNnYkFyZDBvd0V4Vkd2LXZJUjN1c0dCVjdyRDl2RmdQNmZJQlpkanBCN1JZVV94MEhVMG5qdWI1UFZ2UWVkY2FuWUdnTk9KQ3lERi1mRzBaakZDekFJYXdHb2stcGVHTEx3X2lHc3JvV0k2S0tyUDVlcXNYdDlaV2xFMEwwMUlrV3JIUFQ3Z0ZtNWlrcTM5TG54cVphZGhzOENoQmY5T1NYYlR5Z25uVnE0UHpZbXc0YVA4eTNESDk1YXAxbEF3aU05TmZfMnppN3FRQUZka2MxNWhkNTZiYWhsSl9ycVFncDN6LXI2bTV2YkJ3UVgyMzRveG5tRzg0Y1dmWnJQTmhiTkMyS2g1enk2TlRUMGZqOEFSaDBvbGJIczBHdWZILUFCdkc0Wkx6dWNZbEtvRTJiRDd3In19","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlLCJleHRlcm5hbEFjY291bnRCaW5kaW5nIjp7InByb3RlY3RlZCI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW10cFpDSTZJbk5zTmpGVlR6ZHNTMmRUTUZaUFUwOHlRbTVST1VFaUxDSjFjbXdpT2lKb2RIUndjem92TDJGamJXVXVlbVZ5YjNOemJDNWpiMjB2ZGpJdlJGWTVNQzl1WlhkQlkyTnZkVzUwSW4wIiwicGF5bG9hZCI6ImV5SmxJam9pUVZGQlFpSXNJbXQwZVNJNklsSlRRU0lzSW00aU9pSXpXVWd0UVVobGJEWTRWRmxtU0hCS1QwMVlkRGxRT0hvMk5VWlVhRkJsV0hSeFkyZGlRWEprTUc5M1JYaFdSM1l0ZGtsU00zVnpSMEpXTjNKRU9YWkdaMUEyWmtsQ1dtUnFjRUkzVWxsVlgzZ3dTRlV3Ym1wMVlqVlFWblpSWldSallXNVpSMmRPVDBwRGVVUkdMV1pITUZwcVJrTjZRVWxoZDBkdmF5MXdaVWRNVEhkZmFVZHpjbTlYU1RaTFMzSlFOV1Z4YzFoME9WcFhiRVV3VERBeFNXdFhja2hRVkRkblJtMDFhV3R4TXpsTWJuaHhXbUZrYUhNNFEyaENaamxQVTFoaVZIbG5ibTVXY1RSUWVsbHRkelJoVURoNU0wUklPVFZoY0RGc1FYZHBUVGxPWmw4eWVtazNjVkZCUm1Scll6RTFhR1ExTm1KaGFHeEtYM0p4VVdkd00zb3Rjalp0TlhaaVFuZFJXREl6Tkc5NGJtMUhPRFJqVjJaYWNsQk9hR0pPUXpKTGFEVjZlVFpPVkZRd1ptbzRRVkpvTUc5c1lraHpNRWQxWmtndFFVSjJSelJhVEhwMVkxbHNTMjlGTW1KRU4zY2lmUSIsInNpZ25hdHVyZSI6ImV2Um56YlBCV3JIemhIa0QzS2hndDJ2SlR5YVZoZXlkNC1NbHJRblBkMEk9In19","signature":"K0wj-1GReDCQBZXcICcLB_9jwfTIGL3-2Qe5dLBp_w7iU9GBdoP0aM2uqt6iKQD_kDrVbFfoAMMuxYL6dkNR15-G_ZFUaPQBydFvi0zF0gLK-LFUNgwa4ccSV8coFBCMlVT8zzoxwcCh4aXkb8-rYcqvRXJsPmlwYegJK3Cjcq0LriSjRgTePBks1gdJASoSqLDqWxO7BGCTHXrr0AG3V1oBcQDbYIqyvoWlT3lDzN6zfzczfS-zEU6-h9x0XMGNfLC2x_siNHNbAXBEeYW1TjNzxyu_x-E5_cQqncQafvBjvjYMQFN34M8fjuK8EiAAcXMFOXZEdLfcvRcSnwK-Vw"}'
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.12 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 31 Jan 2023 22:10:10 GMT
+      Content-Type:
+      - application/problem+json
+      Content-Length:
+      - '99'
+      Connection:
+      - keep-alive
+      Replay-Nonce:
+      - L7Ph5DdMZ31weGODBte1Bb7yP8GBBeXOeDOSNbYFm_0
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Access-Control-Allow-Origin:
+      - "*"
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"type":"urn:ietf:params:acme:error:malformed","status":400,"detail":"[External
+        Account Binding] "}'
+    http_version:
+  recorded_at: Tue, 31 Jan 2023 22:10:10 GMT
+recorded_with: VCR 2.9.3
