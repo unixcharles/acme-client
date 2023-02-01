@@ -1,4 +1,8 @@
-## `2.0.11`
+## `2.0.12`
+
+* Add support for External Account Binding
+
+## `2.0.12`
 
 * Update test matrix to current Ruby versions (2.7 to 3.2)
 * Support for Faraday retry 2.x
