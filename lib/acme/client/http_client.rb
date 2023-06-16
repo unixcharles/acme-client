@@ -8,7 +8,7 @@ module Acme::Client::HTTPClient
   # @return [Faraday::Connection]
   def self.new_connection(url:, options: {})
     Faraday.new(url, options) do |configuration|
-      configuration.use Acme::Client::HTTPClient::ErrorMiddleware if !skip_error_middleware
+      configuration.use Acme::Client::HTTPClient::ErrorMiddleware
 
       yield(configuration) if block_given?
 
@@ -35,9 +35,6 @@ module Acme::Client::HTTPClient
       end
 
       configuration.use Acme::Client::HTTPClient::AcmeMiddleware, client: client, mode: mode
-      # Can remove the generic ErrorMiddleware and slim down the chain,
-      # as long as AcmeMiddleware rescues the Faraday connection errors.
-      configuration.builder.delete Acme::Client::HTTPClient::ErrorMiddleware
 
       yield(configuration) if block_given?
     end
@@ -76,8 +73,6 @@ module Acme::Client::HTTPClient
       end
 
       @app.call(env).on_complete { |response_env| on_complete(response_env) }
-    rescue Faraday::TimeoutError, Faraday::ConnectionFailed
-      raise Acme::Client::Error::Timeout
     end
 
     def on_complete(env)
