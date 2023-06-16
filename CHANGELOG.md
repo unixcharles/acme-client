@@ -1,3 +1,7 @@
+## `2.0.14`
+
+* Fix Faraday HTTP exceptions leaking out, always raise `Acme::Client::Error` instead
+
 ## `2.0.13`
 
 * Add support for External Account Binding
