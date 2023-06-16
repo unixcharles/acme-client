@@ -8,7 +8,7 @@ module Acme::Client::HTTPClient
   # @return [Faraday::Connection]
   def self.new_connection(url:, options: {})
     Faraday.new(url, options) do |configuration|
-      configuration.use Acme::Client::HTTPClient::ErrorMiddleware
+      configuration.use Acme::Client::HTTPClient::ErrorMiddleware if !skip_error_middleware
 
       yield(configuration) if block_given?
 
@@ -27,14 +27,17 @@ module Acme::Client::HTTPClient
   # @return [Faraday::Connection]
   def self.new_acme_connection(url:, client:, mode:, options: {}, bad_nonce_retry: 0)
     new_connection(url: url, options: options) do |configuration|
-      configuration.use Acme::Client::HTTPClient::AcmeMiddleware, client: client, mode: mode
-
       if bad_nonce_retry > 0
         configuration.request(:retry,
           max: bad_nonce_retry,
           methods: Faraday::Connection::METHODS,
           exceptions: [Acme::Client::Error::BadNonce])
       end
+
+      configuration.use Acme::Client::HTTPClient::AcmeMiddleware, client: client, mode: mode
+      # Can remove the generic ErrorMiddleware and slim down the chain,
+      # as long as AcmeMiddleware rescues the Faraday connection errors.
+      configuration.builder.delete Acme::Client::HTTPClient::ErrorMiddleware
 
       yield(configuration) if block_given?
     end
