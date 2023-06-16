@@ -68,13 +68,8 @@ class Acme::Client::Resources::Directory
   end
 
   def fetch_directory
-    connection = Faraday.new(url: @directory, **@connection_options) do |configuration|
-      configuration.use Acme::Client::FaradayMiddleware, client: nil, mode: nil
-
-      configuration.adapter Faraday.default_adapter
-    end
-    connection.headers[:user_agent] = Acme::Client::USER_AGENT
-    response = connection.get(@url)
+    http_client = Acme::Client::HTTPClient.new_acme_connection(url: @directory, options: @connection_options, client: nil, mode: nil)
+    response = http_client.get(@url)
     response.body
   end
 end

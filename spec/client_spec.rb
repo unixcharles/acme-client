@@ -35,6 +35,15 @@ describe Acme::Client do
       client.nonces << 'invalid_nonce'
       client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
     end
+
+    it 'rescues a timeout error', vcr: { cassette_name: 'get_nonce' } do
+      stub_request(:head, %r{/nonce-plz})
+        .to_raise(Faraday::ConnectionFailed.new('Connection error'))
+
+      expect {
+        unregistered_client.get_nonce
+      }.to raise_error(Acme::Client::Error::Timeout)
+    end
   end
 
   context 'meta', vcr: { cassette_name: 'client_meta' } do
@@ -77,6 +86,15 @@ describe Acme::Client do
           external_account_binding: { kid: kid, hmac_key: hmac_key }
         )
         expect(account.status).to eq('valid')
+      end
+
+      it 'rescues a timeout error', vcr: { cassette_name: 'new_account_agree_terms' } do
+        stub_request(:post, %r{/sign-me-up})
+          .to_raise(Faraday::ConnectionFailed.new('Connection error'))
+
+        expect {
+          unregistered_client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
+        }.to raise_error(Acme::Client::Error::Timeout)
       end
     end
 
