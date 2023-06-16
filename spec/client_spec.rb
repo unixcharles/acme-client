@@ -38,7 +38,7 @@ describe Acme::Client do
 
     it 'rescues a timeout error', vcr: { cassette_name: 'get_nonce' } do
       stub_request(:head, %r{/nonce-plz})
-        .to_raise(Faraday::ConnectionFailed.new)
+        .to_raise(Faraday::ConnectionFailed.new("Connection error"))
 
       expect {
         unregistered_client.get_nonce
@@ -90,7 +90,7 @@ describe Acme::Client do
 
       it 'rescues a timeout error', vcr: { cassette_name: 'new_account_agree_terms' } do
         stub_request(:post, %r{/sign-me-up})
-          .to_raise(Faraday::ConnectionFailed.new)
+          .to_raise(Faraday::ConnectionFailed.new("Connection error"))
 
         expect {
           unregistered_client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
