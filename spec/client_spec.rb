@@ -55,6 +55,29 @@ describe Acme::Client do
           unregistered_client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: false)
         }.to raise_error(Acme::Client::Error, 'Provided account did not agree to the terms of service')
       end
+
+      let(:hmac_key) { 'ZzAJzgctYHnssCwf5swk1z1gC-bplzulO2fF3uwYUvyPsfug7OvSmp-xmZTy7uPqM1qP54gwj_CJM8sjpDJhfw' }
+      let(:kid) { 'sl61UO7lKgS0VOSO2BnQ9A' }
+      it 'use an invalid external account binding', vcr: { cassette_name: 'new_account_invalid_external_binding' } do
+        expect {
+          unregistered_client.new_account(
+            contact: 'mailto:info@example.com',
+            terms_of_service_agreed: true,
+            external_account_binding: { kid: kid, hmac_key: hmac_key }
+          )
+        }.to raise_error(Acme::Client::Error)
+      end
+
+      let(:hmac_key) { 'FEkpgzzQZUQ7qgBp3Ewa7VodVjFJMkX1l0aVXK2J_o3cQFZhuoDatKIymXJCl8v06Q0Wc56BASDtof2MZPT3gg' }
+      let(:kid) { 'AfAr-z9i9WvdIz5hgdtKBA' }
+      it 'use an valid external account binding', vcr: { cassette_name: 'new_account_valid_external_binding' } do
+        account = unregistered_client.new_account(
+          contact: 'mailto:info@example.com',
+          terms_of_service_agreed: true,
+          external_account_binding: { kid: kid, hmac_key: hmac_key }
+        )
+        expect(account.status).to eq('valid')
+      end
     end
 
     context 'account' do
@@ -102,6 +125,14 @@ describe Acme::Client do
         expect(
           deactivated_account.status
         ).to eq('deactivated')
+      end
+    end
+
+    context 'account key change' do
+      it 'changes the key', vcr: { cassette_name: 'account_key_change' } do
+        client.account_key_change(new_private_key: generate_private_key)
+
+        expect(client.account.status).to eq('valid')
       end
     end
   end
@@ -227,6 +258,61 @@ describe Acme::Client do
         certificate = client.certificate(url: finalized_order.certificate_url)
 
         expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
+      end
+
+      context 'preferred chain' do
+        context 'without alternates link' do
+          it 'download a certificate with a preferred match', vcr: { cassette_name: 'certificate_download' } do
+            serve_once(challenge.file_content) do
+              client.request_challenge_validation(url: challenge.url)
+            end
+
+            order = client.finalize(url: finalize_url, csr: csr)
+            finalized_order = client.order(url: order.url)
+            certificate = client.certificate(url: finalized_order.certificate_url, force_chain: 'Pebble Root CA')
+
+            expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
+          end
+
+          it 'download a certificate and fail preferred match', vcr: { cassette_name: 'certificate_download' } do
+            serve_once(challenge.file_content) do
+              client.request_challenge_validation(url: challenge.url)
+            end
+
+            order = client.finalize(url: finalize_url, csr: csr)
+            finalized_order = client.order(url: order.url)
+            expect {
+              client.certificate(url: finalized_order.certificate_url, force_chain: 'foobar')
+            }.to raise_error(Acme::Client::Error::ForcedChainNotFound)
+          end
+        end
+
+        context 'with alternates link' do
+          it 'download a certificate with a preferred match', vcr: { cassette_name: 'certificate_download_with_alternative' } do
+            serve_once(challenge.file_content) do
+              client.request_challenge_validation(url: challenge.url)
+            end
+
+            order = client.finalize(url: finalize_url, csr: csr)
+            finalized_order = client.order(url: order.url)
+            certificate = client.certificate(url: finalized_order.certificate_url, force_chain: 'Pebble Root CA 769220')
+
+            expect { OpenSSL::X509::Certificate.new(certificate) }.not_to raise_error
+            expect(OpenSSL::X509::Certificate.new(certificate).issuer.to_s).to eq('/CN=Pebble Intermediate CA 7c13ed')
+          end
+
+          it 'download a certificate and fail preferred match', vcr: { cassette_name: 'certificate_download_with_alternative' } do
+            serve_once(challenge.file_content) do
+              client.request_challenge_validation(url: challenge.url)
+            end
+
+            order = client.finalize(url: finalize_url, csr: csr)
+            finalized_order = client.order(url: order.url)
+            expect {
+              client.certificate(url: finalized_order.certificate_url, force_chain: 'foobar')
+            }.to raise_error(Acme::Client::Error::ForcedChainNotFound)
+          end
+        end
       end
     end
 

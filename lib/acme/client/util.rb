@@ -5,6 +5,17 @@ module Acme::Client::Util
     Base64.urlsafe_encode64(data).sub(/[\s=]*\z/, '')
   end
 
+  LINK_MATCH = /<(.*?)>\s?;\s?rel="([\w-]+)"/
+
+  # See RFC 8288 - https://tools.ietf.org/html/rfc8288#section-3
+  def decode_link_headers(link_header)
+    link_header.split(',').each_with_object({}) { |entry, hash|
+      _, link, name = *entry.match(LINK_MATCH)
+      hash[name] ||= []
+      hash[name].push(link)
+    }
+  end
+
   # Sets public key on CSR or cert.
   #
   # obj  - An OpenSSL::X509::Certificate or OpenSSL::X509::Request instance.

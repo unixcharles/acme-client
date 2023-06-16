@@ -5,7 +5,7 @@ class Acme::Client::Resources::Order
 
   def initialize(client, **arguments)
     @client = client
-    assign_attributes(arguments)
+    assign_attributes(**arguments)
   end
 
   def reload
@@ -24,9 +24,9 @@ class Acme::Client::Resources::Order
     true
   end
 
-  def certificate
+  def certificate(force_chain: nil)
     if certificate_url
-      @client.certificate(url: certificate_url)
+      @client.certificate(url: certificate_url, force_chain: force_chain)
     else
       raise Acme::Client::Error::CertificateNotReady, 'No certificate_url to collect the order'
     end

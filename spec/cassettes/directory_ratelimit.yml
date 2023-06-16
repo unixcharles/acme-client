@@ -1,0 +1,35 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: "<DIRECTORY_URL>"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 10 Oct 2019 03:08:14 GMT
+      Content-Length:
+      - '212'
+    body:
+      encoding: UTF-8
+      string: |-
+        {"type": "urn:ietf:params:acme:error:rateLimited", "detail": "Your IP, 156.38.202.48, has been blocked due to extremely high traffic. Once corrected, request a review by emailing unblock-request@letsencrypt.org"}
+    http_version: 
+  recorded_at: Thu, 10 Oct 2019 03:08:14 GMT
+recorded_with: VCR 2.9.3

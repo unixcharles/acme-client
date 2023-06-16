@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'faraday'
+require 'faraday/retry'
 require 'json'
 require 'openssl'
 require 'digest'
@@ -20,6 +21,7 @@ require 'acme/client/resources'
 require 'acme/client/jwk'
 require 'acme/client/error'
 require 'acme/client/util'
+require 'acme/client/chain_identifier'
 
 class Acme::Client
   DEFAULT_DIRECTORY = 'http://127.0.0.1:4000/directory'.freeze
@@ -48,7 +50,8 @@ class Acme::Client
 
   attr_reader :jwk, :nonces
 
-  def new_account(contact:, terms_of_service_agreed: nil)
+  def new_account(contact:, terms_of_service_agreed: nil, external_account_binding: nil)
+    new_account_endpoint = endpoint_for(:new_account)
     payload = {
       contact: Array(contact)
     }
@@ -57,7 +60,18 @@ class Acme::Client
       payload[:termsOfServiceAgreed] = terms_of_service_agreed
     end
 
-    response = post(endpoint_for(:new_account), payload: payload, mode: :jws)
+    if external_account_binding
+      kid, hmac_key = external_account_binding.values_at(:kid, :hmac_key)
+      if kid.nil? || hmac_key.nil?
+        raise ArgumentError, 'must specify kid and hmac_key key for external_account_binding'
+      end
+
+      hmac = Acme::Client::JWK::HMAC.new(Base64.urlsafe_decode64(hmac_key))
+      external_account_payload = hmac.jws(header: { kid: kid, url: new_account_endpoint }, payload: @jwk)
+      payload[:externalAccountBinding] = JSON.parse(external_account_payload)
+    end
+
+    response = post(new_account_endpoint, payload: payload, mode: :jws)
     @kid = response.headers.fetch(:location)
 
     if response.body.nil? || response.body.empty?
@@ -81,6 +95,28 @@ class Acme::Client
   def account_deactivate
     response = post(kid, payload: { status: 'deactivated' })
     arguments = attributes_from_account_response(response)
+    Acme::Client::Resources::Account.new(self, url: kid, **arguments)
+  end
+
+  def account_key_change(new_private_key: nil, new_jwk: nil)
+    if new_private_key.nil? && new_jwk.nil?
+      raise ArgumentError, 'must specify new_jwk or new_private_key'
+    end
+    old_jwk = jwk
+    new_jwk ||= Acme::Client::JWK.from_private_key(new_private_key)
+
+    inner_payload_header = {
+      url: endpoint_for(:key_change)
+    }
+    inner_payload = {
+      account: kid,
+      oldKey: old_jwk.to_h
+    }
+    payload = JSON.parse(new_jwk.jws(header: inner_payload_header, payload: inner_payload))
+
+    response = post(endpoint_for(:key_change), payload: payload, mode: :kid)
+    arguments = attributes_from_account_response(response)
+    @jwk = new_jwk
     Acme::Client::Resources::Account.new(self, url: kid, **arguments)
   end
 
@@ -127,9 +163,24 @@ class Acme::Client
     Acme::Client::Resources::Order.new(self, **arguments)
   end
 
-  def certificate(url:)
+  def certificate(url:, force_chain: nil)
     response = download(url, format: :pem)
-    response.body
+    pem = response.body
+
+    return pem if force_chain.nil?
+
+    return pem if ChainIdentifier.new(pem).match_name?(force_chain)
+
+    alternative_urls = Array(response.headers.dig('link', 'alternate'))
+    alternative_urls.each do |alternate_url|
+      response = download(alternate_url, format: :pem)
+      pem = response.body
+      if ChainIdentifier.new(pem).match_name?(force_chain)
+        return pem
+      end
+    end
+
+    raise Acme::Client::Error::ForcedChainNotFound, "Could not find any matching chain for `#{force_chain}`"
   end
 
   def authorization(url:)
@@ -285,7 +336,7 @@ class Acme::Client
     @connections ||= {}
     @connections[mode] ||= {}
     @connections[mode][endpoint] ||= Acme::Client::HTTPClient.new_acme_connection(
-      endpoint: URI(endpoint), mode: mode, client: self, options: @connection_options, bad_nonce_retry: @bad_nonce_retry
+      url: URI(endpoint), mode: mode, client: self, options: @connection_options, bad_nonce_retry: @bad_nonce_retry
     )
   end
 

@@ -4,7 +4,6 @@ $LOAD_PATH.unshift File.join(__dir__, 'support')
 require 'openssl'
 
 DIRECTORY_URL = ENV['ACME_DIRECTORY_URL'] || 'https://127.0.0.1/directory'
-OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 require 'acme/client'
 
@@ -18,9 +17,6 @@ require 'retry_helper'
 require 'ssl_helper'
 require 'tls_helper'
 require 'profile_helper' if ENV['RUBY_PROF']
-
-# pebble use self-signed certificate
-OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 RSpec.configure do |c|
   c.include Asn1Helper

@@ -1,3 +1,41 @@
+## `2.0.13`
+
+* Add support for External Account Binding
+
+## `2.0.12`
+
+* Update test matrix to current Ruby versions (2.7 to 3.2)
+* Support for Faraday retry 2.x
+
+## `2.0.11`
+
+* Add support for error code `AlreadyRevoked` and `BadPublicKey`
+
+## `2.0.10`
+
+* Support for Faraday 1.0 / 2.0
+
+## `2.0.9`
+
+* Support for Ruby 3.0 and Faraday 0.17.x
+* Raise when directory is rate limited
+
+## `2.0.8`
+
+* Add support for the keyChange endpoint
+
+https://tools.ietf.org/html/rfc8555#section-7.3.5
+
+
+## `2.0.7`
+
+* Add support for alternate certificate chain
+* Change `Link` headers parsing to return array of value. This add support multiple entries at the same `rel`
+
+## `2.0.6`
+
+* Allow Faraday up to `< 2.0`
+
 ## `2.0.5`
 
 * Use post-as-get

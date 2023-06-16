@@ -7,10 +7,13 @@ class Acme::Client::Error < StandardError
   class UnsupportedChallengeType < ClientError; end
   class NotFound < ClientError; end
   class CertificateNotReady < ClientError; end
+  class ForcedChainNotFound < ClientError; end
 
   class ServerError < Acme::Client::Error; end
+  class AlreadyRevoked < ServerError; end
   class BadCSR < ServerError; end
   class BadNonce < ServerError; end
+  class BadPublicKey < ServerError; end
   class BadSignatureAlgorithm < ServerError; end
   class InvalidContact < ServerError; end
   class UnsupportedContact < ServerError; end
@@ -31,8 +34,10 @@ class Acme::Client::Error < StandardError
   class IncorrectResponse < ServerError; end
 
   ACME_ERRORS = {
+    'urn:ietf:params:acme:error:alreadyRevoked' => AlreadyRevoked,
     'urn:ietf:params:acme:error:badCSR' => BadCSR,
     'urn:ietf:params:acme:error:badNonce' => BadNonce,
+    'urn:ietf:params:acme:error:badPublicKey' => BadPublicKey,
     'urn:ietf:params:acme:error:badSignatureAlgorithm' => BadSignatureAlgorithm,
     'urn:ietf:params:acme:error:invalidContact' => InvalidContact,
     'urn:ietf:params:acme:error:unsupportedContact' => UnsupportedContact,

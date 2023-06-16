@@ -20,14 +20,14 @@ module Acme::Client::HTTPClient
 
   # Creates and returns a new HTTP client designed for the Acme-protocol, with default settings.
   #
-  # @param  endpoint [URI:HTTPS]
+  # @param  url [URI:HTTPS]
   # @param  client [Acme::Client]
   # @param  mode [Symbol]
   # @param  options [Hash]
   # @param  bad_nonce_retry [Integer]
   # @return [Faraday::Connection]
-  def self.new_acme_connection(endpoint:, client:, mode:, options: {}, bad_nonce_retry: 0)
-    new_connection(url: endpoint, options: options) do |configuration|
+  def self.new_acme_connection(url:, client:, mode:, options: {}, bad_nonce_retry: 0)
+    new_connection(url: url, options: options) do |configuration|
       configuration.use Acme::Client::HTTPClient::AcmeMiddleware, client: client, mode: mode
 
       if bad_nonce_retry > 0
@@ -62,16 +62,13 @@ module Acme::Client::HTTPClient
     attr_reader :env, :response, :client
 
     CONTENT_TYPE = 'application/jose+json'
-    LINK_MATCH = /<(.*?)>;rel="([\w-]+)"/
 
-
-    def initialize(app, client:, mode:)
+    def initialize(app, options)
       super(app)
-      @client = client
-      @mode = mode
+      @client = options.fetch(:client)
+      @mode = options.fetch(:mode)
     end
 
-    # Implements the Rack-alike Faraday::Middleware interface.
     def call(env)
       @env = env
       @env[:request_headers]['Content-Type'] = CONTENT_TYPE
@@ -145,13 +142,7 @@ module Acme::Client::HTTPClient
     def decode_link_headers
       return unless env.response_headers.key?('Link')
       link_header = env.response_headers['Link']
-
-      links = link_header.split(', ').map { |entry|
-        _, link, name = *entry.match(LINK_MATCH)
-        [name, link]
-      }
-
-      Hash[*links.flatten]
+      Acme::Client::Util.decode_link_headers(link_header)
     end
 
     def store_nonce

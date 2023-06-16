@@ -68,8 +68,8 @@ class Acme::Client::Resources::Directory
   end
 
   def fetch_directory
-    http_client = Acme::Client::HTTPClient.new_connection(url: @directory, options: @connection_options)
+    http_client = Acme::Client::HTTPClient.new_acme_connection(url: @directory, options: @connection_options, client: nil, mode: nil)
     response = http_client.get(@url)
-    JSON.parse(response.body)
+    response.body
   end
 end
