@@ -30,7 +30,8 @@ describe Acme::Client do
       }.to raise_error(Acme::Client::Error::BadNonce)
     end
 
-    it 'retry on bad nonce with bad_nonce_retry option', vcr: { cassette_name: 'nonce_retry' }, pending: "Is NONCE required for new_account?" do
+    it 'retry on bad nonce with bad_nonce_retry option', vcr: { cassette_name: 'nonce_retry' } do
+      pending 'Is NONCE required for new_account?'
       client = Acme::Client.new(private_key: private_key, bad_nonce_retry: 10, directory: DIRECTORY_URL)
       client.nonces << 'invalid_nonce'
       client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
