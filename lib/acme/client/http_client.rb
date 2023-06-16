@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Acme::Client::HTTPClient
-
   # Creates and returns a new HTTP client, with default settings.
   #
   # @param  url [URI:HTTPS]
@@ -41,20 +40,16 @@ module Acme::Client::HTTPClient
     end
   end
 
-
   # ErrorMiddleware ensures the HTTP Client would not raise exceptions outside the Acme namespace.
   #
   # Exceptions are rescued and re-packaged as Acme exceptions.
   class ErrorMiddleware < Faraday::Middleware
-
     # Implements the Rack-alike Faraday::Middleware interface.
     def call(env)
       @app.call(env)
-
     rescue Faraday::TimeoutError, Faraday::ConnectionFailed
       raise Acme::Client::Error::Timeout
     end
-
   end
 
   # AcmeMiddleware implements the Acme-protocol requirements for JWK requests.
