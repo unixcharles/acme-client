@@ -223,7 +223,7 @@ class Acme::Client
   end
 
   def get_nonce
-    http_client = Acme::Client::HTTPClient.new_connection(url: endpoint_for(:new_nonce))
+    http_client = Acme::Client::HTTPClient.new_connection(url: endpoint_for(:new_nonce), options: @connection_options)
     response = http_client.head(nil, nil)
     nonces << response.headers['replay-nonce']
     true
