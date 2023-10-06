@@ -1,3 +1,8 @@
+## `2.0.15`
+
+* Also pass connection_options to Faraday for Client#get_nonce
+
+
 ## `2.0.14`
 
 * Fix Faraday HTTP exceptions leaking out, always raise `Acme::Client::Error` instead
