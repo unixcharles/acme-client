@@ -246,7 +246,7 @@ client.account_key_change(new_private_key: new_private_key)
 
 ## Requirements
 
-Ruby >= 2.1
+Ruby >= 3.0
 
 ## Development
 
