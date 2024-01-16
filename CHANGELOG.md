@@ -1,3 +1,8 @@
+## `2.0.16`
+
+* Refactor Directory
+* Fix an issue where the client would crash when ACME provider return nonce for directory endpoint
+
 ## `2.0.15`
 
 * Also pass connection_options to Faraday for Client#get_nonce
