@@ -44,7 +44,7 @@ class Acme::Client
 
     @kid, @connection_options = kid, connection_options
     @bad_nonce_retry = bad_nonce_retry
-    @directory = Acme::Client::Resources::Directory.new(URI(directory), @connection_options)
+    @directory_url = URI(directory)
     @nonces ||= []
   end
 
@@ -229,27 +229,43 @@ class Acme::Client
     true
   end
 
+  def directory
+    @directory ||= load_directory
+  end
+
   def meta
-    @directory.meta
+    directory.meta
   end
 
   def terms_of_service
-    @directory.terms_of_service
+    directory.terms_of_service
   end
 
   def website
-    @directory.website
+    directory.website
   end
 
   def caa_identities
-    @directory.caa_identities
+    directory.caa_identities
   end
 
   def external_account_required
-    @directory.external_account_required
+    directory.external_account_required
   end
 
   private
+
+  def load_directory
+    Acme::Client::Resources::Directory.new(self, directory: fetch_directory)
+  end
+
+  def fetch_directory
+    response = get(@directory_url)
+    response.body
+  rescue JSON::ParserError => exception
+    raise Acme::Client::Error::InvalidDirectory,
+      "Invalid directory url\n#{@directory_url} did not return a valid directory\n#{exception.inspect}"
+  end
 
   def prepare_order_identifiers(identifiers)
     if identifiers.is_a?(Hash)
@@ -351,6 +367,6 @@ class Acme::Client
   end
 
   def endpoint_for(key)
-    @directory.endpoint_for(key)
+    directory.endpoint_for(key)
   end
 end

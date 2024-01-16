@@ -17,12 +17,13 @@ class Acme::Client::Resources::Directory
     external_account_required: 'externalAccountRequired'
   }
 
-  def initialize(url, connection_options)
-    @url, @connection_options = url, connection_options
+  def initialize(client, **arguments)
+    @client = client
+    assign_attributes(**arguments)
   end
 
   def endpoint_for(key)
-    directory.fetch(key) do |missing_key|
+    @directory.fetch(key) do |missing_key|
       raise Acme::Client::Error::UnsupportedOperation,
         "Directory at #{@url} does not include `#{missing_key}`"
     end
@@ -45,31 +46,16 @@ class Acme::Client::Resources::Directory
   end
 
   def meta
-    directory[:meta]
+    @directory[:meta]
   end
 
   private
 
-  def directory
-    @directory ||= load_directory
-  end
-
-  def load_directory
-    body = fetch_directory
-    result = {}
-    result[:meta] = body.delete('meta')
+  def assign_attributes(directory:)
+    @directory = {}
+    @directory[:meta] = directory.delete('meta')
     DIRECTORY_RESOURCES.each do |key, entry|
-      result[key] = URI(body[entry]) if body[entry]
+      @directory[key] = URI(directory[entry]) if directory[entry]
     end
-    result
-  rescue JSON::ParserError => exception
-    raise Acme::Client::Error::InvalidDirectory,
-      "Invalid directory url\n#{@directory} did not return a valid directory\n#{exception.inspect}"
-  end
-
-  def fetch_directory
-    http_client = Acme::Client::HTTPClient.new_acme_connection(url: @directory, options: @connection_options, client: nil, mode: nil)
-    response = http_client.get(@url)
-    response.body
   end
 end
