@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'acme-client'
+
+require File.join(File.dirname(__FILE__), '../spec/support/ssl_helper')
+
+
+SSLHelper::KEYSTASH.generate_keystash!(size: 200)

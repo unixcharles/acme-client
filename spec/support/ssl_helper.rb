@@ -5,17 +5,24 @@ module SSLHelper
     KEYSTASH_PATH = File.join(__dir__, '../fixtures/keystash.yml')
 
     def initialize
-      @keystash = load
+      @keystash = load.shuffle
       @iter = @keystash.each
     end
 
     def next
       @iter.next
     rescue StopIteration
-      @keystash << generate_key
-      save
-      @keystash.last
+      raise "Reached the end of the keystash. #{@keystash.size} key is too small. Regenerate with ./bin/generate_keystash."
     end
+
+    def generate_keystash!(size:)
+      @keystash = []
+      size.times { @keystash << generate_key }
+      save
+      true
+    end
+
+    private
 
     def generate_key
       case (rand * 4).to_i
@@ -36,8 +43,6 @@ module SSLHelper
       k = OpenSSL::PKey::EC.generate(curve)
       Acme::Client::CertificateRequest::ECKeyPatch.new(k)
     end
-
-    private
 
     def load
       if File.exist?(KEYSTASH_PATH)
