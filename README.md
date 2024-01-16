@@ -1,12 +1,10 @@
 # Acme::Client
 
-`acme-client` is a client implementation of the ACMEv2 / [RFC 8555](https://tools.ietf.org/html/rfc8555) protocol in Ruby.
+`acme-client` is a client implementation of the ACME / [RFC 8555](https://tools.ietf.org/html/rfc8555) protocol in Ruby.
 
 You can find the ACME reference implementations of the [server](https://github.com/letsencrypt/boulder) in Go and the [client](https://github.com/certbot/certbot) in Python.
 
 ACME is part of the [Letsencrypt](https://letsencrypt.org/) project, which goal is to provide free SSL/TLS certificates with automation of the acquiring and renewal process.
-
-You can find ACMEv1 compatible client in the [acme-v1](https://github.com/unixcharles/acme-client/tree/acme-v1) branch.
 
 ## Installation
 
@@ -207,8 +205,7 @@ order.certificate # => PEM-formatted certificate
 
 ### Ordering an alternative certificate
 
-Let's Encrypt is [transitioning](https://letsencrypt.org/2019/04/15/transitioning-to-isrg-root.html) to use a new intermediate certificate. Starting January 11, 2021 new certificates will be signed by their own intermediate. To ease the transition on clients Let's Encrypt will continue signing an alternative version of the certificate using the old, cross-signed intermediate until September 29, 2021. In order to utilize an alternative certificate the `Order#certificate` method accepts a `force_chain` keyword argument, which takes the issuer name of the intermediate certificate.
-For example, to download the cross-signed certificate after January 11, 2021, call `Order#certificate` as follows:
+The provider may provide alternate certificate with different certificate chain. You can specify the required chain and the client will automatically download alternate certificate and match the chain by name.
 
 ```ruby
 begin
