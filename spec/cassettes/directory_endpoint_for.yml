@@ -8,7 +8,9 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.15 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -23,15 +25,16 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 10 Oct 2019 03:08:14 GMT
+      - Tue, 16 Jan 2024 18:10:15 GMT
       Content-Length:
-      - '386'
+      - '396'
     body:
       encoding: UTF-8
       string: |-
         {
            "keyChange": "<DIRECTORY_BASE_URL>/rollover-account-key",
            "meta": {
+              "externalAccountRequired": false,
               "termsOfService": "data:text/plain,Do%20what%20thou%20wilt"
            },
            "newAccount": "<DIRECTORY_BASE_URL>/sign-me-up",
@@ -39,6 +42,89 @@ http_interactions:
            "newOrder": "<DIRECTORY_BASE_URL>/order-plz",
            "revokeCert": "<DIRECTORY_BASE_URL>/revoke-cert"
         }
-    http_version: 
-  recorded_at: Thu, 10 Oct 2019 03:08:14 GMT
+    http_version:
+  recorded_at: Tue, 16 Jan 2024 18:10:15 GMT
+- request:
+    method: head
+    uri: "<DIRECTORY_BASE_URL>/nonce-plz"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.15 (https://github.com/unixcharles/acme-client)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Replay-Nonce:
+      - DXS4nYJl18Pid0N5tjRffw
+      Date:
+      - Tue, 16 Jan 2024 18:10:15 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Tue, 16 Jan 2024 18:10:15 GMT
+- request:
+    method: post
+    uri: "<DIRECTORY_BASE_URL>/sign-me-up"
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzM4NCIsIm5vbmNlIjoiRFhTNG5ZSmwxOFBpZDBONXRqUmZmdyIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImNydiI6IlAtMzg0Iiwia3R5IjoiRUMiLCJ4IjoiMm5NOHg0aVR4UElLcUZqR01jX3RiY2QxOW1QT1pydld1S3ZpYlU3MGsxWlZwaU9LQ2p2c3N3Yl9OT0JNX29lYiIsInkiOiJHaHFaN3d2dXhRb05VRThJclBkVF9qVkVOQmJqRThjWVBjYnIwMkdrTk0tSHNhanNJWGRrNTYyNXZsNVpVdkhNIn19","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"_Ct6M9duFtXOxtZDWLwrxcVv49z3l2JJCDFGuQQ1HyUvbnBfoVPNuLssJEQ3bXz_Dh-F-W32DTPaOoPAvlIwWOV-WuHZEYuw1DeR8GwGS68cC-xbU2Fbs1c5Fu5bHhU-"}'
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.15 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Link:
+      - <<DIRECTORY_URL>>;rel="index"
+      Location:
+      - "<DIRECTORY_BASE_URL>/my-account/3011c37ad722d86"
+      Replay-Nonce:
+      - "-0Wz_OugGSEpZJRBPs8X2g"
+      Date:
+      - Tue, 16 Jan 2024 18:10:15 GMT
+      Content-Length:
+      - '360'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+           "status": "valid",
+           "contact": [
+              "mailto:info@example.com"
+           ],
+           "orders": "<DIRECTORY_BASE_URL>/list-orderz/3011c37ad722d86",
+           "key": {
+              "kty": "EC",
+              "crv": "P-384",
+              "x": "2nM8x4iTxPIKqFjGMc_tbcd19mPOZrvWuKvibU70k1ZVpiOKCjvsswb_NOBM_oeb",
+              "y": "GhqZ7wvuxQoNUE8IrPdT_jVENBbjE8cYPcbr02GkNM-HsajsIXdk5625vl5ZUvHM"
+           }
+        }
+    http_version:
+  recorded_at: Tue, 16 Jan 2024 18:10:15 GMT
 recorded_with: VCR 2.9.3
