@@ -356,16 +356,6 @@ class Acme::Client
     )
   end
 
-  def fetch_chain(response, limit = 10)
-    links = response.headers['link']
-    if limit.zero? || links.nil? || links['up'].nil?
-      []
-    else
-      issuer = get(links['up'])
-      [OpenSSL::X509::Certificate.new(issuer.body), *fetch_chain(issuer, limit - 1)]
-    end
-  end
-
   def endpoint_for(key)
     directory.endpoint_for(key)
   end
