@@ -1,3 +1,7 @@
+## `2.0.17`
+
+* Fix bug where depending on call order `jws` get generated with the wrong `kid`
+
 ## `2.0.16`
 
 * Refactor Directory
