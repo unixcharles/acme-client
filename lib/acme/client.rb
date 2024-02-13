@@ -332,7 +332,7 @@ class Acme::Client
     connection.post(url, nil)
   end
 
-  def get(url, mode: :kid)
+  def get(url, mode: :get)
     connection = connection_for(url: url, mode: mode)
     connection.get(url)
   end
