@@ -1,3 +1,7 @@
+## `2.0.18`
+
+* Fix an issue public key encoding. `OpenSSL::BN` cause keys with leading zero to fail.
+
 ## `2.0.17`
 
 * Fix bug where depending on call order `jws` get generated with the wrong `kid`
