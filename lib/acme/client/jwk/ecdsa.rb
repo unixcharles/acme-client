@@ -50,8 +50,8 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
     {
       crv: @curve_params[:jwa_crv],
       kty: 'EC',
-      x: Acme::Client::Util.urlsafe_base64(coordinates[:x].to_s(2)),
-      y: Acme::Client::Util.urlsafe_base64(coordinates[:y].to_s(2))
+      x: Acme::Client::Util.urlsafe_base64(coordinates[:x]),
+      y: Acme::Client::Util.urlsafe_base64(coordinates[:y])
     }
   end
 
@@ -92,8 +92,8 @@ class Acme::Client::JWK::ECDSA < Acme::Client::JWK::Base
       hex_y = hex[2 + data_len / 2, data_len / 2]
 
       {
-        x: OpenSSL::BN.new([hex_x].pack('H*'), 2),
-        y: OpenSSL::BN.new([hex_y].pack('H*'), 2)
+        x: [hex_x].pack('H*'),
+        y: [hex_y].pack('H*')
       }
     end
   end

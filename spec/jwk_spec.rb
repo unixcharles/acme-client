@@ -99,6 +99,25 @@ describe Acme::Client::JWK do
         expect(payload).to include('some' => 'data')
       end
     end
+
+    describe 'key with leading zero bytes in the encoded public key x' do
+      let(:private_key) {
+        loop do
+          key = OpenSSL::PKey::EC.generate('prime256v1')
+          break key if key.public_key.to_bn.to_s(16)[2..3] == '00'
+        end
+      }
+
+      it 'can be encoded correctly' do
+        jws_s = subject.jws(header: { 'a-header' => 'header-value' }, payload: { 'some' => 'data' })
+        jws = JSON.parse(jws_s)
+
+        b64_point_x = JSON.parse(Base64.urlsafe_decode64(jws['protected']))['jwk']['x']
+        hex_point_x = Base64.urlsafe_decode64(b64_point_x).unpack('H*').first
+
+        expect(hex_point_x[0..1]).to eq('00')
+      end
+    end
   end
 
   def generate_key(klass)
