@@ -145,4 +145,10 @@ describe Acme::Client::CertificateRequest do
 
     expect(request.csr.verify(ec_key)).to be(true)
   end
+
+  it 'generate the request with version zero' do
+    request = Acme::Client::CertificateRequest.new(common_name: 'example.org', private_key: test_key)
+
+    expect(request.csr.version).to be_zero
+  end
 end

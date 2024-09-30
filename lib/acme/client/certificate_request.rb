@@ -89,7 +89,7 @@ class Acme::Client::CertificateRequest
       end
       csr.public_key = @private_key
       csr.subject = generate_subject
-      csr.version = 2
+      csr.version = 0
       add_extension(csr)
       csr.sign @private_key, @digest
     end
