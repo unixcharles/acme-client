@@ -1,3 +1,7 @@
+## `2.0.19`
+
+* Fix an issue CSR generation. Version should be set to zero according to the spec. It's causing issue with some ACME server implementation.
+
 ## `2.0.18`
 
 * Fix an issue public key encoding. `OpenSSL::BN` cause keys with leading zero to fail.
