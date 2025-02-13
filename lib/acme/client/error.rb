@@ -8,6 +8,7 @@ class Acme::Client::Error < StandardError
   class NotFound < ClientError; end
   class CertificateNotReady < ClientError; end
   class ForcedChainNotFound < ClientError; end
+  class OrderNotReady < ClientError; end
 
   class ServerError < Acme::Client::Error; end
   class AlreadyRevoked < ServerError; end
@@ -44,6 +45,7 @@ class Acme::Client::Error < StandardError
     'urn:ietf:params:acme:error:externalAccountRequired' => ExternalAccountRequired,
     'urn:ietf:params:acme:error:accountDoesNotExist' => AccountDoesNotExist,
     'urn:ietf:params:acme:error:malformed' => Malformed,
+    'urn:ietf:params:acme:error:orderNotReady' => OrderNotReady,
     'urn:ietf:params:acme:error:rateLimited' => RateLimited,
     'urn:ietf:params:acme:error:rejectedIdentifier' => RejectedIdentifier,
     'urn:ietf:params:acme:error:serverInternal' => ServerInternal,
