@@ -1,3 +1,7 @@
+## `2.0.20`
+
+* Add OrderNotReady exception
+
 ## `2.0.19`
 
 * Fix an issue CSR generation. Version should be set to zero according to the spec. It's causing issue with some ACME server implementation.
