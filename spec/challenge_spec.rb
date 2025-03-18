@@ -18,6 +18,7 @@ describe Acme::Client::Resources::Challenges do
     it 'reload reload the challenge' do
       expect { http01.reload }.not_to raise_error
       expect(http01.url).not_to be_nil
+      expect(http01.validated).to be_nil
     end
   end
 
@@ -43,6 +44,7 @@ describe Acme::Client::Resources::Challenges do
         }.to_not raise_error
 
         expect(http01.status).to eq('valid')
+        expect(http01.validated).not_to be_nil
       end
     end
 
@@ -60,6 +62,7 @@ describe Acme::Client::Resources::Challenges do
 
         expect(http01.status).to eq('invalid')
         expect(http01.error).to_not be_empty
+        expect(http01.validated).not_to be_nil
       end
     end
   end
