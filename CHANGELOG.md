@@ -1,3 +1,7 @@
+## `2.0.21`
+
+* Add validated attribute to challenges
+
 ## `2.0.20`
 
 * Add OrderNotReady exception
