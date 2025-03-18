@@ -310,7 +310,7 @@ class Acme::Client
   end
 
   def attributes_from_challenge_response(response)
-    extract_attributes(response.body, :status, :url, :token, :type, :error)
+    extract_attributes(response.body, :status, :url, :token, :type, :error, :validated)
   end
 
   def extract_attributes(input, *attributes)
