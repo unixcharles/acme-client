@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock', '~> 3.8'
   spec.add_development_dependency 'webrick', '~> 1.7'
 
-  spec.add_runtime_dependency 'base64', '~> 0.2.0'
+  spec.add_runtime_dependency 'base64', '~> 0.2'
   spec.add_runtime_dependency 'faraday', '>= 1.0', '< 3.0.0'
   spec.add_runtime_dependency 'faraday-retry', '>= 1.0', '< 3.0.0'
 end
