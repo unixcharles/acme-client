@@ -1,3 +1,7 @@
+## `2.0.22`
+
+* Loosen base64 dependency constraint
+
 ## `2.0.21`
 
 * Add validated attribute to challenges
