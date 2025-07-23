@@ -46,7 +46,7 @@ class Acme::Client::Resources::Order
 
   private
 
-  def assign_attributes(url:, status:, expires:, finalize_url:, authorization_urls:, identifiers:, certificate_url: nil)
+  def assign_attributes(url: nil, status:, expires:, finalize_url:, authorization_urls:, identifiers:, certificate_url: nil)
     @url = url
     @status = status
     @expires = expires
