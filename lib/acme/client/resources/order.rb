@@ -9,6 +9,10 @@ class Acme::Client::Resources::Order
   end
 
   def reload
+    if url.nil?
+      raise Acme::Client::Error::OrderNotReloadable, 'Finalized orders are not reloadable for this CA'
+    end
+
     assign_attributes(**@client.order(url: url).to_h)
     true
   end
