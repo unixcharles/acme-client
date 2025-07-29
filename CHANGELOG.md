@@ -1,3 +1,7 @@
+## `2.0.23`
+
+* Allow Order to be create without url. Location is not always required in the specification. 
+
 ## `2.0.22`
 
 * Loosen base64 dependency constraint
