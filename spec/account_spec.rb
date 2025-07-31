@@ -19,6 +19,7 @@ describe Acme::Client::Resources::Account do
   context 'status' do
     it 'send the agreement for the terms', vcr: { cassette_name: 'registration_agree_terms' } do
       expect(account.status).to eq('valid')
+      expect(account.orders_url).to eq('https://127.0.0.1/list-orderz/74')
     end
   end
 
@@ -27,6 +28,7 @@ describe Acme::Client::Resources::Account do
       expect(account.contact).to eq(['mailto:info@example.com'])
       account.update(contact: 'mailto:updated@example.com')
       expect(account.contact).to eq(['mailto:updated@example.com'])
+      expect(account.orders_url).to eq('https://127.0.0.1/list-orderz/75')
     end
   end
 
@@ -35,6 +37,7 @@ describe Acme::Client::Resources::Account do
       expect(account.status).to eq('valid')
       account.deactivate
       expect(account.status).to eq('deactivated')
+      expect(account.orders_url).to eq('https://127.0.0.1/list-orderz/77')
     end
   end
 
@@ -42,6 +45,7 @@ describe Acme::Client::Resources::Account do
     it 'reload the account' do
       expect { account.reload }.not_to raise_error
       expect(account.url).not_to be_nil
+      expect(account.orders_url).to eq('https://127.0.0.1/list-orderz/76')
     end
   end
 end
