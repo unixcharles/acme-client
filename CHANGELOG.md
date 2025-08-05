@@ -1,3 +1,7 @@
+## `2.0.24`
+
+* Add support for account orders url attribute.
+
 ## `2.0.23`
 
 * Allow Order to be create without url. Location is not always required in the specification. 
