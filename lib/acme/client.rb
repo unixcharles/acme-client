@@ -286,6 +286,7 @@ class Acme::Client
       response.body,
       :status,
       [:term_of_service, 'termsOfServiceAgreed'],
+      :orders,
       :contact
     )
   end

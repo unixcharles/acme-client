@@ -34,16 +34,18 @@ class Acme::Client::Resources::Account
       url: url,
       term_of_service: term_of_service,
       status: status,
-      contact: contact
+      contact: contact,
+      orders: orders_url
     }
   end
 
   private
 
-  def assign_attributes(url:, term_of_service:, status:, contact:)
+  def assign_attributes(url:, term_of_service:, status:, contact:, orders: nil)
     @url = url
     @term_of_service = term_of_service
     @status = status
     @contact = Array(contact)
+    @orders_url = orders
   end
 end
