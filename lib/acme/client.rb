@@ -135,11 +135,12 @@ class Acme::Client
     @kid ||= account.kid
   end
 
-  def new_order(identifiers:, not_before: nil, not_after: nil)
+  def new_order(identifiers:, not_before: nil, not_after: nil, profile: nil)
     payload = {}
     payload['identifiers'] = prepare_order_identifiers(identifiers)
     payload['notBefore'] = not_before if not_before
     payload['notAfter'] = not_after if not_after
+    payload['profile'] = profile if profile
 
     response = post(endpoint_for(:new_order), payload: payload)
     arguments = attributes_from_order_response(response)
@@ -253,6 +254,10 @@ class Acme::Client
     directory.external_account_required
   end
 
+  def profiles
+    directory.profiles
+  end
+
   private
 
   def load_directory
@@ -299,7 +304,8 @@ class Acme::Client
       [:finalize_url, 'finalize'],
       [:authorization_urls, 'authorizations'],
       [:certificate_url, 'certificate'],
-      :identifiers
+      :identifiers,
+      :profile
     )
 
     attributes[:url] = response.headers[:location] if response.headers[:location]

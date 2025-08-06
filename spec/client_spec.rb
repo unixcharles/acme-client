@@ -11,7 +11,7 @@ describe Acme::Client do
   let(:unregistered_client) { Acme::Client.new(private_key: private_key, directory: DIRECTORY_URL) }
   let(:client) do
     client = Acme::Client.new(private_key: private_key, directory: DIRECTORY_URL)
-    client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
+    client.new_account(contact: "mailto:info@#{EXAMPLE_DOMAIN}", terms_of_service_agreed: true)
     client
   end
 
@@ -50,6 +50,7 @@ describe Acme::Client do
     it { expect(client.meta).to be_a(Hash) }
     it { expect(client.terms_of_service).to be_a(String) }
     it { expect(client.external_account_required).to be_nil }
+    it { expect(client.profiles).to be_a_kind_of(Hash) }
   end
 
   context 'account operation' do

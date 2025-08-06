@@ -4,18 +4,28 @@ describe Acme::Client::Resources::Order do
   let(:private_key) { generate_private_key }
   let(:unregistered_client) do
     client = Acme::Client.new(private_key: private_key, directory: DIRECTORY_URL)
-    client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
+    client.new_account(contact: "mailto:info@#{EXAMPLE_DOMAIN}", terms_of_service_agreed: true)
     client
   end
 
   let(:client) do
     client = Acme::Client.new(private_key: private_key, directory: DIRECTORY_URL)
-    client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
+    client.new_account(contact: "mailto:info@#{EXAMPLE_DOMAIN}", terms_of_service_agreed: true)
     client
   end
 
   let(:order) do
     client.new_order(identifiers: [{ type: 'dns', value: 'example.com' }])
+  end
+
+  context 'profile' do
+    let(:order) do
+      client.new_order(identifiers: [{ type: 'dns', value: EXAMPLE_DOMAIN }], profile: 'shortlived')
+    end
+
+    it 'call client open with a profile', vcr: { cassette_name: 'order_profile' } do
+      expect(order.profile).to eq('shortlived')
+    end
   end
 
   context 'status' do

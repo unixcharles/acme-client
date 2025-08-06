@@ -2,8 +2,10 @@ $LOAD_PATH.unshift File.join(__dir__, '../lib')
 $LOAD_PATH.unshift File.join(__dir__, 'support')
 
 require 'openssl'
+require 'securerandom'
 
 DIRECTORY_URL = ENV['ACME_DIRECTORY_URL'] || 'https://127.0.0.1/directory'
+EXAMPLE_DOMAIN = ENV['EXAMPLE_DOMAIN'] || "#{SecureRandom.hex}-example.com"
 
 require 'acme/client'
 
@@ -38,5 +40,8 @@ VCR.configure do |c|
   end
   c.filter_sensitive_data('<DIRECTORY_BASE_URL>') do
     DIRECTORY_URL.gsub(%r[\/[^\/]+$], '')
+  end
+  c.filter_sensitive_data('<EXAMPLE_DOMAIN>') do
+    EXAMPLE_DOMAIN
   end
 end

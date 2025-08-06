@@ -14,7 +14,8 @@ class Acme::Client::Resources::Directory
     terms_of_service: 'termsOfService',
     website: 'website',
     caa_identities: 'caaIdentities',
-    external_account_required: 'externalAccountRequired'
+    external_account_required: 'externalAccountRequired',
+    profiles: 'profiles'
   }
 
   def initialize(client, **arguments)
@@ -43,6 +44,10 @@ class Acme::Client::Resources::Directory
 
   def external_account_required
     meta[DIRECTORY_META[:external_account_required]]
+  end
+
+  def profiles
+    meta[DIRECTORY_META[:profiles]]
   end
 
   def meta
