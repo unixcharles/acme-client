@@ -1,3 +1,7 @@
+## `2.0.25`
+
+* Add support for profiles extension
+
 ## `2.0.24`
 
 * Add support for account orders url attribute.
