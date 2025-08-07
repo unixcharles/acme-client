@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.15 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.24 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -20,39 +20,56 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 07 Aug 2025 00:03:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1069'
+      Connection:
+      - keep-alive
       Cache-Control:
       - public, max-age=0, no-cache
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 16 Jan 2024 18:10:51 GMT
-      Content-Length:
-      - '396'
+      X-Frame-Options:
+      - DENY
+      Strict-Transport-Security:
+      - max-age=604800
     body:
       encoding: UTF-8
       string: |-
         {
-           "keyChange": "<DIRECTORY_BASE_URL>/rollover-account-key",
-           "meta": {
-              "externalAccountRequired": false,
-              "termsOfService": "data:text/plain,Do%20what%20thou%20wilt"
-           },
-           "newAccount": "<DIRECTORY_BASE_URL>/sign-me-up",
-           "newNonce": "<DIRECTORY_BASE_URL>/nonce-plz",
-           "newOrder": "<DIRECTORY_BASE_URL>/order-plz",
-           "revokeCert": "<DIRECTORY_BASE_URL>/revoke-cert"
+          "7G1fvuN7_Ag": "https://community.letsencrypt.org/t/adding-random-entries-to-the-directory/33417",
+          "keyChange": "<DIRECTORY_BASE_URL>/acme/key-change",
+          "meta": {
+            "caaIdentities": [
+              "letsencrypt.org"
+            ],
+            "profiles": {
+              "classic": "https://letsencrypt.org/docs/profiles#classic",
+              "shortlived": "https://letsencrypt.org/docs/profiles#shortlived (not yet generally available)",
+              "tlsserver": "https://letsencrypt.org/docs/profiles#tlsserver"
+            },
+            "termsOfService": "https://letsencrypt.org/documents/LE-SA-v1.5-February-24-2025.pdf",
+            "website": "https://letsencrypt.org/docs/staging-environment/"
+          },
+          "newAccount": "<DIRECTORY_BASE_URL>/acme/new-acct",
+          "newNonce": "<DIRECTORY_BASE_URL>/acme/new-nonce",
+          "newOrder": "<DIRECTORY_BASE_URL>/acme/new-order",
+          "renewalInfo": "<DIRECTORY_BASE_URL>/acme/renewal-info",
+          "revokeCert": "<DIRECTORY_BASE_URL>/acme/revoke-cert"
         }
-    http_version:
-  recorded_at: Tue, 16 Jan 2024 18:10:51 GMT
+  recorded_at: Thu, 07 Aug 2025 00:03:18 GMT
 - request:
     method: head
-    uri: "<DIRECTORY_BASE_URL>/nonce-plz"
+    uri: "<DIRECTORY_BASE_URL>/acme/new-nonce"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.15 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.24 (https://github.com/unixcharles/acme-client)
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -62,28 +79,35 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 07 Aug 2025 00:03:18 GMT
+      Connection:
+      - keep-alive
       Cache-Control:
       - public, max-age=0, no-cache
       Link:
       - <<DIRECTORY_URL>>;rel="index"
       Replay-Nonce:
-      - Tuty2P8DM9lQfIoWYI_xIA
-      Date:
-      - Tue, 16 Jan 2024 18:10:51 GMT
+      - ALP4o33PV4DYny9QNudkQ3PifpsjGtherdY0XtqivctWeSSRZt8
+      X-Frame-Options:
+      - DENY
+      Strict-Transport-Security:
+      - max-age=604800
     body:
       encoding: UTF-8
       string: ''
-    http_version:
-  recorded_at: Tue, 16 Jan 2024 18:10:51 GMT
+  recorded_at: Thu, 07 Aug 2025 00:03:18 GMT
 - request:
     method: post
-    uri: "<DIRECTORY_BASE_URL>/sign-me-up"
+    uri: "<DIRECTORY_BASE_URL>/acme/new-acct"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzM4NCIsIm5vbmNlIjoiVHV0eTJQOERNOWxRZklvV1lJX3hJQSIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImNydiI6IlAtMzg0Iiwia3R5IjoiRUMiLCJ4IjoiNkZ2SzNfZ3Ywei1mZ250b0VRQWFmUGxpZHVxUXd0QlpsMGdqTDRzc2ltdm5Cd0M4aWxYVlBiLWNNTlBxaFEwaSIsInkiOiJla2lEa29YTVlXTmhvSWwydTRUcEg2U3oyOXlXMkZpMm1qenhBYVRzTGpQczVIMnhQWW1GYlBRRmF1N3EzejVQIn19","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"TD8n-T2m1qE1mo9uZTl7AJax1D1LclTBixqXZmeyQi7xXQjSeGWdtBPpjvE6d0kCSpQNGv6GcBJgYHS-QoK-z-4YQnCDggCMetyn2d9MFeYuqiEhM9XrULchX58ZmiFe"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoiQUxQNG8zM1BWNERZbnk5UU51ZGtRM1BpZnBzakd0aGVyZFkwWHRxaXZjdFdlU1NSWnQ4IiwidXJsIjoiaHR0cHM6Ly9hY21lLXN0YWdpbmctdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9uZXctYWNjdCIsImp3ayI6eyJlIjoiQVFBQiIsImt0eSI6IlJTQSIsIm4iOiJrSXd6cWg1MlhibnRndHVrMUY0TnVDSjN3MUtIa3NjU0lUejR2UHd5V0lJd0U3b2x0VGZNMjZYY2pfNXpDNFpTNm5GUXF2YnVxaUh0bEJTOGlsWWlfd1hadllvNDdXWmRnMF9RRi0xYmdDV2wxc2VpYXhSY2RUWThfMXBmMlZWOUUwZ3AwVzdyREp3eDRwVEtQQUlfcWE4SG9VZXVqZ1RYLXBJd0ZtNlYxV1dDZmM1RWxETEVYQmprQ2NsUmk2LTFMZjJUZi1IT1N3OWVvWExCTnNZZ2JGbTFqZmoxeUhSeHZ6b0N0WmRpYWJpTnBDbEdPSlJZV0x2MzhjV25nMHNfeFgtckhxejZrTUsycmtuSDdXZjFyYS1ndVo4N2Zqbl9OZGd5TFJyTzc5TU9Eb29PT3ZBekpyRGhwQ0lQTmZENFlOM21YZzZXV3B1UEp0SnpHc1NUZXcifX0","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQDQzMDgxNmRlZGNiOWQ1ZmE3NWY1ZTljMjMxZjMyYzM0LWV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"SIurq4ua2Cq1EFCmUx527gHIYLXu7ZeoWps_tUiaRrW4M80_UQxp4CLGL5gAKweE3xhrhDB54jYHHuKYt_2DiBbIIQ8UcO-okt9KG0btWjN47J2HSBA3EaZQt1aIR2_PSve-uED8b1YgzDSpIkEIt0fSxrvk93gA5rtMriIUgy0-8iiiUarV9YchTocDJEnEM4MG93c0YX0QEhE5oRnIAUAgVsP5pcQOyafmhCQPmpbYUXNDcyX-tT0TfA5Hp9ciCtzKb-0J77G0h4n9cWrSxF-Xnu7wcXCCUX5ZtCI_R0DbWtkzFeU2ObbO8JS3gp9SvMRtFo3hM13bZGBljGBEJw"}'
     headers:
       User-Agent:
-      - Acme::Client v2.0.15 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.24 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -95,36 +119,42 @@ http_interactions:
       code: 201
       message: Created
     headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 07 Aug 2025 00:03:19 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '477'
+      Connection:
+      - keep-alive
+      Boulder-Requester:
+      - '218860643'
       Cache-Control:
       - public, max-age=0, no-cache
-      Content-Type:
-      - application/json; charset=utf-8
       Link:
       - <<DIRECTORY_URL>>;rel="index"
+      - <https://letsencrypt.org/documents/LE-SA-v1.5-February-24-2025.pdf>;rel="terms-of-service"
       Location:
-      - "<DIRECTORY_BASE_URL>/my-account/4530875a31aa979c"
+      - "<DIRECTORY_BASE_URL>/acme/acct/218860643"
       Replay-Nonce:
-      - wgZvnNCEXH7AO9RaizC3Tw
-      Date:
-      - Tue, 16 Jan 2024 18:10:51 GMT
-      Content-Length:
-      - '361'
+      - tqu6ViAuxdoFl38R7avi6ln3cAC9iCH0orClXVo9s1GK1TqgkzA
+      X-Frame-Options:
+      - DENY
+      Strict-Transport-Security:
+      - max-age=604800
     body:
       encoding: UTF-8
       string: |-
         {
-           "status": "valid",
-           "contact": [
-              "mailto:info@example.com"
-           ],
-           "orders": "<DIRECTORY_BASE_URL>/list-orderz/4530875a31aa979c",
-           "key": {
-              "kty": "EC",
-              "crv": "P-384",
-              "x": "6FvK3_gv0z-fgntoEQAafPliduqQwtBZl0gjL4ssimvnBwC8ilXVPb-cMNPqhQ0i",
-              "y": "ekiDkoXMYWNhoIl2u4TpH6Sz29yW2Fi2mjzxAaTsLjPs5H2xPYmFbPQFau7q3z5P"
-           }
+          "key": {
+            "kty": "RSA",
+            "n": "kIwzqh52Xbntgtuk1F4NuCJ3w1KHkscSITz4vPwyWIIwE7oltTfM26Xcj_5zC4ZS6nFQqvbuqiHtlBS8ilYi_wXZvYo47WZdg0_QF-1bgCWl1seiaxRcdTY8_1pf2VV9E0gp0W7rDJwx4pTKPAI_qa8HoUeujgTX-pIwFm6V1WWCfc5ElDLEXBjkCclRi6-1Lf2Tf-HOSw9eoXLBNsYgbFm1jfj1yHRxvzoCtZdiabiNpClGOJRYWLv38cWng0s_xX-rHqz6kMK2rknH7Wf1ra-guZ87fjn_NdgyLRrO79MODooOOvAzJrDhpCIPNfD4YN3mXg6WWpuPJtJzGsSTew",
+            "e": "AQAB"
+          },
+          "createdAt": "2025-08-07T00:03:19.073480281Z",
+          "status": "valid"
         }
-    http_version:
-  recorded_at: Tue, 16 Jan 2024 18:10:51 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 07 Aug 2025 00:03:19 GMT
+recorded_with: VCR 6.3.1

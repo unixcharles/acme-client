@@ -4,7 +4,7 @@ describe Acme::Client::Resources::Directory do
   let(:private_key) { generate_private_key }
   let(:client) do
     client = Acme::Client.new(private_key: private_key, directory: DIRECTORY_URL)
-    client.new_account(contact: 'mailto:info@example.com', terms_of_service_agreed: true)
+    client.new_account(contact: "mailto:info@#{EXAMPLE_DOMAIN}", terms_of_service_agreed: true)
     client
   end
 
@@ -29,6 +29,7 @@ describe Acme::Client::Resources::Directory do
   context 'meta', vcr: { cassette_name: 'directory_meta' } do
     it { expect(directory.meta).to be_a(Hash) }
     it { expect(directory.terms_of_service).to be_a(String) }
-    it { expect(directory.external_account_required).to be false }
+    it { expect(directory.external_account_required).to be nil }
+    it { expect(directory.profiles).to be_a_kind_of(Hash) }
   end
 end
