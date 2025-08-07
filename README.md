@@ -244,6 +244,22 @@ new_private_key = OpenSSL::PKey::RSA.new(4096)
 client.account_key_change(new_private_key: new_private_key)
 ```
 
+### Profile Extension
+
+Provide a CA profile when creating a new order:
+
+```ruby
+order = client.new_order(identifiers: ['example.com'], profile: 'shortlived')
+```
+
+ACME servers may list supported profiles in the directory endpoint:
+
+```ruby
+client.profiles => {"classic": "https://example.com/docs/classic", "shortlived": "https://example.com/docs/shortlived"}
+```
+
+See the [RFC draft of certificate profiles](https://datatracker.ietf.org/doc/draft-aaron-acme-profiles/) for more info.
+
 ## Requirements
 
 Ruby >= 3.0
