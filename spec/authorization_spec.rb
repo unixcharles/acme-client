@@ -40,7 +40,7 @@ describe Acme::Client::Resources::Authorization do
       challenge = authorization.dns_account
       expect(challenge).to be_a(Acme::Client::Resources::Challenges::DNSAccount01)
 
-      expect(challenge.record_name).to eq('_acme-challenge_jn322n6un75fspyf')
+      expect(challenge.record_name).to eq('_jn322n6un75fspyf._acme-challenge')
 
       expected_content = Acme::Client::Util.urlsafe_base64(
         OpenSSL::Digest::SHA256.digest(challenge.key_authorization)

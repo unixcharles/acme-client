@@ -16,7 +16,7 @@ describe Acme::Client::Resources::Challenges::DNSAccount01 do
   end
 
   it 'returns the account specific record name' do
-    expect(dns_account_01.record_name).to eq('_acme-challenge_ujmmovf2vn55tgye')
+    expect(dns_account_01.record_name).to eq('_ujmmovf2vn55tgye._acme-challenge')
   end
 
   it { expect(dns_account_01.record_type).to eq('TXT') }
