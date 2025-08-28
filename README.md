@@ -120,9 +120,11 @@ To order a new certificate, the client must provide a list of identifiers.
 
 The returned order will contain a list of `Authorization` that need to be completed in other to finalize the order, generally one per identifier.
 
-Each authorization contains multiple challenges, typically a `dns-01` and a `http-01` challenge. The applicant is only required to complete one of the challenges.
+Each authorization contains multiple challenges, typically a `dns-01`, `dns-account-01`, and a `http-01` challenge. The applicant is only required to complete one of the challenges.
 
-You can access the challenge you wish to complete using the `#dns` or `#http` method.
+The `dns-account-01` challenge prefixes the record name with an account-specific label so different clients can validate the same domain concurrently.
+
+You can access the challenge you wish to complete using the `#dns`, `#dns_account`, or `#http` methods.
 
 ```ruby
 order = client.new_order(identifiers: ['example.com'])

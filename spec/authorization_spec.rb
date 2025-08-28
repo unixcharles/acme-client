@@ -35,6 +35,21 @@ describe Acme::Client::Resources::Authorization do
     it 'returns the DNS challenge', vcr: { cassette_name: 'authorization_dns_challenge' } do
       expect(authorization.dns).to be_a(Acme::Client::Resources::Challenges::DNS01)
     end
+
+    it 'returns the DNS account challenge', vcr: { cassette_name: 'authorization_dns_account_challenge' } do
+      challenge = authorization.dns_account_01
+      expect(challenge).to be_a(Acme::Client::Resources::Challenges::DNSAccount01)
+
+      digest = OpenSSL::Digest::SHA256.digest(client.kid)[0, 10]
+      alphabet = 'abcdefghijklmnopqrstuvwxyz234567'
+      label = digest.unpack1('B*').scan(/.{5}/).map { |c| alphabet[c.to_i(2)] }.join
+      expect(challenge.record_name).to eq("_acme-challenge_#{label}")
+
+      expected_content = Acme::Client::Util.urlsafe_base64(
+        OpenSSL::Digest::SHA256.digest(challenge.key_authorization)
+      )
+      expect(challenge.record_content).to eq(expected_content)
+    end
   end
 
   context 'reload' do

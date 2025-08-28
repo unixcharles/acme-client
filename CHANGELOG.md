@@ -1,6 +1,7 @@
 ## `2.0.25`
 
 * Add support for profiles extension
+* Add support for dns-account-01 challenge
 
 ## `2.0.24`
 
