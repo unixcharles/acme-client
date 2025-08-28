@@ -43,6 +43,7 @@ class Acme::Client::Resources::Authorization
       challenge.is_a?(Acme::Client::Resources::Challenges::DNSAccount01)
     }
   end
+  alias_method :dns_account, :dns_account_01
 
   def to_h
     {
