@@ -167,6 +167,25 @@ dns_challenge.record_type # => 'TXT'
 dns_challenge.record_content # => 'HRV3PS5sRDyV-ous4HJk4z24s5JjmUTjcCaUjFt28-8'
 ```
 
+### Preparing for DNS-Account-01 challenge
+
+To complete the DNS-Account-01 challenge, you must set a DNS TXT record using an account-specific name. This allows multiple ACME clients to validate the same domain concurrently without conflicts.
+
+The DNSAccount01 object has utility methods to generate the required DNS record:
+
+```ruby
+dns_account_challenge = authorization.dns_account
+
+dns_account_challenge.record_name    # => '_ujmmovf2vn55tgye._acme-challenge'
+dns_account_challenge.record_type    # => 'TXT'
+dns_account_challenge.record_content # => 'HRV3PS5sRDyV-ous4HJk4z24s5JjmUTjcCaUjFt28-8'
+```
+
+The record name includes an account-specific label derived from your account URL, ensuring different clients can validate simultaneously:
+
+- **DNS-01**: `_acme-challenge.example.com` (shared)
+- **DNS-Account-01**: `_ujmmovf2vn55tgye._acme-challenge.example.com` (account-specific)
+
 ### Requesting a challenge verification
 
 Once you are ready to complete the challenge, you can request the server perform the verification.
