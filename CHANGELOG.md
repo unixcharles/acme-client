@@ -1,7 +1,10 @@
+## `2.0.26`
+
+* Add support for dns-account-01 challenge (RFC draft-ietf-acme-dns-account-label-01)
+
 ## `2.0.25`
 
 * Add support for profiles extension
-* Add support for dns-account-01 challenge (RFC draft-ietf-acme-dns-account-label-01)
 
 ## `2.0.24`
 
