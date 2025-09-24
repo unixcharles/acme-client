@@ -16,5 +16,10 @@ describe Acme::Client::Resources::Challenges::DNS01 do
 
   it { expect(dns01.record_name).to eq('_acme-challenge') }
   it { expect(dns01.record_type).to eq('TXT') }
-  it { expect(dns01.record_content).to be_a(String) }
+
+  it 'returns the digest of the key authorization' do
+    key_authorization = "#{attributes[:token]}.#{client.jwk.thumbprint}"
+    expected = Acme::Client::Util.urlsafe_base64(OpenSSL::Digest::SHA256.digest(key_authorization))
+    expect(dns01.record_content).to eq(expected)
+  end
 end

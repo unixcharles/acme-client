@@ -38,6 +38,13 @@ class Acme::Client::Resources::Authorization
   end
   alias_method :dns, :dns01
 
+  def dns_account_01
+    @dns_account_01 ||= challenges.find { |challenge|
+      challenge.is_a?(Acme::Client::Resources::Challenges::DNSAccount01)
+    }
+  end
+  alias_method :dns_account, :dns_account_01
+
   def to_h
     {
       url: url,
