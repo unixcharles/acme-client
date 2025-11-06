@@ -223,6 +223,15 @@ class Acme::Client
     response.success?
   end
 
+  def renewal_info(certificate:)
+    cert_id = Acme::Client::Util.ari_certificate_identifier(certificate)
+    renewal_info_url = URI.join(endpoint_for(:renewal_info).to_s + '/', cert_id).to_s
+
+    response = get(renewal_info_url)
+    attributes = attributes_from_renewal_info_response(response)
+    Acme::Client::Resources::RenewalInfo.new(self, **attributes)
+  end
+
   def get_nonce
     http_client = Acme::Client::HTTPClient.new_connection(url: endpoint_for(:new_nonce), options: @connection_options)
     response = http_client.head(nil, nil)
@@ -318,6 +327,16 @@ class Acme::Client
 
   def attributes_from_challenge_response(response)
     extract_attributes(response.body, :status, :url, :token, :type, :error, :validated)
+  end
+
+  def attributes_from_renewal_info_response(response)
+    attributes = extract_attributes(
+      response.body,
+      [:suggested_window, 'suggestedWindow'],
+      [:explanation_url, 'explanationURL']
+    )
+    attributes[:retry_after] = response.headers['retry-after'] if response.headers['retry-after']
+    attributes
   end
 
   def extract_attributes(input, *attributes)
