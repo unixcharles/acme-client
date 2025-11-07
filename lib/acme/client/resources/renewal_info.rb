@@ -16,6 +16,19 @@ class Acme::Client::Resources::RenewalInfo
     suggested_window&.fetch('end', nil)
   end
 
+  def suggested_renewal_time
+    return nil unless suggested_window_start && suggested_window_end
+
+    start_time = Time.parse(suggested_window_start)
+    end_time = Time.parse(suggested_window_end)
+    window_duration = end_time - start_time
+
+    random_offset = rand(0.0..window_duration)
+    selected_time = start_time + random_offset
+
+    selected_time > Time.now ? selected_time : Time.now
+  end
+
   def to_h
     {
       suggested_window: suggested_window,

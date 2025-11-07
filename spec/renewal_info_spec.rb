@@ -55,6 +55,35 @@ describe 'Acme::Client renewal_info' do
       expect(hash).to have_key(:explanation_url)
       expect(hash).to have_key(:retry_after)
     end
+
+    it 'selects a random renewal time within the suggested window' do
+      renewal_info = client.renewal_info(certificate: certificate_pem)
+
+      start_time = Time.parse(renewal_info.suggested_window_start)
+      end_time = Time.parse(renewal_info.suggested_window_end)
+
+      selected_time = renewal_info.suggested_renewal_time
+
+      expect(selected_time).to be_a(Time)
+
+      if selected_time > Time.now
+        expect(selected_time).to be >= start_time
+        expect(selected_time).to be <= end_time
+      else
+        expect(selected_time).to be_within(1).of(Time.now)
+      end
+    end
+
+    it 'returns Time.now if selected time is in the past' do
+      renewal_info = client.renewal_info(certificate: certificate_pem)
+
+      allow(renewal_info).to receive(:suggested_window_start).and_return((Time.now - 7200).iso8601)
+      allow(renewal_info).to receive(:suggested_window_end).and_return((Time.now - 3600).iso8601)
+
+      selected_time = renewal_info.suggested_renewal_time
+
+      expect(selected_time).to be_within(1).of(Time.now)
+    end
   end
 
   context 'certificate identifier generation' do
