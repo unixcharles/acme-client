@@ -135,12 +135,13 @@ class Acme::Client
     @kid ||= account.kid
   end
 
-  def new_order(identifiers:, not_before: nil, not_after: nil, profile: nil)
+  def new_order(identifiers:, not_before: nil, not_after: nil, profile: nil, replaces: nil)
     payload = {}
     payload['identifiers'] = prepare_order_identifiers(identifiers)
     payload['notBefore'] = not_before if not_before
     payload['notAfter'] = not_after if not_after
     payload['profile'] = profile if profile
+    payload['replaces'] = replaces if replaces
 
     response = post(endpoint_for(:new_order), payload: payload)
     arguments = attributes_from_order_response(response)

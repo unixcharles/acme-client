@@ -86,6 +86,19 @@ describe 'Acme::Client renewal_info' do
     end
   end
 
+  context 'replaces field in new order' do
+    let(:certificate_pem) { File.read('spec/fixtures/certificate_chain.pem') }
+
+    it 'accepts replaces parameter with ARI certificate identifier', vcr: { cassette_name: 'new_order_with_replaces' } do
+      cert_id = Acme::Client::Util.ari_certificate_identifier(certificate_pem)
+
+      order = client.new_order(identifiers: [EXAMPLE_DOMAIN], replaces: cert_id)
+
+      expect(order).to be_a(Acme::Client::Resources::Order)
+      expect(order.status).to eq('pending')
+    end
+  end
+
   context 'certificate identifier generation' do
     let(:certificate_pem) { File.read('spec/fixtures/certificate_chain.pem') }
     let(:cert) { OpenSSL::X509::Certificate.new(certificate_pem) }
