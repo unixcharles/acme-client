@@ -97,6 +97,14 @@ describe 'Acme::Client renewal_info' do
       expect(order).to be_a(Acme::Client::Resources::Order)
       expect(order.status).to eq('pending')
     end
+
+    it 'raises AlreadyReplaced error when certificate was already replaced', vcr: { cassette_name: 'new_order_already_replaced' } do
+      cert_id = Acme::Client::Util.ari_certificate_identifier(certificate_pem)
+
+      expect {
+        client.new_order(identifiers: [EXAMPLE_DOMAIN], replaces: cert_id)
+      }.to raise_error(Acme::Client::Error::AlreadyReplaced)
+    end
   end
 
   context 'certificate identifier generation' do
