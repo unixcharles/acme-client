@@ -1,3 +1,7 @@
+## `2.0.27`
+
+*  Add support for Renewal Information (ARI) (RFC 9773)
+
 ## `2.0.26`
 
 * Add support for dns-account-01 challenge (RFC draft-ietf-acme-dns-account-label-01)
