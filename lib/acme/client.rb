@@ -171,16 +171,16 @@ class Acme::Client
 
     return pem if force_chain.nil?
 
-    return pem if ChainIdentifier.new(pem).match_name?(force_chain)
-
     alternative_urls = Array(response.headers.dig('link', 'alternate'))
     alternative_urls.each do |alternate_url|
       response = download(alternate_url, format: :pem)
-      pem = response.body
-      if ChainIdentifier.new(pem).match_name?(force_chain)
-        return pem
+      alternate_pem = response.body
+      if ChainIdentifier.new(alternate_pem).match_name?(force_chain)
+        return alternate_pem
       end
     end
+
+    return pem if ChainIdentifier.new(pem).match_name?(force_chain)
 
     raise Acme::Client::Error::ForcedChainNotFound, "Could not find any matching chain for `#{force_chain}`"
   end
