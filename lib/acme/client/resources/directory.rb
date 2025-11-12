@@ -7,7 +7,8 @@ class Acme::Client::Resources::Directory
     new_order: 'newOrder',
     new_authz: 'newAuthz',
     revoke_certificate: 'revokeCert',
-    key_change: 'keyChange'
+    key_change: 'keyChange',
+    renewal_info: 'renewalInfo'
   }
 
   DIRECTORY_META = {

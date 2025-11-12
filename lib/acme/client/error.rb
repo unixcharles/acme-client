@@ -12,6 +12,7 @@ class Acme::Client::Error < StandardError
   class OrderNotReloadable < ClientError; end
 
   class ServerError < Acme::Client::Error; end
+  class AlreadyReplaced < ServerError; end
   class AlreadyRevoked < ServerError; end
   class BadCSR < ServerError; end
   class BadNonce < ServerError; end
@@ -36,6 +37,7 @@ class Acme::Client::Error < StandardError
   class IncorrectResponse < ServerError; end
 
   ACME_ERRORS = {
+    'urn:ietf:params:acme:error:alreadyReplaced' => AlreadyReplaced,
     'urn:ietf:params:acme:error:alreadyRevoked' => AlreadyRevoked,
     'urn:ietf:params:acme:error:badCSR' => BadCSR,
     'urn:ietf:params:acme:error:badNonce' => BadNonce,

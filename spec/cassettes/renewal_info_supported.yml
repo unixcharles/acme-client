@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.15 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.26 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -27,7 +27,7 @@ http_interactions:
       Date:
       - Tue, 16 Jan 2024 18:10:15 GMT
       Content-Length:
-      - '396'
+      - '420'
     body:
       encoding: UTF-8
       string: |-
@@ -53,7 +53,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.15 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.26 (https://github.com/unixcharles/acme-client)
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -65,12 +65,14 @@ http_interactions:
     headers:
       Cache-Control:
       - public, max-age=0, no-cache
+      Date:
+      - Tue, 16 Jan 2024 18:10:15 GMT
       Link:
       - <<DIRECTORY_URL>>;rel="index"
       Replay-Nonce:
-      - DXS4nYJl18Pid0N5tjRffw
-      Date:
-      - Tue, 16 Jan 2024 18:10:15 GMT
+      - test-nonce-12345
+      Content-Length:
+      - '0'
     body:
       encoding: UTF-8
       string: ''
@@ -81,10 +83,10 @@ http_interactions:
     uri: "<DIRECTORY_BASE_URL>/sign-me-up"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzM4NCIsIm5vbmNlIjoiRFhTNG5ZSmwxOFBpZDBONXRqUmZmdyIsInVybCI6Imh0dHBzOi8vMC4wLjAuMDoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImNydiI6IlAtMzg0Iiwia3R5IjoiRUMiLCJ4IjoiMm5NOHg0aVR4UElLcUZqR01jX3RiY2QxOW1QT1pydld1S3ZpYlU3MGsxWlZwaU9LQ2p2c3N3Yl9OT0JNX29lYiIsInkiOiJHaHFaN3d2dXhRb05VRThJclBkVF9qVkVOQmJqRThjWVBjYnIwMkdrTk0tSHNhanNJWGRrNTYyNXZsNVpVdkhNIn19","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"_Ct6M9duFtXOxtZDWLwrxcVv49z3l2JJCDFGuQQ1HyUvbnBfoVPNuLssJEQ3bXz_Dh-F-W32DTPaOoPAvlIwWOV-WuHZEYuw1DeR8GwGS68cC-xbU2Fbs1c5Fu5bHhU-"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIm5vbmNlIjoidGVzdC1ub25jZS0xMjM0NSIsInVybCI6Imh0dHA6Ly8xMjcuMC4wLjE6NDAwMC9zaWduLW1lLXVwIiwiandrcnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJhTEJONjNKSWoxenRXeFJYa2dlVVJ1VnN0RnRNblNBQU1DSTBqZmgxUnEwIiwieSI6InVLSHotVkwzQ1BfNUxSWW9kZ2pIMGVYMkRaYlN4YXFQT1dONUtNdDBxajgifX0","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQHRlc3QtZXhhbXBsZS5jb20iXSwidGVybXNPZlNlcnZpY2VBZ3JlZWQiOnRydWV9","signature":"test-signature"}'
     headers:
       User-Agent:
-      - Acme::Client v2.0.15 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.26 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -100,32 +102,68 @@ http_interactions:
       - public, max-age=0, no-cache
       Content-Type:
       - application/json; charset=utf-8
+      Date:
+      - Tue, 16 Jan 2024 18:10:15 GMT
       Link:
       - <<DIRECTORY_URL>>;rel="index"
       Location:
-      - "<DIRECTORY_BASE_URL>/my-account/3011c37ad722d86"
+      - "<DIRECTORY_BASE_URL>/my-account/1"
       Replay-Nonce:
-      - "-0Wz_OugGSEpZJRBPs8X2g"
-      Date:
-      - Tue, 16 Jan 2024 18:10:15 GMT
+      - test-nonce-67890
       Content-Length:
-      - '360'
+      - '189'
     body:
       encoding: UTF-8
       string: |-
         {
-           "status": "valid",
-           "contact": [
-              "mailto:info@example.com"
-           ],
-           "orders": "<DIRECTORY_BASE_URL>/list-orderz/3011c37ad722d86",
-           "key": {
-              "kty": "EC",
-              "crv": "P-384",
-              "x": "2nM8x4iTxPIKqFjGMc_tbcd19mPOZrvWuKvibU70k1ZVpiOKCjvsswb_NOBM_oeb",
-              "y": "GhqZ7wvuxQoNUE8IrPdT_jVENBbjE8cYPcbr02GkNM-HsajsIXdk5625vl5ZUvHM"
-           }
+          "key": {
+            "kty": "EC",
+            "crv": "P-256",
+            "x": "aLBN63JIj1ztWxRXkgeURuVstFtMnSAAMCI0jfh1Rq0",
+            "y": "uKHz-VL3CP_5LRYodgjH0eX2DZbSxaqPOWN5KMt0qj8"
+          },
+          "status": "valid"
         }
     http_version:
   recorded_at: Tue, 16 Jan 2024 18:10:15 GMT
+- request:
+    method: get
+    uri: "<DIRECTORY_BASE_URL>/renewal-info/iI3WEvKmyebwpZWLci0rRSeNp7Q.a2EsI7kDF8k"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Acme::Client v2.0.26 (https://github.com/unixcharles/acme-client)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - public, max-age=0, no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 16 Jan 2024 18:10:16 GMT
+      Retry-After:
+      - '86400'
+      Content-Length:
+      - '151'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "suggestedWindow": {
+            "start": "2024-01-23T00:00:00Z",
+            "end": "2024-01-25T23:59:59Z"
+          },
+          "explanationURL": "https://example.com/docs/ari"
+        }
+    http_version:
+  recorded_at: Tue, 16 Jan 2024 18:10:16 GMT
 recorded_with: VCR 2.9.3

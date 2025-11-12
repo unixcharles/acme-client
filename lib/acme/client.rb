@@ -135,12 +135,13 @@ class Acme::Client
     @kid ||= account.kid
   end
 
-  def new_order(identifiers:, not_before: nil, not_after: nil, profile: nil)
+  def new_order(identifiers:, not_before: nil, not_after: nil, profile: nil, replaces: nil)
     payload = {}
     payload['identifiers'] = prepare_order_identifiers(identifiers)
     payload['notBefore'] = not_before if not_before
     payload['notAfter'] = not_after if not_after
     payload['profile'] = profile if profile
+    payload['replaces'] = replaces if replaces
 
     response = post(endpoint_for(:new_order), payload: payload)
     arguments = attributes_from_order_response(response)
@@ -221,6 +222,15 @@ class Acme::Client
 
     response = post(endpoint_for(:revoke_certificate), payload: payload)
     response.success?
+  end
+
+  def renewal_info(certificate:)
+    cert_id = Acme::Client::Util.ari_certificate_identifier(certificate)
+    renewal_info_url = URI.join(endpoint_for(:renewal_info).to_s + '/', cert_id).to_s
+
+    response = get(renewal_info_url)
+    attributes = attributes_from_renewal_info_response(response)
+    Acme::Client::Resources::RenewalInfo.new(self, **attributes)
   end
 
   def get_nonce
@@ -318,6 +328,16 @@ class Acme::Client
 
   def attributes_from_challenge_response(response)
     extract_attributes(response.body, :status, :url, :token, :type, :error, :validated)
+  end
+
+  def attributes_from_renewal_info_response(response)
+    attributes = extract_attributes(
+      response.body,
+      [:suggested_window, 'suggestedWindow'],
+      [:explanation_url, 'explanationURL']
+    )
+    attributes[:retry_after] = response.headers['retry-after'] if response.headers['retry-after']
+    attributes
   end
 
   def extract_attributes(input, *attributes)

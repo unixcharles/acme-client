@@ -16,6 +16,7 @@ describe Acme::Client::Resources::Directory do
     it { expect(directory.endpoint_for(:new_order)).to be_a_kind_of(URI) }
     it { expect(directory.endpoint_for(:revoke_certificate)).to be_a_kind_of(URI) }
     it { expect(directory.endpoint_for(:key_change)).to be_a_kind_of(URI) }
+    it { expect(directory.endpoint_for(:renewal_info)).to be_a_kind_of(URI) }
 
     context 'when rate limited', vcr: { cassette_name: 'directory_ratelimit' } do
       it do
