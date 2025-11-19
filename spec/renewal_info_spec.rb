@@ -15,6 +15,7 @@ describe 'Acme::Client renewal_info' do
       renewal_info = client.renewal_info(certificate: certificate_pem)
 
       expect(renewal_info).to be_a(Acme::Client::Resources::RenewalInfo)
+      expect(renewal_info.ari_id).to be_a(String)
       expect(renewal_info.suggested_window).to be_a(Hash)
       expect(renewal_info.suggested_window_start).to be_a(String)
       expect(renewal_info.suggested_window_end).to be_a(String)
@@ -88,21 +89,21 @@ describe 'Acme::Client renewal_info' do
 
   context 'replaces field in new order' do
     let(:certificate_pem) { File.read('spec/fixtures/certificate_chain.pem') }
+    let(:ari_id) { Acme::Client::Util.ari_certificate_identifier(certificate_pem) }
 
     it 'accepts replaces parameter with ARI certificate identifier', vcr: { cassette_name: 'new_order_with_replaces' } do
-      cert_id = Acme::Client::Util.ari_certificate_identifier(certificate_pem)
-
-      order = client.new_order(identifiers: [EXAMPLE_DOMAIN], replaces: cert_id)
+      order = client.new_order(identifiers: [EXAMPLE_DOMAIN], replaces: ari_id)
 
       expect(order).to be_a(Acme::Client::Resources::Order)
       expect(order.status).to eq('pending')
+
+      pending('a way to seed an replaceable order/cert in the CA')
+      expect(order.replaces).to eq(ari_id)
     end
 
     it 'raises AlreadyReplaced error when certificate was already replaced', vcr: { cassette_name: 'new_order_already_replaced' } do
-      cert_id = Acme::Client::Util.ari_certificate_identifier(certificate_pem)
-
       expect {
-        client.new_order(identifiers: [EXAMPLE_DOMAIN], replaces: cert_id)
+        client.new_order(identifiers: [EXAMPLE_DOMAIN], replaces: ari_id)
       }.to raise_error(Acme::Client::Error::AlreadyReplaced)
     end
   end
