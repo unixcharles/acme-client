@@ -28,6 +28,20 @@ describe Acme::Client::Resources::Order do
     end
   end
 
+  context 'replaces' do
+    let(:certificate_pem) { File.read('spec/fixtures/certificate_chain.pem') }
+    let(:ari_id) { Acme::Client::Util.ari_certificate_identifier(certificate_pem) }
+
+    let(:order) do
+      client.new_order(identifiers: [{ type: 'dns', value: EXAMPLE_DOMAIN }], replaces: ari_id)
+    end
+
+    it 'call client open with a replaces ARI identifier', vcr: { cassette_name: 'new_order_with_replaces' } do
+      pending('a way to seed an replaceable order/cert in the CA')
+      expect(order.replaces).to eq(ari_id)
+    end
+  end
+
   context 'status' do
     it 'send the agreement for the terms', vcr: { cassette_name: 'order_status' } do
       expect(order.status).to eq('pending')
