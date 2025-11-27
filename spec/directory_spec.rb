@@ -25,6 +25,7 @@ describe Acme::Client::Resources::Directory do
         }.to raise_error(Acme::Client::Error::RateLimited)
       end
     end
+
   end
 
   context 'meta', vcr: { cassette_name: 'directory_meta' } do

@@ -20,6 +20,7 @@ require 'acme/client/self_sign_certificate'
 require 'acme/client/resources'
 require 'acme/client/jwk'
 require 'acme/client/error'
+require 'acme/client/error/rate_limited'
 require 'acme/client/util'
 require 'acme/client/chain_identifier'
 
