@@ -225,13 +225,18 @@ class Acme::Client
     response.success?
   end
 
-  def renewal_info(certificate:)
-    cert_id = Acme::Client::Util.ari_certificate_identifier(certificate)
-    renewal_info_url = URI.join(endpoint_for(:renewal_info).to_s + '/', cert_id).to_s
+  def renewal_info(certificate: nil, ari_id: nil)
+    if certificate.nil? && ari_id.nil?
+      raise ArgumentError, 'must specify certificate or ari_id'
+    end
+
+    ari_id ||= Acme::Client::Util.ari_certificate_identifier(certificate)
+
+    renewal_info_url = URI.join(endpoint_for(:renewal_info).to_s + '/', ari_id).to_s
 
     response = get(renewal_info_url)
     attributes = attributes_from_renewal_info_response(response)
-    Acme::Client::Resources::RenewalInfo.new(self, **attributes)
+    Acme::Client::Resources::RenewalInfo.new(self, ari_id: ari_id, **attributes)
   end
 
   def get_nonce
