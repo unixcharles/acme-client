@@ -169,6 +169,44 @@ describe Acme::Client do
 
         expect(order).to be_a(Acme::Client::Resources::Order)
       end
+
+      it 'raises RateLimited with retry_after when rate limited', vcr: { cassette_name: 'new_order' } do
+        stub_request(:post, %r{/order-plz}).to_return(
+          status: 429,
+          headers: {
+            'Content-Type' => 'application/problem+json',
+            'Retry-After' => '3600'
+          },
+          body: {
+            type: 'urn:ietf:params:acme:error:rateLimited',
+            detail: 'Too many requests'
+          }.to_json
+        )
+
+        expect {
+          client.new_order(identifiers: ['example.com'])
+        }.to raise_error(Acme::Client::Error::RateLimited) { |error|
+          expect(error.retry_after).to eq(3600)
+          expect(error.message).to eq('Too many requests')
+        }
+      end
+
+      it 'defaults retry_after to 10 when Retry-After header is missing', vcr: { cassette_name: 'new_order' } do
+        stub_request(:post, %r{/order-plz}).to_return(
+          status: 429,
+          headers: { 'Content-Type' => 'application/problem+json' },
+          body: {
+            type: 'urn:ietf:params:acme:error:rateLimited',
+            detail: 'Too many requests'
+          }.to_json
+        )
+
+        expect {
+          client.new_order(identifiers: ['example.com'])
+        }.to raise_error(Acme::Client::Error::RateLimited) { |error|
+          expect(error.retry_after).to eq(10)
+        }
+      end
     end
 
     context 'order' do
