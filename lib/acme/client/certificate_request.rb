@@ -104,8 +104,15 @@ class Acme::Client::CertificateRequest
   end
 
   def add_extension(csr)
+    san = @names.map do |name|
+      if valid_ip_address?(name)
+        "IP:#{name}"
+      else
+        "DNS:#{name}"
+      end
+    end
     extension = OpenSSL::X509::ExtensionFactory.new.create_extension(
-      'subjectAltName', @names.map { |name| "DNS:#{name}" }.join(', '), false
+      'subjectAltName', san.join(', '), false
     )
     csr.add_attribute(
       OpenSSL::X509::Attribute.new(
@@ -113,6 +120,16 @@ class Acme::Client::CertificateRequest
         OpenSSL::ASN1::Set.new([OpenSSL::ASN1::Sequence.new([extension])])
       )
     )
+  end
+end
+
+def valid_ip_address?(address)
+  require 'ipaddr'
+  begin
+    ip = IPAddr.new(address)
+    true
+  rescue IPAddr::InvalidAddressError, IPAddr::AddressFamilyError
+    false
   end
 end
 
