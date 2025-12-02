@@ -132,6 +132,18 @@ describe Acme::Client::CertificateRequest do
     expect(value).to include('www.example.org')
   end
 
+  it 'creates a subjectAltName extension with combined name and ip' do
+    request = Acme::Client::CertificateRequest.new(names: %w(example.org 172.18.4.5), private_key: test_key)
+
+    extension = request.csr.attributes.find { |attribute|
+      asn1_dig(attribute).first.value == 'subjectAltName'
+    }
+    expect(extension).not_to be_nil
+    value = asn1_dig(extension).last.value
+    expect(value).to include('example.org')
+    expect(value).to include('172.18.4.5'.split('.').map(&:to_i).pack('C*'))
+  end
+
   it 'signs the request with the private key' do
     request = Acme::Client::CertificateRequest.new(common_name: 'example.org', private_key: test_key)
 
