@@ -1,3 +1,7 @@
+## `2.0.29`
+
+* IP support to the CertificateRequest helper
+
 ## `2.0.28`
 
 *  Make [Retry-After](https://datatracker.ietf.org/doc/html/rfc8555/#section-6.6) accessible from RateLimited#retry_after exceptions
