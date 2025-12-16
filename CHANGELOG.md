@@ -1,3 +1,9 @@
+## `2.0.30`
+
+* Add a default message to RateLimited error
+
+This fix avoid argument error on RateLimited object when stubbing without passing arguments.
+
 ## `2.0.29`
 
 * IP support to the CertificateRequest helper

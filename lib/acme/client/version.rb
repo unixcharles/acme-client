@@ -2,6 +2,6 @@
 
 module Acme
   class Client
-    VERSION = '2.0.29'.freeze
+    VERSION = '2.0.30'.freeze
   end
 end
