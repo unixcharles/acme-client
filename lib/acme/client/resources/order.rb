@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Acme::Client::Resources::Order
-  attr_reader :url, :status, :contact, :finalize_url, :identifiers, :authorization_urls, :expires, :certificate_url, :profile
+  attr_reader :url, :status, :contact, :finalize_url, :identifiers, :authorization_urls, :expires, :certificate_url, :profile, :retry_after
 
   def initialize(client, **arguments)
     @client = client
@@ -45,13 +45,14 @@ class Acme::Client::Resources::Order
       authorization_urls: authorization_urls,
       identifiers: identifiers,
       certificate_url: certificate_url,
-      profile: profile
+      profile: profile,
+      retry_after: retry_after
     }
   end
 
   private
 
-  def assign_attributes(url: nil, status:, expires:, finalize_url:, authorization_urls:, identifiers:, certificate_url: nil, profile: nil) # rubocop:disable Layout/LineLength,Metrics/ParameterLists
+  def assign_attributes(url: nil, status:, expires:, finalize_url:, authorization_urls:, identifiers:, certificate_url: nil, profile: nil, retry_after: nil) # rubocop:disable Layout/LineLength,Metrics/ParameterLists
     @url = url
     @status = status
     @expires = expires
@@ -60,5 +61,6 @@ class Acme::Client::Resources::Order
     @identifiers = identifiers
     @certificate_url = certificate_url
     @profile = profile
+    @retry_after = retry_after
   end
 end
