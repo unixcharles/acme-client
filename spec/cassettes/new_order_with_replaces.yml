@@ -4,11 +4,13 @@ http_interactions:
     method: get
     uri: "<DIRECTORY_URL>"
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.27 (https://github.com/unixcharles/acme-client)
+      Content-Type:
+      - application/jose+json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -23,33 +25,44 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 10 Oct 2019 03:08:20 GMT
+      - Thu, 05 Mar 2026 19:32:44 GMT
       Content-Length:
-      - '386'
+      - '716'
     body:
       encoding: UTF-8
       string: |-
         {
            "keyChange": "<DIRECTORY_BASE_URL>/rollover-account-key",
            "meta": {
+              "caaIdentities": [
+                 "pebble.letsencrypt.org"
+              ],
+              "externalAccountRequired": false,
+              "profiles": {
+                 "default": "The profile you know and love",
+                 "shortlived": "A short-lived cert profile, without actual enforcement"
+              },
               "termsOfService": "data:text/plain,Do%20what%20thou%20wilt"
            },
            "newAccount": "<DIRECTORY_BASE_URL>/sign-me-up",
            "newNonce": "<DIRECTORY_BASE_URL>/nonce-plz",
            "newOrder": "<DIRECTORY_BASE_URL>/order-plz",
+           "renewalInfo": "<DIRECTORY_BASE_URL>/draft-ietf-acme-ari-03/renewalInfo",
            "revokeCert": "<DIRECTORY_BASE_URL>/revoke-cert"
         }
-    http_version: 
-  recorded_at: Thu, 10 Oct 2019 03:08:20 GMT
+    http_version:
+  recorded_at: Thu, 05 Mar 2026 19:32:43 GMT
 - request:
     method: head
     uri: "<DIRECTORY_BASE_URL>/nonce-plz"
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.27 (https://github.com/unixcharles/acme-client)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
   response:
@@ -62,23 +75,23 @@ http_interactions:
       Link:
       - <<DIRECTORY_URL>>;rel="index"
       Replay-Nonce:
-      - Oro0Rhbjrz15xEYyE3bWYg
+      - K-dr0sOSfbnmHNN9ERrCUg
       Date:
-      - Thu, 10 Oct 2019 03:08:20 GMT
+      - Thu, 05 Mar 2026 19:32:44 GMT
     body:
       encoding: UTF-8
       string: ''
-    http_version: 
-  recorded_at: Thu, 10 Oct 2019 03:08:20 GMT
+    http_version:
+  recorded_at: Thu, 05 Mar 2026 19:32:44 GMT
 - request:
     method: post
     uri: "<DIRECTORY_BASE_URL>/sign-me-up"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzM4NCIsIm5vbmNlIjoiT3JvMFJoYmpyejE1eEVZeUUzYldZZyIsInVybCI6Imh0dHBzOi8vMTkyLjE2OC41Ni45MzoxNDAwMC9zaWduLW1lLXVwIiwiandrIjp7ImNydiI6IlAtMzg0Iiwia3R5IjoiRUMiLCJ4IjoiZW1CYXd1bF9lRkFqeXZGZ2ZRU2JlQUpHTTZnbDVFZ2tDQkdHSzk3RjV1c3FSZjZXWmtJLS1KQjgyWXFBNDJDeSIsInkiOiJTb1VaMzVOTnBNVG9XdTJZMWdkVjgwUHJBZ3UxVFRnR2s4eDVTSXZ1WmNUMFl0bllDNkIyVHpmdGg4di1VX2hPIn19","payload":"eyJjb250YWN0IjpbIm1haWx0bzppbmZvQGV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"ZhYDAXx1fRqjgQhlSqq2vWfE0Tu8GIBx5VED5AgsTny0LFxr0VTTcfV8g7qsavCoGipRRZcrNfCL326kh5mq1XPHzXdG0iNWwtGHRrbMB4XrsaTC4E5js3RMtxF9CKxc"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIm5vbmNlIjoiSy1kcjBzT1NmYm5tSE5OOUVSckNVZyIsInVybCI6Imh0dHBzOi8vMTI3LjAuMC4xOjE0MDAwL3NpZ24tbWUtdXAiLCJqd2siOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJJTU9lUmdXNW1yNTlza2E5dmJvcWVCRTVWdVNkbERzeENHTE1rS3ZiTmM0IiwieSI6InFkQ3JIcnBWQ1hYaUxZUkNpVnpIVWRnU0t6TW5GYnlwd3g2WXhGeE1oUDgifX0","payload":"eyJjb250YWN0IjpbIm1haWx0bzp0ZXN0QGFyaS10ZXN0LmV4YW1wbGUuY29tIl0sInRlcm1zT2ZTZXJ2aWNlQWdyZWVkIjp0cnVlfQ","signature":"cIz5Jwbg0pQMSj3uqNh9a-qzxw6pqrp8pAFLCoe3XUh7v_IKdodF4LXgzbiO3xapZVqSp-ryOa3qeXyw-Wlizg"}'
     headers:
       User-Agent:
-      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.27 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -87,8 +100,8 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 201
-      message: Created
+      code: 200
+      message: OK
     headers:
       Cache-Control:
       - public, max-age=0, no-cache
@@ -97,40 +110,40 @@ http_interactions:
       Link:
       - <<DIRECTORY_URL>>;rel="index"
       Location:
-      - "<DIRECTORY_BASE_URL>/my-account/69"
+      - "<DIRECTORY_BASE_URL>/my-account/3a35ea733fb2fe70"
       Replay-Nonce:
-      - fSZVUdObtWiKkOeoBuQDPg
+      - yaU3pBMEOn58yIrRcXnyWw
       Date:
-      - Thu, 10 Oct 2019 03:08:20 GMT
+      - Thu, 05 Mar 2026 19:32:44 GMT
       Content-Length:
-      - '353'
+      - '330'
     body:
       encoding: UTF-8
       string: |-
         {
            "status": "valid",
            "contact": [
-              "mailto:info@example.com"
+              "mailto:test@<EXAMPLE_DOMAIN>"
            ],
-           "orders": "<DIRECTORY_BASE_URL>/list-orderz/69",
+           "orders": "<DIRECTORY_BASE_URL>/list-orderz/3a35ea733fb2fe70",
            "key": {
               "kty": "EC",
-              "crv": "P-384",
-              "x": "emBawul_eFAjyvFgfQSbeAJGM6gl5EgkCBGGK97F5usqRf6WZkI--JB82YqA42Cy",
-              "y": "SoUZ35NNpMToWu2Y1gdV80PrAgu1TTgGk8x5SIvuZcT0YtnYC6B2Tzfth8v-U_hO"
+              "crv": "P-256",
+              "x": "IMOeRgW5mr59ska9vboqeBE5VuSdlDsxCGLMkKvbNc4",
+              "y": "qdCrHrpVCXXiLYRCiVzHUdgSKzMnFbypwx6YxFxMhP8"
            }
         }
-    http_version: 
-  recorded_at: Thu, 10 Oct 2019 03:08:20 GMT
+    http_version:
+  recorded_at: Thu, 05 Mar 2026 19:32:44 GMT
 - request:
     method: post
     uri: "<DIRECTORY_BASE_URL>/order-plz"
     body:
       encoding: UTF-8
-      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzM4NCIsIm5vbmNlIjoiZlNaVlVkT2J0V2lLa09lb0J1UURQZyIsInVybCI6Imh0dHBzOi8vMTkyLjE2OC41Ni45MzoxNDAwMC9vcmRlci1wbHoiLCJraWQiOiJodHRwczovLzE5Mi4xNjguNTYuOTM6MTQwMDAvbXktYWNjb3VudC82OSJ9","payload":"eyJpZGVudGlmaWVycyI6W3sidHlwZSI6ImRucyIsInZhbHVlIjoiZXhhbXBsZS5jb20ifV19","signature":"_Xt5PHogrITBJFl7q8DHi6Mzl3nMr-K43QNQshDVmmcdVp98BF8xQr3XM39RH_hNhze5awagBqVrA50ELUJSW6XG3LBCR5N6fyhsVbWoDnx8rCwfY0F0YqGzTZacSjlA"}'
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsIm5vbmNlIjoieWFVM3BCTUVPbjU4eUlyUmNYbnlXdyIsInVybCI6Imh0dHBzOi8vMTI3LjAuMC4xOjE0MDAwL29yZGVyLXBseiIsImtpZCI6Imh0dHBzOi8vMTI3LjAuMC4xOjE0MDAwL215LWFjY291bnQvM2EzNWVhNzMzZmIyZmU3MCJ9","payload":"eyJpZGVudGlmaWVycyI6W3sidHlwZSI6ImRucyIsInZhbHVlIjoiYXJpLXRlc3QuZXhhbXBsZS5jb20ifV0sInJlcGxhY2VzIjoiOWdjd0NwaVpsSEVqVDlqWV9wRWw1N05ReE9vLkthX1dJQVNkQjZRIn0","signature":"qXLdiMidSmVCqu-SKoFYvYgHFREFZIj9XF3DE6khLl-nk-L1FQIAxQENcB3EaavB2tvfkUhIfgHIn0ym42wd2Q"}'
     headers:
       User-Agent:
-      - Acme::Client v2.0.4 (https://github.com/unixcharles/acme-client)
+      - Acme::Client v2.0.27 (https://github.com/unixcharles/acme-client)
       Content-Type:
       - application/jose+json
       Accept-Encoding:
@@ -149,30 +162,32 @@ http_interactions:
       Link:
       - <<DIRECTORY_URL>>;rel="index"
       Location:
-      - "<DIRECTORY_BASE_URL>/my-order/6H2x8Bin-qxPnVerW-k4C-2nlYzbW3SWpBlw-o--_Kg"
+      - "<DIRECTORY_BASE_URL>/my-order/htJu_dybukj7lPdcvoH9wGWWICUOtXfYLq9j2YSc6VI"
       Replay-Nonce:
-      - BoTL51TdVcVh6iD_cLVPNw
+      - VFEt89AfPRsfN7G6k37Rhw
       Date:
-      - Thu, 10 Oct 2019 03:08:20 GMT
+      - Thu, 05 Mar 2026 19:32:44 GMT
       Content-Length:
-      - '382'
+      - '469'
     body:
       encoding: UTF-8
       string: |-
         {
            "status": "pending",
-           "expires": "2019-10-11T03:08:20Z",
+           "expires": "2026-03-06T19:32:44Z",
            "identifiers": [
               {
                  "type": "dns",
-                 "value": "example.com"
+                 "value": "<EXAMPLE_DOMAIN>"
               }
            ],
-           "finalize": "<DIRECTORY_BASE_URL>/finalize-order/6H2x8Bin-qxPnVerW-k4C-2nlYzbW3SWpBlw-o--_Kg",
+           "profile": "shortlived",
+           "finalize": "<DIRECTORY_BASE_URL>/finalize-order/htJu_dybukj7lPdcvoH9wGWWICUOtXfYLq9j2YSc6VI",
            "authorizations": [
-              "<DIRECTORY_BASE_URL>/authZ/AnWQqpbBeqh-Vm-5BAEWTRnb3lKyEtfJUxdTllcdGbo"
-           ]
+              "<DIRECTORY_BASE_URL>/authZ/NY77Q3hmnst82EehprYFbQ0epnsvQUxyiQ8HAvBXDZ8"
+           ],
+           "replaces": "9gcwCpiZlHEjT9jY_pEl57NQxOo.Ka_WIASdB6Q"
         }
-    http_version: 
-  recorded_at: Thu, 10 Oct 2019 03:08:20 GMT
+    http_version:
+  recorded_at: Thu, 05 Mar 2026 19:32:44 GMT
 recorded_with: VCR 2.9.3

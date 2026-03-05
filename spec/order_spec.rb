@@ -37,7 +37,6 @@ describe Acme::Client::Resources::Order do
     end
 
     it 'call client open with a replaces ARI identifier', vcr: { cassette_name: 'new_order_with_replaces' } do
-      pending('a way to seed an replaceable order/cert in the CA')
       expect(order.replaces).to eq(ari_id)
     end
   end

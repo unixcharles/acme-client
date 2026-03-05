@@ -96,8 +96,6 @@ describe 'Acme::Client renewal_info' do
 
       expect(order).to be_a(Acme::Client::Resources::Order)
       expect(order.status).to eq('pending')
-
-      pending('a way to seed an replaceable order/cert in the CA')
       expect(order.replaces).to eq(ari_id)
     end
 
