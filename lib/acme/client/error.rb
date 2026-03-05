@@ -1,4 +1,11 @@
 class Acme::Client::Error < StandardError
+  attr_reader :acme_error_body
+
+  def initialize(message = nil, acme_error_body: nil)
+    super(message)
+    @acme_error_body = acme_error_body
+  end
+
   class Timeout < Acme::Client::Error; end
 
   class ClientError < Acme::Client::Error; end

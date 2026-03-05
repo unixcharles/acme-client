@@ -101,10 +101,11 @@ module Acme::Client::HTTPClient
     end
 
     def raise_on_error!
+      body = env.body.is_a?(Hash) ? env.body : nil
       if error_class == Acme::Client::Error::RateLimited
-        raise error_class.new(error_message, env.response_headers['Retry-After'])
+        raise error_class.new(error_message, env.response_headers['Retry-After'], acme_error_body: body)
       end
-      raise error_class, error_message
+      raise error_class.new(error_message, acme_error_body: body)
     end
 
     def error_message
