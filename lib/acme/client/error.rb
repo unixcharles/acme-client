@@ -38,7 +38,7 @@ class Acme::Client::Error < StandardError
   class CertificateNotReady < ClientError; end
   class ForcedChainNotFound < ClientError; end
   class OrderNotReady < ClientError; end
-  class OrderNotReloadable < ClientError; end
+  class OrderUrlNil < ClientError; end
 
   class ServerError < Acme::Client::Error; end
   class AlreadyReplaced < ServerError; end

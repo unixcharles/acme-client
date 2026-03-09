@@ -9,9 +9,7 @@ class Acme::Client::Resources::Order
   end
 
   def reload
-    if url.nil?
-      raise Acme::Client::Error::OrderNotReloadable, 'Finalized orders are not reloadable for this CA'
-    end
+    raise Acme::Client::Error::OrderUrlNil, 'Cannot reload order with nil url.' if url.nil?
 
     assign_attributes(**@client.order(url: url).to_h)
     true
@@ -52,7 +50,7 @@ class Acme::Client::Resources::Order
   private
 
   def assign_attributes(url: nil, status:, expires:, finalize_url:, authorization_urls:, identifiers:, certificate_url: nil, profile: nil) # rubocop:disable Layout/LineLength,Metrics/ParameterLists
-    @url = url
+    @url = url unless url.nil?
     @status = status
     @expires = expires
     @finalize_url = finalize_url
