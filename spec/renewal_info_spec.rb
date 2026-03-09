@@ -42,7 +42,7 @@ describe 'Acme::Client renewal_info' do
 
       # retry_after is optional per RFC 9773
       if renewal_info.retry_after
-        expect(renewal_info.retry_after).to be_a(String)
+        expect(renewal_info.retry_after).to be_a(Time)
       end
     end
 
