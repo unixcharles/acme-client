@@ -320,19 +320,19 @@ class Acme::Client
     )
 
     attributes[:url] = response.headers[:location] if response.headers[:location]
-    attributes[:retry_after] = response.headers['retry-after'] if response.headers['retry-after']
+    attributes[:retry_after] = Acme::Client::Util.parse_retry_after(response.headers['retry-after']) if response.headers['retry-after']
     attributes
   end
 
   def attributes_from_authorization_response(response)
     attributes = extract_attributes(response.body, :identifier, :status, :expires, :challenges, :wildcard)
-    attributes[:retry_after] = response.headers['retry-after'] if response.headers['retry-after']
+    attributes[:retry_after] = Acme::Client::Util.parse_retry_after(response.headers['retry-after']) if response.headers['retry-after']
     attributes
   end
 
   def attributes_from_challenge_response(response)
     attributes = extract_attributes(response.body, :status, :url, :token, :type, :error, :validated)
-    attributes[:retry_after] = response.headers['retry-after'] if response.headers['retry-after']
+    attributes[:retry_after] = Acme::Client::Util.parse_retry_after(response.headers['retry-after']) if response.headers['retry-after']
     attributes
   end
 
@@ -342,7 +342,7 @@ class Acme::Client
       [:suggested_window, 'suggestedWindow'],
       [:explanation_url, 'explanationURL']
     )
-    attributes[:retry_after] = response.headers['retry-after'] if response.headers['retry-after']
+    attributes[:retry_after] = Acme::Client::Util.parse_retry_after(response.headers['retry-after']) if response.headers['retry-after']
     attributes
   end
 

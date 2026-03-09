@@ -9,30 +9,11 @@ class Acme::Client::Error < StandardError
 
   def initialize(message = nil, retry_after: nil, subproblems: nil)
     super(message)
-    @retry_after = parse_retry_after(retry_after)
+    @retry_after = retry_after
     @subproblems = parse_subproblems(subproblems)
   end
 
   private
-
-  def parse_retry_after(value)
-    return nil if value.nil?
-
-    # RFC 7231 §7.1.3: Retry-After can be an integer (delay-seconds) or an HTTP-date
-    if value.is_a?(Integer) || value.is_a?(Float)
-      value.to_i
-    elsif value.is_a?(String)
-      # Try integer seconds first
-      Integer(value, 10)
-    end
-  rescue ArgumentError
-    # Must be an HTTP-date (e.g., "Thu, 06 Mar 2026 14:00:00 GMT")
-    begin
-      Time.httpdate(value)
-    rescue ArgumentError
-      nil
-    end
-  end
 
   def parse_subproblems(raw)
     return [] if raw.nil? || !raw.is_a?(Array)

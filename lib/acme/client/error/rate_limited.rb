@@ -1,8 +1,13 @@
 class Acme::Client::Error::RateLimited < Acme::Client::Error::ServerError
   DEFAULT_MESSAGE = 'Error message: urn:ietf:params:acme:error:rateLimited'
+  DEFAULT_RETRY_SECONDS = 10
 
-  def initialize(message = DEFAULT_MESSAGE, retry_after = 10, subproblems: nil)
-    super(message, retry_after: retry_after, subproblems: subproblems)
-    @retry_after = (@retry_after.nil? ? 10 : @retry_after)
+  def initialize(message = DEFAULT_MESSAGE, retry_after = nil, subproblems: nil)
+    parsed = case retry_after
+             when Time then retry_after
+             when nil then Time.now + DEFAULT_RETRY_SECONDS
+             else Acme::Client::Util.parse_retry_after(retry_after) || Time.now + DEFAULT_RETRY_SECONDS
+             end
+    super(message, retry_after: parsed, subproblems: subproblems)
   end
 end

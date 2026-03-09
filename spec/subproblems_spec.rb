@@ -113,14 +113,18 @@ RSpec.describe 'RFC 7807 subproblems support' do
     end
 
     it 'works on RateLimited with positional args preserved' do
+      now = Time.now
       error = Acme::Client::Error::RateLimited.new('rate limited', 60, subproblems: raw_subproblems)
-      expect(error.retry_after).to eq(60)
+      expect(error.retry_after).to be_a(Time)
+      expect(error.retry_after).to be_within(1).of(now + 60)
       expect(error.subproblems.length).to eq(2)
     end
 
     it 'works on RateLimited with defaults' do
+      now = Time.now
       error = Acme::Client::Error::RateLimited.new
-      expect(error.retry_after).to eq(10)
+      expect(error.retry_after).to be_a(Time)
+      expect(error.retry_after).to be_within(1).of(now + 10)
       expect(error.subproblems).to eq([])
     end
 
