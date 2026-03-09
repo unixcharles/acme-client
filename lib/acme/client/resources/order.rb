@@ -9,6 +9,8 @@ class Acme::Client::Resources::Order
   end
 
   def reload
+    raise Acme::Client::Error::OrderUrlNil, 'Cannot reload order with nil url.' if url.nil?
+
     assign_attributes(**@client.order(url: url).to_h)
     true
   end
