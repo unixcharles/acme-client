@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Acme::Client::Resources::Order
-  attr_reader :url, :status, :contact, :finalize_url, :identifiers, :authorization_urls, :expires, :certificate_url, :profile
+  attr_reader :url, :status, :contact, :finalize_url, :identifiers, :authorization_urls, :expires, :certificate_url, :profile, :replaces
 
   def initialize(client, **arguments)
     @client = client
@@ -34,6 +34,18 @@ class Acme::Client::Resources::Order
     end
   end
 
+  def renew(replaces: nil, **arguments)
+    replaces ||= renewal_info.ari_id
+
+    @client.new_order(replaces: replaces, **to_h.slice(:identifiers, :profile).merge(arguments))
+  end
+
+  def renewal_info(certificate: nil, ari_id: nil)
+    certificate ||= self.certificate if ari_id.nil?
+
+    @client.renewal_info(certificate:, ari_id:)
+  end
+
   def to_h
     {
       url: url,
@@ -43,13 +55,14 @@ class Acme::Client::Resources::Order
       authorization_urls: authorization_urls,
       identifiers: identifiers,
       certificate_url: certificate_url,
-      profile: profile
+      profile: profile,
+      replaces: replaces
     }
   end
 
   private
 
-  def assign_attributes(url: nil, status:, expires:, finalize_url:, authorization_urls:, identifiers:, certificate_url: nil, profile: nil) # rubocop:disable Layout/LineLength,Metrics/ParameterLists
+  def assign_attributes(url: nil, status:, expires:, finalize_url:, authorization_urls:, identifiers:, certificate_url: nil, profile: nil, replaces: nil) # rubocop:disable Layout/LineLength,Metrics/ParameterLists
     @url = url unless url.nil?
     @status = status
     @expires = expires
@@ -58,5 +71,6 @@ class Acme::Client::Resources::Order
     @identifiers = identifiers
     @certificate_url = certificate_url
     @profile = profile
+    @replaces = replaces
   end
 end

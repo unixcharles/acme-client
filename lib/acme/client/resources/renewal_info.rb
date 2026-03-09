@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class Acme::Client::Resources::RenewalInfo
-  attr_reader :suggested_window, :explanation_url, :retry_after
+  attr_reader :ari_id, :suggested_window, :explanation_url, :retry_after
 
   def initialize(client, **arguments)
     @client = client
     assign_attributes(**arguments)
+  end
+
+  def reload
+    assign_attributes(**@client.renewal_info(ari_id: ari_id).to_h)
   end
 
   def suggested_window_start
@@ -31,6 +35,7 @@ class Acme::Client::Resources::RenewalInfo
 
   def to_h
     {
+      ari_id: ari_id,
       suggested_window: suggested_window,
       explanation_url: explanation_url,
       retry_after: retry_after
@@ -39,7 +44,8 @@ class Acme::Client::Resources::RenewalInfo
 
   private
 
-  def assign_attributes(suggested_window:, explanation_url: nil, retry_after: nil)
+  def assign_attributes(ari_id:, suggested_window:, explanation_url: nil, retry_after: nil)
+    @ari_id = ari_id
     @suggested_window = suggested_window
     @explanation_url = explanation_url
     @retry_after = retry_after
