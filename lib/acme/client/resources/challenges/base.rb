@@ -28,6 +28,15 @@ class Acme::Client::Resources::Challenges::Base
     true
   end
 
+  def typed_error
+    return nil unless error
+
+    error_type = error['type']
+    error_detail = error['detail'] || 'Unknown error'
+    error_class = Acme::Client::Error::ACME_ERRORS.fetch(error_type, Acme::Client::Error)
+    error_class.new(error_detail)
+  end
+
   def to_h
     { status: status, url: url, token: token, error: error, validated: validated, retry_after: retry_after }
   end

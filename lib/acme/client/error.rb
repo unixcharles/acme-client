@@ -1,9 +1,16 @@
 class Acme::Client::Error < StandardError
-  attr_reader :retry_after
+  attr_reader :retry_after, :subproblems
 
-  def initialize(message = nil, retry_after: nil)
+  Subproblem = Struct.new(:type, :detail, :identifier, keyword_init: true) do
+    def to_h
+      { type: type, detail: detail, identifier: identifier }
+    end
+  end
+
+  def initialize(message = nil, retry_after: nil, subproblems: nil)
     super(message)
     @retry_after = parse_retry_after(retry_after)
+    @subproblems = parse_subproblems(subproblems)
   end
 
   private
@@ -27,6 +34,20 @@ class Acme::Client::Error < StandardError
     end
   end
 
+  def parse_subproblems(raw)
+    return [] if raw.nil? || !raw.is_a?(Array)
+
+    raw.map do |sp|
+      Subproblem.new(
+        type: sp['type'],
+        detail: sp['detail'],
+        identifier: sp['identifier']
+      )
+    end
+  end
+
+  public
+
   class Timeout < Acme::Client::Error; end
 
   class ClientError < Acme::Client::Error; end
@@ -37,7 +58,7 @@ class Acme::Client::Error < StandardError
   class CertificateNotReady < ClientError; end
   class ForcedChainNotFound < ClientError; end
   class OrderNotReady < ClientError; end
-  class OrderNotReloadable < ClientError; end
+  class OrderUrlNil < ClientError; end
 
   class ServerError < Acme::Client::Error; end
   class AlreadyReplaced < ServerError; end
