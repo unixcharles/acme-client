@@ -1,4 +1,33 @@
 class Acme::Client::Error < StandardError
+  attr_reader :subproblems
+
+  Subproblem = Struct.new(:type, :detail, :identifier, keyword_init: true) do
+    def to_h
+      { type: type, detail: detail, identifier: identifier }
+    end
+  end
+
+  def initialize(message = nil, subproblems: nil)
+    super(message)
+    @subproblems = parse_subproblems(subproblems)
+  end
+
+  private
+
+  def parse_subproblems(raw)
+    return [] if raw.nil? || !raw.is_a?(Array)
+
+    raw.map do |sp|
+      Subproblem.new(
+        type: sp['type'],
+        detail: sp['detail'],
+        identifier: sp['identifier']
+      )
+    end
+  end
+
+  public
+
   class Timeout < Acme::Client::Error; end
 
   class ClientError < Acme::Client::Error; end
