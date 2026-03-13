@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Acme::Client::Resources::RenewalInfo
-  attr_reader :suggested_window, :explanation_url, :retry_after
+  attr_reader :suggested_window, :explanation_url, :retry_after, :retry_after_time
 
   def initialize(client, **arguments)
     @client = client
@@ -43,5 +43,6 @@ class Acme::Client::Resources::RenewalInfo
     @suggested_window = suggested_window
     @explanation_url = explanation_url
     @retry_after = retry_after
+    @retry_after_time = Acme::Client::Util.parse_retry_after(retry_after)
   end
 end

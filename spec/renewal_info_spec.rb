@@ -41,8 +41,8 @@ describe 'Acme::Client renewal_info' do
       renewal_info = client.renewal_info(certificate: certificate_pem)
 
       # retry_after is optional per RFC 9773
-      if renewal_info.retry_after
-        expect(renewal_info.retry_after).to be_a(Time)
+      if renewal_info.retry_after_time
+        expect(renewal_info.retry_after_time).to be_a(Time)
       end
     end
 

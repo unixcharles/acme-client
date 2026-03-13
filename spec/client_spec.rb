@@ -183,12 +183,11 @@ describe Acme::Client do
           }.to_json
         )
 
-        now = Time.now
         expect {
           client.new_order(identifiers: ['example.com'])
         }.to raise_error(Acme::Client::Error::RateLimited) { |error|
-          expect(error.retry_after).to be_a(Time)
-          expect(error.retry_after).to be_within(1).of(now + 3600)
+          expect(error.retry_after).to eq(3600)
+          expect(error.retry_after_time).to be_a(Time)
           expect(error.message).to eq('Too many requests')
         }
       end
@@ -203,12 +202,10 @@ describe Acme::Client do
           }.to_json
         )
 
-        now = Time.now
         expect {
           client.new_order(identifiers: ['example.com'])
         }.to raise_error(Acme::Client::Error::RateLimited) { |error|
-          expect(error.retry_after).to be_a(Time)
-          expect(error.retry_after).to be_within(1).of(now + 10)
+          expect(error.retry_after).to eq(10)
         }
       end
     end

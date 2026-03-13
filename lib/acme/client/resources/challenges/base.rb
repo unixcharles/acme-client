@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Acme::Client::Resources::Challenges::Base
-  attr_reader :status, :url, :token, :error, :validated, :retry_after
+  attr_reader :status, :url, :token, :error, :validated, :retry_after, :retry_after_time
 
   def initialize(client, **arguments)
     @client = client
@@ -56,5 +56,6 @@ class Acme::Client::Resources::Challenges::Base
     @error = error
     @validated = validated
     @retry_after = retry_after
+    @retry_after_time = Acme::Client::Util.parse_retry_after(retry_after)
   end
 end

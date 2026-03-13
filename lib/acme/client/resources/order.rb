@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Acme::Client::Resources::Order
-  attr_reader :url, :status, :contact, :finalize_url, :identifiers, :authorization_urls, :expires, :certificate_url, :profile, :retry_after
+  attr_reader :url, :status, :contact, :finalize_url, :identifiers, :authorization_urls, :expires, :certificate_url, :profile, :retry_after, :retry_after_time
 
   def initialize(client, **arguments)
     @client = client
@@ -60,5 +60,6 @@ class Acme::Client::Resources::Order
     @certificate_url = certificate_url
     @profile = profile
     @retry_after = retry_after
+    @retry_after_time = Acme::Client::Util.parse_retry_after(retry_after)
   end
 end
