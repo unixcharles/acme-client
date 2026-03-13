@@ -1,5 +1,23 @@
+require 'time'
+
 module Acme::Client::Util
   extend self
+
+  # Parses a Retry-After header value into a Time.
+  # RFC 7231 §7.1.3: the value is either delay-seconds or an HTTP-date.
+  # Returns a Time, or nil if the value is nil or unparseable.
+  def parse_retry_after(value)
+    return nil if value.nil?
+
+    value = value.to_s
+    Integer(value, 10).then { |seconds| Time.now + seconds }
+  rescue ArgumentError, RangeError
+    begin
+      Time.httpdate(value)
+    rescue ArgumentError
+      nil
+    end
+  end
 
   def urlsafe_base64(data)
     Base64.urlsafe_encode64(data).sub(/[\s=]*\z/, '')

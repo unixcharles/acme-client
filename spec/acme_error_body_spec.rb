@@ -54,14 +54,20 @@ RSpec.describe 'Full problem document (acme_error_body) support' do
     end
 
     it 'works on RateLimited with positional args preserved' do
+      now = Time.now
       error = Acme::Client::Error::RateLimited.new('rate limited', 60, acme_error_body: problem_document)
       expect(error.retry_after).to eq(60)
+      expect(error.retry_after_time).to be_a(Time)
+      expect(error.retry_after_time).to be_within(1).of(now + 60)
       expect(error.acme_error_body).to eq(problem_document)
     end
 
     it 'works on RateLimited with defaults' do
+      now = Time.now
       error = Acme::Client::Error::RateLimited.new
       expect(error.retry_after).to eq(10)
+      expect(error.retry_after_time).to be_a(Time)
+      expect(error.retry_after_time).to be_within(1).of(now + 10)
       expect(error.acme_error_body).to be_nil
     end
 

@@ -326,15 +326,20 @@ class Acme::Client
     )
 
     attributes[:url] = response.headers[:location] if response.headers[:location]
+    attributes[:retry_after] = response.headers['retry-after'] if response.headers['retry-after']
     attributes
   end
 
   def attributes_from_authorization_response(response)
-    extract_attributes(response.body, :identifier, :status, :expires, :challenges, :wildcard)
+    attributes = extract_attributes(response.body, :identifier, :status, :expires, :challenges, :wildcard)
+    attributes[:retry_after] = response.headers['retry-after'] if response.headers['retry-after']
+    attributes
   end
 
   def attributes_from_challenge_response(response)
-    extract_attributes(response.body, :status, :url, :token, :type, :error, :validated)
+    attributes = extract_attributes(response.body, :status, :url, :token, :type, :error, :validated)
+    attributes[:retry_after] = response.headers['retry-after'] if response.headers['retry-after']
+    attributes
   end
 
   def attributes_from_renewal_info_response(response)

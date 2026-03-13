@@ -187,6 +187,7 @@ describe Acme::Client do
           client.new_order(identifiers: ['example.com'])
         }.to raise_error(Acme::Client::Error::RateLimited) { |error|
           expect(error.retry_after).to eq(3600)
+          expect(error.retry_after_time).to be_a(Time)
           expect(error.message).to eq('Too many requests')
         }
       end

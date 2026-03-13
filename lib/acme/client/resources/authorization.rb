@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Acme::Client::Resources::Authorization
-  attr_reader :url, :identifier, :domain, :expires, :status, :wildcard
+  attr_reader :url, :identifier, :domain, :expires, :status, :wildcard, :retry_after, :retry_after_time
 
   def initialize(client, **arguments)
     @client = client
@@ -52,7 +52,8 @@ class Acme::Client::Resources::Authorization
       status: status,
       expires: expires,
       challenges: @challenges,
-      wildcard: wildcard
+      wildcard: wildcard,
+      retry_after: retry_after
     }
   end
 
@@ -69,7 +70,7 @@ class Acme::Client::Resources::Authorization
     Acme::Client::Resources::Challenges.new(@client, **arguments)
   end
 
-  def assign_attributes(url:, status:, expires:, challenges:, identifier:, wildcard: false)
+  def assign_attributes(url:, status:, expires:, challenges:, identifier:, wildcard: false, retry_after: nil)
     @url = url
     @identifier = identifier
     @domain = identifier.fetch('value')
@@ -77,5 +78,7 @@ class Acme::Client::Resources::Authorization
     @expires = expires
     @challenges = challenges
     @wildcard = wildcard
+    @retry_after = retry_after
+    @retry_after_time = Acme::Client::Util.parse_retry_after(retry_after)
   end
 end
