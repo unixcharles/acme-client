@@ -39,9 +39,10 @@ RSpec.describe 'Retry-After support' do
   end
 
   describe Acme::Client::Error do
-    it 'stores retry_after as whatever was provided' do
+    it 'stores retry_after as an integer number of seconds' do
       error = Acme::Client::Error.new('rate limited', retry_after: '120')
-      expect(error.retry_after).to eq('120')
+      expect(error.retry_after).to be_a(Integer)
+      expect(error.retry_after).to be_within(2).of(120)
     end
 
     it 'exposes retry_after_time as a parsed Time' do
@@ -90,6 +91,14 @@ RSpec.describe 'Retry-After support' do
       expect(error.retry_after_time).to eq(Time.httpdate(http_date))
     end
 
+    it 'exposes retry_after as seconds-until for HTTP-date input' do
+      future = Time.now + 300
+      http_date = future.httpdate
+      error = Acme::Client::Error::RateLimited.new('rate limited', http_date)
+      expect(error.retry_after).to be_a(Integer)
+      expect(error.retry_after).to be_within(2).of(300)
+    end
+
     it 'defaults retry_after to 10 when not provided' do
       error = Acme::Client::Error::RateLimited.new
       expect(error.retry_after).to eq(10)
@@ -116,7 +125,8 @@ RSpec.describe 'Retry-After support' do
   describe Acme::Client::Error::ServerError do
     it 'inherits retry_after support from base Error' do
       error = Acme::Client::Error::ServerError.new('server error', retry_after: '30')
-      expect(error.retry_after).to eq('30')
+      expect(error.retry_after).to be_a(Integer)
+      expect(error.retry_after).to be_within(2).of(30)
     end
 
     it 'exposes retry_after_time as a parsed Time' do
@@ -131,7 +141,7 @@ RSpec.describe 'Retry-After support' do
     it 'inherits retry_after support' do
       now = Time.now
       error = Acme::Client::Error::ServerInternal.new('503', retry_after: '60')
-      expect(error.retry_after).to eq('60')
+      expect(error.retry_after).to be_within(2).of(60)
       expect(error.retry_after_time).to be_a(Time)
       expect(error.retry_after_time).to be_within(1).of(now + 60)
     end
@@ -309,7 +319,7 @@ RSpec.describe 'Retry-After support' do
         next if error_class == Acme::Client::Error::RateLimited
 
         error = error_class.new('test', retry_after: '42')
-        expect(error.retry_after).to eq('42'),
+        expect(error.retry_after).to be_within(2).of(42),
           "#{error_class} did not store retry_after correctly"
         expect(error.retry_after_time).to be_a(Time),
           "#{error_class} did not expose retry_after_time correctly"

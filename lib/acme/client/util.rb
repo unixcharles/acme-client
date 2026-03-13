@@ -11,7 +11,7 @@ module Acme::Client::Util
 
     value = value.to_s
     Integer(value, 10).then { |seconds| Time.now + seconds }
-  rescue ArgumentError
+  rescue ArgumentError, RangeError
     begin
       Time.httpdate(value)
     rescue ArgumentError

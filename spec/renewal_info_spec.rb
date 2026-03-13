@@ -41,10 +41,8 @@ describe 'Acme::Client renewal_info' do
     it 'returns retry_after if provided' do
       renewal_info = client.renewal_info(certificate: certificate_pem)
 
-      # retry_after is optional per RFC 9773
-      if renewal_info.retry_after_time
-        expect(renewal_info.retry_after_time).to be_a(Time)
-      end
+      expect(renewal_info.retry_after_time).to be_a(Time)
+      expect(renewal_info.retry_after_time).to be_within(5).of(Time.now + 21600)
     end
 
     it 'converts to hash' do
