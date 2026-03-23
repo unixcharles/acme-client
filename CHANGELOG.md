@@ -1,3 +1,10 @@
+## `2.0.31`
+
+* Expose Retry-After header on all
+* ARI improvement
+* Expose full error message on Error#acme_error_body
+* Expose error subproblems (RFC7807) on Error#subproblems
+
 ## `2.0.30`
 
 * Add a default message to RateLimited error
