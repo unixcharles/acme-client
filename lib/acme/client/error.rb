@@ -1,7 +1,5 @@
 class Acme::Client::Error < StandardError
-  attr_reader :subproblems
-  attr_reader :acme_error_body
-
+  attr_reader :retry_after, :retry_after_time, :subproblems, :acme_error_body
 
   Subproblem = Struct.new(:type, :detail, :identifier, keyword_init: true) do
     def to_h
@@ -9,8 +7,10 @@ class Acme::Client::Error < StandardError
     end
   end
 
-  def initialize(message = nil, acme_error_body: nil, subproblems: nil)
+  def initialize(message = nil, retry_after: nil, acme_error_body: nil, subproblems: nil)
     super(message)
+    @retry_after_time = Acme::Client::Util.parse_retry_after(retry_after)
+    @retry_after = @retry_after_time ? [(@retry_after_time - Time.now).ceil, 0].max : nil
     @acme_error_body = acme_error_body
     @subproblems = parse_subproblems(subproblems)
   end

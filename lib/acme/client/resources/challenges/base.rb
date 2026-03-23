@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Acme::Client::Resources::Challenges::Base
-  attr_reader :status, :url, :token, :error, :validated
+  attr_reader :status, :url, :token, :error, :validated, :retry_after, :retry_after_time
 
   def initialize(client, **arguments)
     @client = client
@@ -38,7 +38,7 @@ class Acme::Client::Resources::Challenges::Base
   end
 
   def to_h
-    { status: status, url: url, token: token, error: error, validated: validated }
+    { status: status, url: url, token: token, error: error, validated: validated, retry_after: retry_after }
   end
 
   private
@@ -49,11 +49,13 @@ class Acme::Client::Resources::Challenges::Base
     ).to_h
   end
 
-  def assign_attributes(status:, url:, token:, error: nil, validated: nil)
+  def assign_attributes(status:, url:, token:, error: nil, validated: nil, retry_after: nil)
     @status = status
     @url = url
     @token = token
     @error = error
     @validated = validated
+    @retry_after = retry_after
+    @retry_after_time = Acme::Client::Util.parse_retry_after(retry_after)
   end
 end
