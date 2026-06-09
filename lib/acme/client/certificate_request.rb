@@ -121,15 +121,15 @@ class Acme::Client::CertificateRequest
       )
     )
   end
-end
 
-def valid_ip_address?(address)
-  require 'ipaddr'
-  begin
-    ip = IPAddr.new(address)
-    true
-  rescue IPAddr::InvalidAddressError, IPAddr::AddressFamilyError
-    false
+  def valid_ip_address?(address)
+    require 'ipaddr'
+    begin
+      ip = IPAddr.new(address)
+      true
+    rescue IPAddr::InvalidAddressError, IPAddr::AddressFamilyError
+      false
+    end
   end
 end
 
