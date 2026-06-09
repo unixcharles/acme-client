@@ -1,3 +1,7 @@
+## `2.0.32`
+
+* Fix `valid_ip_address?` method definition. Was mistakenly defined on Object instead of `Acme::Client::CertificateRequest`
+
 ## `2.0.31`
 
 * Expose Retry-After header on all
