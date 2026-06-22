@@ -16,7 +16,7 @@ jobs:
     env:
       FARADAY_VERSION: ${{ matrix.faraday-version }}
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
