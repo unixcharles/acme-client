@@ -1,3 +1,7 @@
+## `2.0.34`
+
+* Add badAttestationStatement error
+
 ## `2.0.33`
 
 * Add `Acme::Client::Problem` for structured RFC 7807 / RFC 8555 ACME problem documents
