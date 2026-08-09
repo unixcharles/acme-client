@@ -26,6 +26,11 @@ RSpec.configure do |c|
   c.include TlsHelper
   c.include RetryHelper
   c.include SSLHelper
+
+  # Hits the live IANA registry over the network; excluded from the default
+  # run so a newly registered ACME error doesn't fail the whole suite.
+  # Run explicitly via `rake spec_iana_registry`.
+  c.filter_run_excluding :iana_registry unless ENV['RUN_IANA_REGISTRY_SPEC']
 end
 
 VCR.configure do |c|
