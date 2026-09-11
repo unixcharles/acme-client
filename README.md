@@ -224,6 +224,15 @@ end
 order.certificate # => PEM-formatted certificate
 ```
 
+When the server fails issuance after accepting the finalize request, the order moves to `invalid` and carries a problem document explaining why.
+
+```ruby
+if order.status == 'invalid'
+  order.error       # => { "type" => "urn:ietf:params:acme:error:rateLimited", "detail" => "..." }
+  order.typed_error # => Acme::Client::Error::RateLimited
+end
+```
+
 ### Ordering an alternative certificate
 
 The provider may provide alternate certificate with different certificate chain. You can specify the required chain and the client will automatically download alternate certificate and match the chain by name.

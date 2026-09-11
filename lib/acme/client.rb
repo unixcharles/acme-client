@@ -323,7 +323,8 @@ class Acme::Client
       [:certificate_url, 'certificate'],
       :identifiers,
       :profile,
-      :replaces
+      :replaces,
+      :error
     )
 
     attributes[:url] = response.headers[:location] if response.headers[:location]

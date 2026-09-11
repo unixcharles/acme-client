@@ -1,3 +1,7 @@
+## Unreleased
+
+* Expose the RFC 8555 order `error` field on `Resources::Order#error` and add `Order#typed_error`
+
 ## `2.0.34`
 
 * Add badAttestationStatement error

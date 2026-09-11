@@ -118,4 +118,33 @@ describe Acme::Client::Resources::Order do
       expect(authorizations).to all(be_a(Acme::Client::Resources::Authorization))
     end
   end
+
+  context 'error' do
+    let(:authorization) { order.authorizations.first }
+    let(:challenge) { authorization.http01 }
+
+    it 'is nil while the order is pending', vcr: { cassette_name: 'order_status' } do
+      expect(order.error).to be_nil
+      expect(order.typed_error).to be_nil
+    end
+
+    it 'exposes the problem document once validation makes the order invalid', vcr: { cassette_name: 'order_invalid_error' } do
+      serve_once("#{challenge.file_content}-oops") do
+        expect(challenge.request_validation).to be(true)
+        retry_until(condition: lambda { !%w[pending processing].include?(challenge.status) }) do
+          challenge.reload
+        end
+      end
+
+      expect(challenge.status).to eq('invalid')
+
+      order.reload
+
+      expect(order.status).to eq('invalid')
+      expect(order.error).to include('type', 'detail')
+      expect(order.typed_error).to be_a(Acme::Client::Error::Unauthorized)
+      expect(order.typed_error.problem.code).to eq('unauthorized')
+      expect(order.error).to eq(challenge.error)
+    end
+  end
 end
