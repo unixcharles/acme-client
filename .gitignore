@@ -10,3 +10,4 @@
 /vendor/bundle
 /.idea/
 .tool-versions
+*.gem
