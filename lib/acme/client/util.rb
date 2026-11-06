@@ -80,7 +80,9 @@ module Acme::Client::Util
 
     key_identifier = hex_string.split(':').map { |hex| hex.to_i(16).chr }.join
     serial_der = OpenSSL::ASN1::Integer.new(cert.serial).to_der
-    serial_value = OpenSSL::ASN1.decode(serial_der).value.to_s(2)
+    header_length = 0
+    OpenSSL::ASN1.traverse(serial_der) { |_depth, _offset, header_len| header_length = header_len }
+    serial_value = serial_der.byteslice(header_length..-1)
 
     aki_b64 = urlsafe_base64(key_identifier)
     serial_b64 = urlsafe_base64(serial_value)

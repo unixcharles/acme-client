@@ -133,6 +133,37 @@ describe 'Acme::Client renewal_info' do
       expect(cert_id1).to eq(cert_id2)
     end
 
+    def certificate_with(serial:, key_id:)
+      key = OpenSSL::PKey::EC.generate('prime256v1')
+      certificate = OpenSSL::X509::Certificate.new
+      certificate.version = 2
+      certificate.serial = serial
+      certificate.subject = OpenSSL::X509::Name.parse('/CN=Test')
+      certificate.issuer = certificate.subject
+      certificate.public_key = key
+      certificate.not_before = Time.now
+      certificate.not_after = Time.now + 3600
+
+      factory = OpenSSL::X509::ExtensionFactory.new
+      factory.subject_certificate = certificate
+      factory.issuer_certificate = certificate
+      certificate.add_extension(factory.create_extension('subjectKeyIdentifier', key_id))
+      certificate.add_extension(factory.create_extension('authorityKeyIdentifier', 'keyid:always'))
+      certificate.sign(key, OpenSSL::Digest::SHA256.new)
+    end
+
+    it 'matches the RFC 9773 example, keeping the DER sign byte of the serial' do
+      cert = certificate_with(serial: 0x87654321, key_id: '69:88:5B:6B:87:46:40:41:E1:B3:7B:84:7B:A0:AE:2C:DE:01:C8:D4')
+
+      expect(Acme::Client::Util.ari_certificate_identifier(cert)).to eq('aYhba4dGQEHhs3uEe6CuLN4ByNQ.AIdlQyE')
+    end
+
+    it 'does not pad a serial whose high bit is clear' do
+      cert = certificate_with(serial: 0x01020304, key_id: '69:88:5B:6B:87:46:40:41:E1:B3:7B:84:7B:A0:AE:2C:DE:01:C8:D4')
+
+      expect(Acme::Client::Util.ari_certificate_identifier(cert)).to eq('aYhba4dGQEHhs3uEe6CuLN4ByNQ.AQIDBA')
+    end
+
     it 'raises error if certificate has no AKI extension' do
       # Create a self-signed certificate without AKI extension
       key = OpenSSL::PKey::RSA.new(2048)
