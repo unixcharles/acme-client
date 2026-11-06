@@ -30,6 +30,34 @@ describe Acme::Client::Resources::Account do
       expect(account.contact).to eq(['mailto:updated@example.com'])
       expect(account.orders_url).to eq('https://127.0.0.1/list-orderz/75')
     end
+
+    context 'terms of service agreement' do
+      let(:client) { instance_double(Acme::Client) }
+      let(:url) { 'https://127.0.0.1/my-account/1' }
+
+      def account_with(term_of_service:)
+        described_class.new(client, url: url, term_of_service: term_of_service, status: 'valid', contact: [])
+      end
+
+      it 'sends the given terms_of_service_agreed' do
+        account = account_with(term_of_service: nil)
+        expect(client).to receive(:account_update)
+          .with(contact: nil, terms_of_service_agreed: true)
+          .and_return(account_with(term_of_service: true))
+
+        account.update(terms_of_service_agreed: true)
+        expect(account.term_of_service).to eq(true)
+      end
+
+      it 'does not resend the current agreement when only updating contact' do
+        account = account_with(term_of_service: true)
+        expect(client).to receive(:account_update)
+          .with(contact: 'mailto:updated@example.com', terms_of_service_agreed: nil)
+          .and_return(account_with(term_of_service: true))
+
+        account.update(contact: 'mailto:updated@example.com')
+      end
+    end
   end
 
   context 'deactivate' do
