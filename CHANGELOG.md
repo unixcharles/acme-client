@@ -1,3 +1,9 @@
+## `2.0.36`
+
+* Fix ARI certificate identifier for serials with the high bit set: keep the DER sign byte, as required by RFC 9773
+* Fix `Account#update` ignoring its `terms_of_service_agreed:` argument
+* Parse ACME JSON responses with `JSON.parse` instead of `JSON.load`, so a response cannot instantiate arbitrary classes via `json_class`
+
 ## `2.0.35`
 
 * Expose the RFC 8555 order `error` field on `Resources::Order#error` and add `Order#typed_error`
