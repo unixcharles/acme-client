@@ -138,7 +138,7 @@ module Acme::Client::HTTPClient
       content_type = env.response_headers['Content-Type'].to_s
 
       if content_type.start_with?('application/json', 'application/problem+json')
-        JSON.load(env.body)
+        JSON.parse(env.body) unless env.body.nil? || env.body.empty?
       else
         env.body
       end

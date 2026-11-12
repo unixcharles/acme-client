@@ -430,4 +430,36 @@ describe Acme::Client do
         .to eq([{ type: 'ip', value: '192.168.1.1' }, { type: 'dns', value: 'example.com' }])
     end
   end
+
+  context 'response body decoding' do
+    let(:connection) do
+      Acme::Client::HTTPClient.new_acme_connection(url: URI('https://ca.example'), client: unregistered_client, mode: :get)
+    end
+
+    def stub_json(path, body)
+      stub_request(:get, "https://ca.example#{path}").to_return(
+        status: 200,
+        headers: { 'Content-Type' => 'application/json' },
+        body: body
+      )
+    end
+
+    it 'does not instantiate classes named by json_class' do
+      probe = Class.new do
+        def self.json_create(_object)
+          new
+        end
+      end
+      stub_const('JsonCreateProbe', probe)
+      stub_json('/probe', '{"json_class":"JsonCreateProbe","value":1}')
+
+      expect(connection.get('/probe').body).to eq('json_class' => 'JsonCreateProbe', 'value' => 1)
+    end
+
+    it 'decodes an empty body to nil' do
+      stub_json('/empty', '')
+
+      expect(connection.get('/empty').body).to be_nil
+    end
+  end
 end
